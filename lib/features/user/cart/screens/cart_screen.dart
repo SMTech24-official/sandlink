@@ -28,6 +28,7 @@ class CartScreen extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(
+              height: Get.height/1.3.h,
               child: ListView.separated(
                 separatorBuilder: (_, index) => SizedBox(height: 8.h),
                 itemCount: 10,
@@ -223,14 +224,16 @@ class CartScreen extends StatelessWidget {
                   );
                 },
               ),
+
             ),
+            _customCheckOutButton()
           ],
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
-        child: _customCheckOutButton(),
-      ),
+      // bottomNavigationBar: Padding(
+      //   padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
+      //   child: _customCheckOutButton(),
+      // ),
     );
   }
 }

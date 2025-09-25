@@ -32,83 +32,17 @@ class LiveMapControllers extends GetxController {
     AppColors.greenColor.withValues(alpha: 0.2),
   ];
 
+
   final LatLng pickupPoint = const LatLng(23.8103, 90.4125); // Dhaka
   final LatLng deliveryPoint = const LatLng(23.7980, 90.4040); // Example
 
+  // Reactive sets
   var markers = <Marker>{}.obs;
   var polylines = <Polyline>{}.obs;
 
-  final String apiKey = "AIzaSyBhlfDHbkwZ3aeUpM_sFuC0opIiPCt7VpQ";
+  final String apiKey = "YOUR_GOOGLE_MAPS_API_KEY";
 
-  // @override
-  // void onInit() {
-  //   super.onInit();
-  //   // _setMarkers();
-  //   // _getRoutePolyline();
-  //   loadCustomIcon();
-  //
-  // }
-  // Future<void> loadCustomIcon() async {
-  //   var vanIcon = await BitmapDescriptor.fromAssetImage(
-  //     const ImageConfiguration(size: Size(48, 48)),
-  //     "${IconsAssetsPaths.instance.van}",
-  //   );
-  //
-  //   _setMarkers();
-  //   _getRoutePolyline();
-  // }
-  //
-  // /// Set Pickup & Delivery Markers
-  // void _setMarkers() {
-  //   markers.addAll([
-  //     Marker(
-  //       markerId: const MarkerId("pickup"),
-  //       position: pickupPoint,
-  //       infoWindow: const InfoWindow(title: "Pickup Point"),
-  //       icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
-  //     ),
-  //     Marker(
-  //       markerId: const MarkerId("delivery"),
-  //       position: deliveryPoint,
-  //
-  //       infoWindow: const InfoWindow(title: "Delivery Point"),
-  //       icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
-  //     ),
-  //
-  //
-  //   ]);
-  // }
-  //
-  // /// Fetch Route Polyline from Google Directions API
-  // Future<void> _getRoutePolyline() async {
-  //   final url =
-  //       "https://maps.googleapis.com/maps/api/directions/json?origin=${pickupPoint.latitude},${pickupPoint.longitude}&destination=${deliveryPoint.latitude},${deliveryPoint.longitude}&key=$apiKey";
-  //
-  //   final response = await http.get(Uri.parse(url));
-  //   final data = json.decode(response.body);
-  //
-  //   if (data["routes"].isNotEmpty) {
-  //     final points = PolylinePoints().decodePolyline(
-  //       data["routes"][0]["overview_polyline"]["points"],
-  //     );
-  //
-  //     final polylineCoordinates = points
-  //         .map((e) => LatLng(e.latitude, e.longitude))
-  //         .toList();
-  //
-  //     polylines.add(
-  //       Polyline(
-  //         polylineId: const PolylineId("route"),
-  //         points: polylineCoordinates,
-  //
-  //         color: AppColors.orangeColor,
-  //         width: 6,
-  //       ),
-  //     );
-  //   }
-  // }
-
-  BitmapDescriptor? vanIcon; // store van icon
+  BitmapDescriptor? vanIcon;
 
   @override
   void onInit() {
@@ -119,7 +53,7 @@ class LiveMapControllers extends GetxController {
   Future<void> _loadCustomIcon() async {
     vanIcon = await BitmapDescriptor.asset(
       const ImageConfiguration(size: Size(60, 60)),
-      IconsAssetsPaths.instance.van,
+      "assets/icons/van.png", // replace with your asset
     );
 
     _setMarkers();
@@ -144,8 +78,8 @@ class LiveMapControllers extends GetxController {
         Marker(
           markerId: const MarkerId("van"),
           position: LatLng(
-            (pickupPoint.latitude + deliveryPoint.latitude) / 1,
-            (pickupPoint.longitude + deliveryPoint.longitude) / 1,
+            (pickupPoint.latitude + deliveryPoint.latitude) / 2,
+            (pickupPoint.longitude + deliveryPoint.longitude) / 2,
           ),
           infoWindow: const InfoWindow(title: "Delivery Van"),
           icon: vanIcon!,
@@ -156,13 +90,14 @@ class LiveMapControllers extends GetxController {
   void _setPolyline() {
     polylines.add(
       Polyline(
-        polylineId: PolylineId("route"),
+        polylineId: const PolylineId("route"),
         points: [pickupPoint, deliveryPoint],
         color: Colors.orange,
         width: 3,
       ),
     );
   }
+
 }
 
 class OrderStep {
@@ -176,3 +111,71 @@ class OrderStep {
     required this.imageUrl,
   });
 }
+
+// @override
+// void onInit() {
+//   super.onInit();
+//   // _setMarkers();
+//   // _getRoutePolyline();
+//   loadCustomIcon();
+//
+// }
+// Future<void> loadCustomIcon() async {
+//   var vanIcon = await BitmapDescriptor.fromAssetImage(
+//     const ImageConfiguration(size: Size(48, 48)),
+//     "${IconsAssetsPaths.instance.van}",
+//   );
+//
+//   _setMarkers();
+//   _getRoutePolyline();
+// }
+//
+// /// Set Pickup & Delivery Markers
+// void _setMarkers() {
+//   markers.addAll([
+//     Marker(
+//       markerId: const MarkerId("pickup"),
+//       position: pickupPoint,
+//       infoWindow: const InfoWindow(title: "Pickup Point"),
+//       icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
+//     ),
+//     Marker(
+//       markerId: const MarkerId("delivery"),
+//       position: deliveryPoint,
+//
+//       infoWindow: const InfoWindow(title: "Delivery Point"),
+//       icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+//     ),
+//
+//
+//   ]);
+// }
+//
+// /// Fetch Route Polyline from Google Directions API
+// Future<void> _getRoutePolyline() async {
+//   final url =
+//       "https://maps.googleapis.com/maps/api/directions/json?origin=${pickupPoint.latitude},${pickupPoint.longitude}&destination=${deliveryPoint.latitude},${deliveryPoint.longitude}&key=$apiKey";
+//
+//   final response = await http.get(Uri.parse(url));
+//   final data = json.decode(response.body);
+//
+//   if (data["routes"].isNotEmpty) {
+//     final points = PolylinePoints().decodePolyline(
+//       data["routes"][0]["overview_polyline"]["points"],
+//     );
+//
+//     final polylineCoordinates = points
+//         .map((e) => LatLng(e.latitude, e.longitude))
+//         .toList();
+//
+//     polylines.add(
+//       Polyline(
+//         polylineId: const PolylineId("route"),
+//         points: polylineCoordinates,
+//
+//         color: AppColors.orangeColor,
+//         width: 6,
+//       ),
+//     );
+//   }
+// }
