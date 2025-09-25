@@ -75,7 +75,7 @@ class RiderOnboardingScreen extends StatelessWidget {
             child: Obx(
               () => CustomButton(
                 text: controller.currentIndex.value == sliderData.length - 1
-                    ? "Get Started"
+                    ? "Let's Get Started"
                     : "Next",
                 onPressed: () {
                   if (controller.currentIndex.value == sliderData.length - 1) {

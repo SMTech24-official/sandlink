@@ -9,10 +9,12 @@ import 'package:sandlink/core/widgets/custom_button.dart';
 import 'package:sandlink/core/widgets/custom_dialog.dart';
 import 'package:sandlink/core/wrappers/custom_text.dart';
 import 'package:sandlink/features/common/auth/controller/register_verify_controller.dart';
+import '../../../rider/driver_verification/screen/rider_steps_screen.dart';
+import '../../splash/controller/choose_role_controller.dart';
 
 class RegisterVerifyScreen extends StatelessWidget {
-  const RegisterVerifyScreen({super.key});
-
+  RegisterVerifyScreen({super.key});
+  final chooseRole = Get.put(ChooseRoleController());
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(RegisterVerifyController());
@@ -156,9 +158,19 @@ class RegisterVerifyScreen extends StatelessWidget {
                             title: "Account verified Successfully",
                             subtitle: "You can explore the app now",
                             buttonFontSize: 16.spMin,
-                            primaryButtonText: "Back to Login",
-                            onPrimaryTap: () =>
-                                Get.offAllNamed(AppRouteNames.instance.login),
+                            primaryButtonText:
+                                // ignore: unrelated_type_equality_checks
+                                chooseRole.selectedRole == 'rider'
+                                ? "Verify Information"
+                                : "Back to Login",
+                            onPrimaryTap: () {
+                              // ignore: unrelated_type_equality_checks
+                              if (chooseRole.selectedRole == 'rider') {
+                                Get.to(() => RiderStepsScreen());
+                              } else {
+                                Get.offAllNamed(AppRouteNames.instance.login);
+                              }
+                            },
                           ),
                         );
                       },

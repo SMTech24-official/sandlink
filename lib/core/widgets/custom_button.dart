@@ -17,6 +17,7 @@ class CustomButton extends StatelessWidget {
     this.fontSize,
     this.borderSide,
     this.child,
+
   });
 
   final String? text;
@@ -30,6 +31,8 @@ class CustomButton extends StatelessWidget {
   final double? fontSize;
   final BorderSide? borderSide;
   final Widget? child;
+
+
 
   @override
   Widget build(BuildContext context) {

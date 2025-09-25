@@ -17,4 +17,8 @@ class AppRouteNames {
   final String registerVerify = "/register-verify";
   final String resetPassword = "/reset-password";
   final String search = "/search";
+
+  // Rider Section //
+
+  final String ridernavnar = '/ridernavbar';
 }

@@ -7,6 +7,8 @@ import 'package:sandlink/features/user/cart/screens/cart_screen.dart';
 import 'package:sandlink/features/user/home/screens/user_home_screen.dart';
 
 import '../../../../core/app_colors/app_colors.dart';
+import '../../notification/screen/notification_screen.dart';
+import '../../user_profile/screen/user_profile_screen.dart';
 
 class UserNavBar extends StatelessWidget {
   final RxInt _selectedIndex;
@@ -30,8 +32,8 @@ class UserNavBar extends StatelessWidget {
   final List<Widget> _screens = [
     UserHomeScreen(),
     CartScreen(),
-    UserHomeScreen(),
-    UserHomeScreen(),
+    NotificationScreen(),
+    UserProfileScreen(),
   ];
 
   String _getLabel(int index) {

@@ -12,6 +12,7 @@ import 'package:sandlink/features/common/onboarding/screens/user_onboarding_scre
 import 'package:sandlink/features/user/search/screens/search_screen.dart';
 import 'package:sandlink/features/common/splash/screens/choose_role_screen.dart';
 import 'package:sandlink/features/common/splash/screens/splash_screen.dart';
+import '../../features/rider/rider_nav_bar/rider_nav_bar.dart';
 import 'app_route_names.dart';
 
 class AppRoutePages {
@@ -50,6 +51,10 @@ class AppRoutePages {
       ),
       _getPage(name: AppRouteNames.instance.userHome, page: UserNavBar()),
       _getPage(name: AppRouteNames.instance.search, page: SearchScreen()),
+
+
+      // Rider Section //
+      _getPage(name: AppRouteNames.instance.ridernavnar, page: RiderNavBar()),
     ];
   }
 

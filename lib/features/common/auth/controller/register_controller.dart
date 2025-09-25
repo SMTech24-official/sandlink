@@ -17,6 +17,7 @@ class RegisterController extends GetxController {
     isPassVisible.value = !isPassVisible.value;
   }
 
+
   @override
   void onClose() {
     super.onClose();

@@ -21,4 +21,10 @@ class SvgAssetsPaths {
   String get personSelected => "$_imagesAssetsPaths/person_selected.svg";
   String get location => "$_imagesAssetsPaths/location.svg";
   String get search => "$_imagesAssetsPaths/search.svg";
+  String get boldorder => "$_imagesAssetsPaths/bold_order_icon.svg";
+  String get outlineorder => "$_imagesAssetsPaths/outline_order_icon.svg";
+  String get boldoearning => "$_imagesAssetsPaths/outline_earning_icon.svg";
+
+  String get outlineearning => "$_imagesAssetsPaths/outline_eraing.svg";
+  String get truck => "$_imagesAssetsPaths/truck.svg";
 }

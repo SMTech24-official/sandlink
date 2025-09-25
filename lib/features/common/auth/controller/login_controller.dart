@@ -7,7 +7,14 @@ class LoginController extends GetxController {
   final emailController = TextEditingController();
   final passController = TextEditingController();
 
+
+
   void togglePasswordVisibility() {
     isPassVisible.value = !isPassVisible.value;
   }
+
+  void checkbox(){
+    isChecked.value = !isChecked.value;
+  }
+
 }
