@@ -27,23 +27,19 @@ class LiveMapScreen extends StatelessWidget {
           children: [
             Expanded(
               flex: 1,
-              child: Container(
-                height: 200,
-                width: double.infinity.w,
-                color: Colors.amber,
-
-                child: Obx(() {
-                  return GoogleMap(
-                    initialCameraPosition: CameraPosition(
-                      target: controller.pickupPoint,
-                      zoom: 14,
-                    ),
-                    markers: controller.markers,
-                    polylines: controller.polylines,
-                  );
-                }),
-              ),
+              child: Obx(() => GoogleMap(
+                initialCameraPosition: CameraPosition(
+                  target: controller.pickupPoint,
+                  zoom: 14,
+                ),
+                markers: controller.markers.value,
+                polylines: controller.polylines.value,
+                mapType: MapType.normal,
+                myLocationEnabled: true,
+                zoomControlsEnabled: false,
+              )),
             ),
+
             SizedBox(height: 20.h),
             Expanded(flex: 2, child: _liveMapTimeLine(controller: controller)),
           ],
