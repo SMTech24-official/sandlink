@@ -10,8 +10,12 @@ import 'package:sandlink/core/widgets/custom_text_field.dart';
 import 'package:sandlink/core/wrappers/custom_text.dart';
 import 'package:sandlink/features/common/auth/controller/login_controller.dart';
 
+import '../../splash/controller/choose_role_controller.dart';
+
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+   LoginScreen({super.key});
+
+  final roleController = Get.put(ChooseRoleController());
 
   @override
   Widget build(BuildContext context) {
@@ -121,8 +125,18 @@ class LoginScreen extends StatelessWidget {
                 ),
                 10.verticalSpace,
                 CustomButton(
-                  onPressed: () =>
-                      Get.offAllNamed(AppRouteNames.instance.userHome),
+                  onPressed: () {
+                    if(controller.isChecked.value){
+                      if(roleController.selectedRole == 'user'){
+                        Get.toNamed(AppRouteNames.instance.userHome);
+                      } else {
+                        Get.toNamed(AppRouteNames.instance.ridernavnar);
+                      }
+                    } else{
+                      Get.snackbar('Remember Me', 'Places Check');
+                    }
+                  },
+                     // Get.offAllNamed(AppRouteNames.instance.userHome),
                   text: 'Login',
                 ),
                 15.verticalSpace,

@@ -31,7 +31,7 @@ class CustomInputField extends StatelessWidget {
     this.isObsecure,
     this.inputFormatters,
     this.onPressed,
-    this.onChanged,
+    this.onChanged, this.headerfontSize,
   });
 
   final TextEditingController? textController;
@@ -56,6 +56,7 @@ class CustomInputField extends StatelessWidget {
   final Color? prefixIconColor;
   final bool? isReadOnly;
   final double? fontSize;
+  final double? headerfontSize;
   final bool? isObsecure;
   final void Function(dynamic)? onChanged;
   final List<TextInputFormatter>? inputFormatters;
@@ -68,7 +69,7 @@ class CustomInputField extends StatelessWidget {
       ),
       borderSide: borderSide != null
           ? borderSide!
-          : BorderSide(width: 0.5.w, color: Color(0xFFD1D1D1)),
+          : BorderSide(width: 1.w, color: Color(0xFFD1D1D1)),
     );
   }
 
@@ -116,7 +117,7 @@ class CustomInputField extends StatelessWidget {
                 headerTitle!,
                 style: TextStyle(
                   color: headerTextColor ?? AppColors.darkGreyColor,
-                  fontSize: 16.spMin,
+                  fontSize: (headerfontSize ?? 14).sp,
                   fontWeight: headerFontWeight ?? FontWeight.w500,
                 ),
               ),

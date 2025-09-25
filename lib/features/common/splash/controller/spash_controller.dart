@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:sandlink/core/app_routes/app_route_names.dart';
+import 'package:sandlink/features/common/splash/screens/splash_screen%20_tow.dart';
 
 class SplashController extends GetxController {
   void _moveToNext() async {
@@ -17,7 +17,7 @@ class SplashController extends GetxController {
       //     Get.offAll(() => SpNavBar());
       //   }
       // } else {
-      Get.offAllNamed(AppRouteNames.instance.chooseRole);
+      Get.to(SplashScreentow());
       // }
     });
   }

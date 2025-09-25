@@ -9,6 +9,8 @@ import 'package:sandlink/core/app_routes/app_route_names.dart';
 import 'package:sandlink/core/config/constants/assets_paths/svg_assets_paths.dart';
 import 'package:sandlink/core/wrappers/custom_text.dart';
 import 'package:sandlink/features/user/home/controllers/user_home_controller.dart';
+import '../../category_popular_list/screens/category_popular_details.dart';
+import '../../category_popular_list/screens/category_popular_list.dart';
 
 class UserHomeScreen extends StatelessWidget {
   const UserHomeScreen({super.key});
@@ -50,11 +52,16 @@ class UserHomeScreen extends StatelessWidget {
                     fontSize: 20.spMin,
                     fontWeight: FontWeight.w600,
                   ),
-                  CustomText(
-                    text: 'See All',
-                    fontSize: 16.spMin,
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.lightGrey,
+                  GestureDetector(
+                    onTap: () => Get.to(
+                      () => CategoryPopularScreen(appbarTitle: 'Most Popular'),
+                    ),
+                    child: CustomText(
+                      text: 'See All',
+                      fontSize: 16.spMin,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.lightGrey,
+                    ),
                   ),
                 ],
               ),
@@ -130,29 +137,35 @@ class UserHomeScreen extends StatelessWidget {
         itemCount: 5,
         separatorBuilder: (_, __) => 15.horizontalSpace,
         itemBuilder: (context, index) {
-          return SizedBox(
-            width: 80.w,
-            child: Column(
-              children: [
-                CircleAvatar(
-                  radius: 30.r,
-                  backgroundImage: const CachedNetworkImageProvider(
-                    "https://www.figma.com/file/jNz7l61vmikt0kYyCBqz6X/image/f08a40c5013d07e2b2fe4f7423a7220f5ba43e84",
+          return GestureDetector(
+            onTap: () {
+              Get.to(() => CategoryPopularScreen(appbarTitle: 'Boulders'));
+            },
+
+            child: SizedBox(
+              width: 80.w,
+              child: Column(
+                children: [
+                  CircleAvatar(
+                    radius: 30.r,
+                    backgroundImage: const CachedNetworkImageProvider(
+                      "https://www.figma.com/file/jNz7l61vmikt0kYyCBqz6X/image/f08a40c5013d07e2b2fe4f7423a7220f5ba43e84",
+                    ),
                   ),
-                ),
-                8.verticalSpace,
-                Expanded(
-                  child: CustomText(
-                    text: 'Boulders',
-                    fontSize: 14.spMin,
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.lightGrey,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.center,
+                  8.verticalSpace,
+                  Expanded(
+                    child: CustomText(
+                      text: 'Boulders',
+                      fontSize: 14.spMin,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.lightGrey,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
         },
@@ -169,80 +182,83 @@ class UserHomeScreen extends StatelessWidget {
         itemCount: 5,
         separatorBuilder: (_, __) => 20.horizontalSpace,
         itemBuilder: (context, index) {
-          return Container(
-            width: 226.w,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12.r),
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: 6,
-                  offset: const Offset(0, 3),
-                ),
-              ],
-            ),
-            padding: EdgeInsets.all(12.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                /// Product image
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(12.r),
-                  child: Image.network(
-                    "https://www.figma.com/file/jNz7l61vmikt0kYyCBqz6X/image/c7eb458c8334d622e53cf983844410ccf9686134",
-                    height: 160.h,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
+          return GestureDetector(
+            onTap: () => Get.to(() => CategoryPopularDetailsScreen()),
+            child: Container(
+              width: 226.w,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12.r),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 6,
+                    offset: const Offset(0, 3),
                   ),
-                ),
-                10.verticalSpace,
-
-                /// Title
-                CustomText(
-                  text: 'Builder’s Choice Sand',
-                  fontSize: 16.spMin,
-                  fontWeight: FontWeight.w600,
-                ),
-                8.verticalSpace,
-
-                /// Rating + Price
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.star_rounded,
-                          color: const Color(0xFFFFC107),
-                          size: 18.sp,
-                        ),
-                        4.horizontalSpace,
-                        CustomText(
-                          text: '5.0',
-                          fontSize: 14.spMin,
-                          color: AppColors.lightGrey,
-                        ),
-                      ],
+                ],
+              ),
+              padding: EdgeInsets.all(12.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  /// Product image
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(12.r),
+                    child: Image.network(
+                      "https://www.figma.com/file/jNz7l61vmikt0kYyCBqz6X/image/c7eb458c8334d622e53cf983844410ccf9686134",
+                      height: 160.h,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
                     ),
-                    Row(
-                      children: [
-                        CustomText(
-                          text: '₦200',
-                          fontSize: 14.spMin,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        4.horizontalSpace,
-                        CustomText(
-                          text: 'Ton',
-                          fontSize: 12.spMin,
-                          color: AppColors.lightGrey,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
+                  ),
+                  10.verticalSpace,
+
+                  /// Title
+                  CustomText(
+                    text: 'Builder’s Choice Sand',
+                    fontSize: 16.spMin,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  8.verticalSpace,
+
+                  /// Rating + Price
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.star_rounded,
+                            color: const Color(0xFFFFC107),
+                            size: 18.sp,
+                          ),
+                          4.horizontalSpace,
+                          CustomText(
+                            text: '5.0',
+                            fontSize: 14.spMin,
+                            color: AppColors.lightGrey,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          CustomText(
+                            text: '₦200',
+                            fontSize: 14.spMin,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          4.horizontalSpace,
+                          CustomText(
+                            text: 'Ton',
+                            fontSize: 12.spMin,
+                            color: AppColors.lightGrey,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           );
         },

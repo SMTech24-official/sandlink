@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:sandlink/core/app_routes/app_route_names.dart';
 import 'package:sandlink/core/app_routes/app_route_pages.dart';
-import 'package:sandlink/features/user/nav_bar/screens/user_nav_bar.dart';
+
 
 class SandLink extends StatelessWidget {
   const SandLink({super.key});
