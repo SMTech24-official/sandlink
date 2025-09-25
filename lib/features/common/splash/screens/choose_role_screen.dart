@@ -1,9 +1,11 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:sandlink/core/app_colors/app_colors.dart';
 import 'package:sandlink/core/app_routes/app_route_names.dart';
 import 'package:sandlink/core/config/constants/assets_paths/icons_assets_paths.dart';
+import 'package:sandlink/core/services/DBServices/local_db_services/storage_service.dart';
 import 'package:sandlink/core/widgets/custom_button.dart';
 import 'package:sandlink/core/wrappers/custom_text.dart';
 import 'package:sandlink/features/common/splash/controller/choose_role_controller.dart';
@@ -272,7 +274,6 @@ class ChooseRoleScreen extends StatelessWidget {
                 );
               }),
 
-
               40.verticalSpace,
 
               /// 🔑 Wrap both options in a RadioGroup
@@ -389,9 +390,28 @@ class ChooseRoleScreen extends StatelessWidget {
       bottomNavigationBar: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 30.h),
         child: CustomButton(
-          onPressed: () => controller.selectedRole.value == "user"
-              ? Get.toNamed(AppRouteNames.instance.userOnboarding)
-              : Get.toNamed(AppRouteNames.instance.riderOnboarding),
+          onPressed: () {
+            final role = controller.selectedRole.value;
+            if (kDebugMode) {
+              print("Role.................................... $role");
+            }
+
+            if (role == "user") {
+              StorageService().saveData('role', role);
+              Get.toNamed(AppRouteNames.instance.userOnboarding);
+            } else if (role == "rider") {
+              StorageService().saveData('role', role);
+              Get.toNamed(AppRouteNames.instance.riderOnboarding);
+            } else {
+              Get.snackbar(
+                "Selection Required",
+                "Please select a role to proceed.",
+                backgroundColor: Colors.redAccent,
+                colorText: Colors.white,
+                snackPosition: SnackPosition.BOTTOM,
+              );
+            }
+          },
           text: "Get Started",
         ),
       ),
