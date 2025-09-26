@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:sandlink/core/app_colors/app_colors.dart';
 import 'package:sandlink/core/app_routes/app_route_names.dart';
 import 'package:sandlink/core/config/constants/assets_paths/svg_assets_paths.dart';
+import 'package:sandlink/core/services/DBServices/local_db_services/storage_service.dart';
 import 'package:sandlink/core/wrappers/custom_text.dart';
 import 'package:sandlink/features/user/home/controllers/user_home_controller.dart';
 import '../../category_popular_list/screens/category_popular_details.dart';
@@ -26,7 +27,7 @@ class UserHomeScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _topAppBarWidget(),
+              _topAppBarWidget(controller: controller),
               20.verticalSpace,
 
               /// 🔹 Banner slider
@@ -53,9 +54,12 @@ class UserHomeScreen extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                   ),
                   GestureDetector(
-                    onTap: () => Get.to(
-                      () => CategoryPopularScreen(appbarTitle: 'Most Popular'),
-                    ),
+                    onTap: () =>
+                        Get.to(
+                              () =>
+                              CategoryPopularScreen(
+                                  appbarTitle: 'Most Popular'),
+                        ),
                     child: CustomText(
                       text: 'See All',
                       fontSize: 16.spMin,
@@ -106,23 +110,24 @@ class UserHomeScreen extends StatelessWidget {
         ),
         8.verticalSpace,
         Obx(
-          () => Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(controller.images.length, (index) {
-              return AnimatedContainer(
-                duration: const Duration(milliseconds: 300),
-                margin: EdgeInsets.symmetric(horizontal: 4.w),
-                height: 8.h,
-                width: controller.currentPage.value == index ? 24.w : 8.w,
-                decoration: BoxDecoration(
-                  color: controller.currentPage.value == index
-                      ? AppColors.primaryColor
-                      : AppColors.primaryColor.withValues(alpha: 0.3),
-                  borderRadius: BorderRadius.circular(4.r),
-                ),
-              );
-            }),
-          ),
+              () =>
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(controller.images.length, (index) {
+                  return AnimatedContainer(
+                    duration: const Duration(milliseconds: 300),
+                    margin: EdgeInsets.symmetric(horizontal: 4.w),
+                    height: 8.h,
+                    width: controller.currentPage.value == index ? 24.w : 8.w,
+                    decoration: BoxDecoration(
+                      color: controller.currentPage.value == index
+                          ? AppColors.primaryColor
+                          : AppColors.primaryColor.withValues(alpha: 0.3),
+                      borderRadius: BorderRadius.circular(4.r),
+                    ),
+                  );
+                }),
+              ),
         ),
       ],
     );
@@ -201,6 +206,7 @@ class UserHomeScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+
                   /// Product image
                   ClipRRect(
                     borderRadius: BorderRadius.circular(12.r),
@@ -267,7 +273,9 @@ class UserHomeScreen extends StatelessWidget {
   }
 
   /// 🔹 Top app bar
-  Widget _topAppBarWidget() {
+  Widget _topAppBarWidget({required UserHomeController controller}) {
+    var userName = StorageService().getData('name');
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -284,28 +292,33 @@ class UserHomeScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CustomText(
-                  text: 'Hi, Prince 👋',
+                  text: 'Hi, $userName',
                   fontSize: 18.spMin,
                   fontWeight: FontWeight.w600,
                 ),
                 4.verticalSpace,
                 Row(
                   children: [
-                    SvgPicture.asset(
-                      SvgAssetsPaths.instance.location,
-                      width: 16.w,
-                      height: 16.h,
-                      colorFilter: ColorFilter.mode(
-                        AppColors.lightGrey,
-                        BlendMode.srcIn,
+                    GestureDetector(
+                      onTap: () => controller.getCurrentLocation(),
+                      child: SvgPicture.asset(
+                        SvgAssetsPaths.instance.location,
+                        width: 16.w,
+                        height: 16.h,
+                        colorFilter: ColorFilter.mode(
+                          AppColors.lightGrey,
+                          BlendMode.srcIn,
+                        ),
                       ),
                     ),
                     6.horizontalSpace,
-                    CustomText(
-                      text: 'California, USA',
-                      fontSize: 14.spMin,
-                      color: AppColors.lightGrey,
-                    ),
+
+                    Obx(() => CustomText(
+                      text:controller.currentAddress.value == ''
+                          ? 'Address not found'
+                          : controller.currentAddress.value,
+
+                    )),
                   ],
                 ),
               ],

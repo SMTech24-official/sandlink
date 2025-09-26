@@ -37,4 +37,17 @@ class ForgotPassVerifyController extends GetxController {
     super.onClose();
     otpController.clear();
   }
+
+
+  Future<void> verifyOTPCode()async{
+
+
+
+
+
+
+  }
+
+
+
 }

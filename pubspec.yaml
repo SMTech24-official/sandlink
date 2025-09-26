@@ -53,6 +53,7 @@ dependencies:
   flutter_steps: any
   flutter_spinkit: ^5.2.2
   geocoding: any
+  geolocator: ^14.0.2
 
 
 dev_dependencies:

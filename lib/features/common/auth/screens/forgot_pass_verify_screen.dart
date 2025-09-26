@@ -152,8 +152,11 @@ class ForgotPassVerifyScreen extends StatelessWidget {
                 ),
                 20.verticalSpace,
                 CustomButton(
-                  onPressed: () =>
-                      Get.toNamed(AppRouteNames.instance.resetPassword),
+                  onPressed: () {
+
+                  },
+
+                     // Get.toNamed(AppRouteNames.instance.resetPassword),
                   text: 'Continue',
                 ),
               ],
