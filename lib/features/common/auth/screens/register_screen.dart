@@ -75,17 +75,22 @@ class RegisterScreen extends StatelessWidget {
                       8.verticalSpace,
                       IntlPhoneField(
                         controller: controller.phoneController,
+
                         decoration: InputDecoration(
                           labelText: 'Phone Number',
                           labelStyle: TextStyle(fontSize: 16.spMin),
                           fillColor: const Color(0xFFF9FAFB),
                           filled: true,
+
                           floatingLabelBehavior: FloatingLabelBehavior.never,
                           errorBorder: _phoneOutlineInputBorder(),
                           enabledBorder: _phoneOutlineInputBorder(),
                           focusedBorder: _phoneOutlineInputBorder(),
                           border: _phoneOutlineInputBorder(),
                           focusedErrorBorder: _phoneOutlineInputBorder(),
+
+
+
                         ),
 
                         pickerDialogStyle: PickerDialogStyle(
@@ -99,11 +104,15 @@ class RegisterScreen extends StatelessWidget {
                         languageCode: "en",
                         initialCountryCode: 'BD',
                         validator: (phone) {
-                          if (phone == null || !phone.isValidNumber()) {
-                            return 'Enter a valid phone number';
+                          if (phone == null) {
+                            return "Phone number is required";
+                          }
+                          if (!phone.isValidNumber()) {
+                            return "Enter a valid phone number";
                           }
                           return null;
                         },
+
                         onChanged: (phone) {
                           controller.fullPhoneNumber.value =
                               phone.completeNumber;
@@ -171,8 +180,10 @@ class RegisterScreen extends StatelessWidget {
                 ),
                 20.verticalSpace,
                 CustomButton(
-                  onPressed: () =>
-                      Get.toNamed(AppRouteNames.instance.registerVerify),
+                  onPressed: (){
+                   controller.createSignupUser();
+                  },
+                     // Get.toNamed(AppRouteNames.instance.registerVerify),
                   text: 'Register',
                 ),
                 15.verticalSpace,

@@ -61,7 +61,15 @@ class ForgotPassVerifyScreen extends StatelessWidget {
                     autofocus: true,
                     keyboardType: TextInputType.number,
                     controller: controller.otpController,
-                    length: 5,
+                    length: 4,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Please enter OTP";
+                      } else if (value.length < 4) {
+                        return "OTP must be 4 digits";
+                      }
+                      return null;
+                    },
                     defaultPinTheme: defaultPinTheme.copyWith(
                       textStyle: TextStyle(
                         fontSize: 24.spMin,
