@@ -35,42 +35,63 @@ class UserHomeScreen extends StatelessWidget {
               20.verticalSpace,
 
               /// 🔹 Our Products
-              CustomText(
-                text: 'Our Products',
-                fontSize: 20.spMin,
-                fontWeight: FontWeight.w600,
+              GestureDetector(
+                onTap: controller.getCategories,
+                child: CustomText(
+                  text: 'Our Products',
+                  fontSize: 20.spMin,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
               12.verticalSpace,
-              _productsWidget(),
+              _productsWidget(controller: controller),
               24.verticalSpace,
 
               /// 🔹 Most Popular
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  CustomText(
-                    text: 'Most Popular',
-                    fontSize: 20.spMin,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  GestureDetector(
-                    onTap: () =>
-                        Get.to(
-                              () =>
-                              CategoryPopularScreen(
-                                  appbarTitle: 'Most Popular'),
-                        ),
-                    child: CustomText(
-                      text: 'See All',
-                      fontSize: 16.spMin,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.lightGrey,
-                    ),
-                  ),
-                ],
-              ),
+
               12.verticalSpace,
-              _popularProducts(),
+              Obx(() {
+                // Check if list is empty
+                if (controller.mostPopularProductList.isEmpty) {
+                  return Center(child: Text(" "));
+                } else {
+                  return Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          GestureDetector(
+                            onTap: (){
+                              controller.getMostPopularProduct();
+                            },
+                            child: CustomText(
+                              text: 'Most Popular',
+                              fontSize: 20.spMin,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () =>
+                                Get.to(
+                                      () =>
+                                      CategoryPopularScreen(
+                                          appbarTitle: 'Most Popular'),
+                                ),
+                            child: CustomText(
+                              text: 'See All',
+                              fontSize: 16.spMin,
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.lightGrey,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 15.h,),
+                      _popularProducts(controller: controller)
+                    ],
+                  );
+                }
+              })
             ],
           ),
         ),
@@ -134,14 +155,16 @@ class UserHomeScreen extends StatelessWidget {
   }
 
   /// 🔹 Products category row
-  Widget _productsWidget() {
+  Widget _productsWidget({required UserHomeController controller}) {
     return SizedBox(
       height: Get.width * 0.27,
-      child: ListView.separated(
+      child: Obx(()=>ListView.separated(
         scrollDirection: Axis.horizontal,
-        itemCount: 5,
+        itemCount: controller.categoriesList.length,
         separatorBuilder: (_, __) => 15.horizontalSpace,
         itemBuilder: (context, index) {
+
+          final  items = controller.categoriesList[index];
           return GestureDetector(
             onTap: () {
               Get.to(() => CategoryPopularScreen(appbarTitle: 'Boulders'));
@@ -153,14 +176,15 @@ class UserHomeScreen extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     radius: 30.r,
-                    backgroundImage: const CachedNetworkImageProvider(
-                      "https://www.figma.com/file/jNz7l61vmikt0kYyCBqz6X/image/f08a40c5013d07e2b2fe4f7423a7220f5ba43e84",
+                    backgroundImage:  CachedNetworkImageProvider(
+                      "${items.image}",
+
                     ),
                   ),
                   8.verticalSpace,
                   Expanded(
                     child: CustomText(
-                      text: 'Boulders',
+                      text: "${items.name}",
                       fontSize: 14.spMin,
                       fontWeight: FontWeight.w500,
                       color: AppColors.lightGrey,
@@ -174,101 +198,109 @@ class UserHomeScreen extends StatelessWidget {
             ),
           );
         },
-      ),
+      )),
     );
   }
 
   /// 🔹 Popular products list
-  Widget _popularProducts() {
+  Widget _popularProducts({required UserHomeController controller}) {
     return SizedBox(
       height: 260.h,
-      child: ListView.separated(
-        scrollDirection: Axis.horizontal,
-        itemCount: 5,
-        separatorBuilder: (_, __) => 20.horizontalSpace,
-        itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () => Get.to(() => CategoryPopularDetailsScreen()),
-            child: Container(
-              width: 226.w,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12.r),
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 6,
-                    offset: const Offset(0, 3),
-                  ),
-                ],
-              ),
-              padding: EdgeInsets.all(12.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+      child: Obx((){
 
-                  /// Product image
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(12.r),
-                    child: Image.network(
-                      "https://www.figma.com/file/jNz7l61vmikt0kYyCBqz6X/image/c7eb458c8334d622e53cf983844410ccf9686134",
-                      height: 160.h,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
+        return ListView.separated(
+          scrollDirection: Axis.horizontal,
+          itemCount: controller.mostPopularProductList.length,
+          separatorBuilder: (_, __) => 20.horizontalSpace,
+          itemBuilder: (context, index) {
+
+            final items = controller.mostPopularProductList[index];
+            return GestureDetector(
+              onTap: () => Get.to(() => CategoryPopularDetailsScreen(
+
+              ),
+              ),
+              child: Container(
+                width: 226.w,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12.r),
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 6,
+                      offset: const Offset(0, 3),
                     ),
-                  ),
-                  10.verticalSpace,
+                  ],
+                ),
+                padding: EdgeInsets.all(12.w),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
 
-                  /// Title
-                  CustomText(
-                    text: 'Builder’s Choice Sand',
-                    fontSize: 16.spMin,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  8.verticalSpace,
+                    /// Product image
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(12.r),
+                      child: Image.network(
+                        "${items.image}",
+                        height: 160.h,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    10.verticalSpace,
 
-                  /// Rating + Price
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.star_rounded,
-                            color: const Color(0xFFFFC107),
-                            size: 18.sp,
-                          ),
-                          4.horizontalSpace,
-                          CustomText(
-                            text: '5.0',
-                            fontSize: 14.spMin,
-                            color: AppColors.lightGrey,
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          CustomText(
-                            text: '₦200',
-                            fontSize: 14.spMin,
-                            fontWeight: FontWeight.w600,
-                          ),
-                          4.horizontalSpace,
-                          CustomText(
-                            text: 'Ton',
-                            fontSize: 12.spMin,
-                            color: AppColors.lightGrey,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
+                    /// Title
+                    CustomText(
+                      text:  items.name??"",
+                      fontSize: 16.spMin,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    8.verticalSpace,
+
+                    /// Rating + Price
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.star_rounded,
+                              color: const Color(0xFFFFC107),
+                              size: 18.sp,
+                            ),
+                            4.horizontalSpace,
+                            CustomText(
+                              text: '5.0',
+                              fontSize: 14.spMin,
+                              color: AppColors.lightGrey,
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            CustomText(
+                              text: '₦${items.price}',
+                              fontSize: 14.spMin,
+                              fontWeight: FontWeight.w600,
+                            ),
+                            4.horizontalSpace,
+                            CustomText(
+                              text: 'Ton',
+                              fontSize: 12.spMin,
+                              color: AppColors.lightGrey,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          );
-        },
-      ),
+            );
+          },
+        );
+      }),
     );
   }
 

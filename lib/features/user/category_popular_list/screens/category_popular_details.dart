@@ -1,26 +1,32 @@
+
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:sandlink/core/widgets/custom_app_bar.dart';
-import 'package:sandlink/core/widgets/custom_button.dart';
-import 'package:sandlink/core/wrappers/custom_text.dart';
-import 'package:sandlink/features/user/my_orders/screen/user_item_reviews.dart';
-
+import 'package:get/get_core/src/get_main.dart';
 import '../../../../core/app_colors/app_colors.dart';
 import '../../../../core/config/constants/assets_paths/icons_assets_paths.dart';
+import '../../../../core/widgets/custom_app_bar.dart';
+import '../../../../core/widgets/custom_button.dart';
+import '../../../../core/wrappers/custom_text.dart';
 import '../../cart/screens/cart_screen.dart';
+import '../../my_orders/screen/user_item_reviews.dart';
 import '../controllers/category_popular_details_controller.dart';
 
-// ignore: must_be_immutable
 class CategoryPopularDetailsScreen extends StatelessWidget {
-  CategoryPopularDetailsScreen({super.key});
-
+   CategoryPopularDetailsScreen({super.key, this.name});
   final controller = Get.put(CategoryPopularDetailsController());
+
+
+
+  final String? name;
 
   String discriptionText =
       """Premium quality construction sand perfect for concrete mixing, masonry work, and general construction projects. Our Builder's Choice Sand is carefully screened and washed to ensure consistent quality...""";
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +58,7 @@ class CategoryPopularDetailsScreen extends StatelessWidget {
 
                         children: [
                           CustomText(
-                            text: '''Builder's Choice Sand''',
+                            text: "${name}",
                             color: AppColors.darkGreyColor,
                             fontWeight: FontWeight.w500,
                             fontSize: 20.sp,
@@ -62,7 +68,7 @@ class CategoryPopularDetailsScreen extends StatelessWidget {
                           Row(
                             children: [
                               CustomText(
-                                text: 'Price: ₦200/',
+                                text: 'Price: ',
                                 color: AppColors.darkGreyColor,
                                 fontWeight: FontWeight.w500,
                                 fontSize: 16.sp,

@@ -21,6 +21,10 @@ class ApiEndPoints {
   static const verify_user_by_email = '$_baseUrl/auth/verify-user-by-email';
 
 
+  //Home categories and Most Popular //
+ static const categories = '$_baseUrl/categories';
+ static const mostPopular = '$_baseUrl/products';
+
 
 
 }
