@@ -186,14 +186,14 @@ class ChooseRoleScreen extends StatelessWidget {
                 return Column(
                   children: [
                     InkWell(
-                      onTap: () => controller.selectRole("user"),
+                      onTap: () => controller.selectRole("CUSTOMER"),
                       child: Container(
                         padding: EdgeInsets.symmetric(
                           vertical: Get.width * 0.025,
                           horizontal: Get.width * 0.01,
                         ),
                         decoration: BoxDecoration(
-                          color: controller.selectedRole.value == "user"
+                          color: controller.selectedRole.value == "CUSTOMER"
                               ? AppColors.primaryColor
                               : AppColors.whiteColor,
                           border: Border.all(
@@ -206,7 +206,7 @@ class ChooseRoleScreen extends StatelessWidget {
                           leading: Icon(
                             Icons.person_sharp,
                             size: 35.r,
-                            color: controller.selectedRole.value == "user"
+                            color: controller.selectedRole.value == "CUSTOMER"
                                 ? Colors.white
                                 : AppColors.darkGreyColor,
                           ),
@@ -214,12 +214,12 @@ class ChooseRoleScreen extends StatelessWidget {
                             text: 'Continue as User',
                             fontSize: 16.spMin,
                             fontWeight: FontWeight.w500,
-                            color: controller.selectedRole.value == "user"
+                            color: controller.selectedRole.value == "CUSTOMER"
                                 ? Colors.white
                                 : AppColors.darkGreyColor,
                           ),
                           trailing: Radio<String>(
-                            value: "user",
+                            value: "CUSTOMER",
                             groupValue: controller.selectedRole.value,
                             activeColor: Colors.white,
                             onChanged: (val) => controller.selectRole(val!),
@@ -229,14 +229,14 @@ class ChooseRoleScreen extends StatelessWidget {
                     ),
                     20.verticalSpace,
                     InkWell(
-                      onTap: () => controller.selectRole("rider"),
+                      onTap: () => controller.selectRole("RIDER"),
                       child: Container(
                         padding: EdgeInsets.symmetric(
                           vertical: Get.width * 0.025,
                           horizontal: Get.width * 0.01,
                         ),
                         decoration: BoxDecoration(
-                          color: controller.selectedRole.value == "rider"
+                          color: controller.selectedRole.value == "RIDER"
                               ? AppColors.primaryColor
                               : AppColors.whiteColor,
                           border: Border.all(
@@ -249,7 +249,7 @@ class ChooseRoleScreen extends StatelessWidget {
                           leading: Icon(
                             Icons.local_shipping_sharp,
                             size: 35.r,
-                            color: controller.selectedRole.value == "rider"
+                            color: controller.selectedRole.value == "RIDER"
                                 ? Colors.white
                                 : AppColors.darkGreyColor,
                           ),
@@ -257,12 +257,12 @@ class ChooseRoleScreen extends StatelessWidget {
                             text: 'Continue as Driver',
                             fontSize: 16.spMin,
                             fontWeight: FontWeight.w500,
-                            color: controller.selectedRole.value == "rider"
+                            color: controller.selectedRole.value == "RIDER"
                                 ? Colors.white
                                 : AppColors.darkGreyColor,
                           ),
                           trailing: Radio<String>(
-                            value: "rider",
+                            value: "RIDER",
                             groupValue: controller.selectedRole.value,
                             activeColor: Colors.white,
                             onChanged: (val) => controller.selectRole(val!),
@@ -396,10 +396,10 @@ class ChooseRoleScreen extends StatelessWidget {
               print("Role.................................... $role");
             }
 
-            if (role == "user") {
+            if (role == "CUSTOMER") {
               StorageService().saveData('role', role);
               Get.toNamed(AppRouteNames.instance.userOnboarding);
-            } else if (role == "rider") {
+            } else if (role == "RIDER") {
               StorageService().saveData('role', role);
               Get.toNamed(AppRouteNames.instance.riderOnboarding);
             } else {

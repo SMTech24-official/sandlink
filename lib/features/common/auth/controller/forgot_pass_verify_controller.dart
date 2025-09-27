@@ -6,13 +6,13 @@ import 'package:get/get.dart';
 class ForgotPassVerifyController extends GetxController {
   final otpController = TextEditingController();
 
-  RxInt remainingSeconds = 60.obs;
+  RxInt remainingSeconds = 300.obs;
   Timer? _timer;
   RxBool isResendAvailable = false.obs;
 
   void startResendTimer() {
     isResendAvailable.value = false;
-    remainingSeconds.value = 60;
+    remainingSeconds.value = 300;
 
     _timer?.cancel();
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
@@ -37,4 +37,17 @@ class ForgotPassVerifyController extends GetxController {
     super.onClose();
     otpController.clear();
   }
+
+
+  Future<void> verifyOTPCode()async{
+
+
+
+
+
+
+  }
+
+
+
 }

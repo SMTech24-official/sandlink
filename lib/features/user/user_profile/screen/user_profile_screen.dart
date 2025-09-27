@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:sandlink/core/app_colors/app_colors.dart';
+import 'package:sandlink/core/app_routes/app_route_names.dart';
+import 'package:sandlink/core/services/DBServices/local_db_services/storage_service.dart';
 import 'package:sandlink/core/widgets/custom_app_bar.dart';
 import 'package:sandlink/core/wrappers/custom_text.dart';
 import 'package:sandlink/features/user/user_profile/screen/save_address_screen.dart';
@@ -98,7 +101,14 @@ Widget _profileMenuList({required UserProfileController controller}){
                    buttonTitle1: 'Cancel',
                    buttonTitle2: 'Yes, Delete',
                    onTap1: ()=>Get.back(),
-                   onTap2: () {  }
+                   onTap2: () async{
+                     await StorageService().clearAll();
+
+                     EasyLoading.dismiss();
+                     EasyLoading.showSuccess('Account Delete Successfully');
+
+                     Get.offAllNamed(AppRouteNames.instance.login);
+                   }
                );
               }
               else if(index == 5){
@@ -108,7 +118,14 @@ Widget _profileMenuList({required UserProfileController controller}){
                    buttonTitle1: 'Cancel',
                    buttonTitle2: 'Yes, Logout',
                    onTap1: ()=>Get.back(),
-                   onTap2: () {  }
+                   onTap2: ()async {
+                     await StorageService().clearAll();
+
+                     EasyLoading.dismiss();
+                     EasyLoading.showSuccess('Logout Successfully');
+
+                     Get.offAllNamed(AppRouteNames.instance.login); // navigate to login
+                   }
                );
               }
             },

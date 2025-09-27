@@ -39,4 +39,15 @@ class Validation {
     }
     return null;
   }
+
+
+  String? phoneValidation(String? phone) {
+    if (phone == null || phone.isEmpty) {
+      return "Phone number is required";
+    }
+    if (!RegExp(r'^[0-9]{10,15}$').hasMatch(phone)) {
+      return "Enter a valid phone number";
+    }
+    return null;
+  }
 }

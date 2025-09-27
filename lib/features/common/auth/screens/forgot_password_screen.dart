@@ -42,6 +42,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                 ),
                 20.verticalSpace,
                 Form(
+                  key: controller.forgotkey,
                   child: Column(
                     children: [
                       CustomInputField(
@@ -51,15 +52,19 @@ class ForgotPasswordScreen extends StatelessWidget {
                         prefixIcon: Icons.email_outlined,
                         keyboardType: TextInputType.emailAddress,
                         formValidator: (value) =>
-                            Validation.validateEmail(value),
+                            Validation.validateEmail(value!),
                       ),
                     ],
                   ),
                 ),
                 20.verticalSpace,
                 CustomButton(
-                  onPressed: () =>
-                      Get.toNamed(AppRouteNames.instance.forgotPasswordVerify),
+                  onPressed: () {
+                    if(controller.forgotkey.currentState!.validate()){
+                      controller.forgotPasswordEmail();
+                    }
+                  },
+
                   text: 'Send OTP',
                 ),
               ],

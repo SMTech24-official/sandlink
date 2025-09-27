@@ -7,6 +7,9 @@ class ChooseRoleController extends GetxController {
     selectedRole.value = role;
   }
 
+
+
+
   //
   // void riderBasicScreen(String role){
   //    if(role == 'rider'){

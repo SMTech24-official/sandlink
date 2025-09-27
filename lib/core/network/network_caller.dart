@@ -112,7 +112,7 @@ class NetworkCaller {
         return ResponseData(
           isSuccess: true,
           statusCode: response.statusCode,
-          responseData: decodedResponse['result'] ?? decodedResponse,
+          responseData: decodedResponse['data'] ?? decodedResponse,
           errorMessage: '',
         );
       } else {

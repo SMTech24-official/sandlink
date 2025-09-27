@@ -14,11 +14,11 @@ import '../../splash/controller/choose_role_controller.dart';
 
 class RegisterVerifyScreen extends StatelessWidget {
   RegisterVerifyScreen({super.key});
-  final chooseRole = Get.put(ChooseRoleController());
+
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(RegisterVerifyController());
-    controller.startResendTimer();
+   // controller.startResendTimer();
     final formKey = GlobalKey<FormState>();
     final defaultPinTheme = PinTheme(
       width: 60.w,
@@ -65,7 +65,15 @@ class RegisterVerifyScreen extends StatelessWidget {
                     autofocus: true,
                     keyboardType: TextInputType.number,
                     controller: controller.otpController,
-                    length: 5,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Please enter OTP";
+                      } else if (value.length < 4) {
+                        return "OTP must be 4 digits";
+                      }
+                      return null;
+                    },
+                    length: 4,
                     defaultPinTheme: defaultPinTheme.copyWith(
                       textStyle: TextStyle(
                         fontSize: 24.spMin,
@@ -128,12 +136,14 @@ class RegisterVerifyScreen extends StatelessWidget {
                       ),
                       TextButton(
                         onPressed: controller.isResendAvailable.value
-                            ? () {}
+                            ? () {
+                          controller.resendOtpCode();
+                        }
                             : null,
                         child: Text(
                           controller.isResendAvailable.value
                               ? "Resend Code"
-                              : "Resend in ${controller.remainingSeconds.value}s",
+                              : "Resend in ${controller.formattedTime} s",
                           style: TextStyle(
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w600,
@@ -149,32 +159,36 @@ class RegisterVerifyScreen extends StatelessWidget {
                 20.verticalSpace,
                 CustomButton(
                   onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          content: CustomDialog(
-                            imagePath: SvgAssetsPaths.instance.successBack,
-                            title: "Account verified Successfully",
-                            subtitle: "You can explore the app now",
-                            buttonFontSize: 16.spMin,
-                            primaryButtonText:
-                                // ignore: unrelated_type_equality_checks
-                                chooseRole.selectedRole == 'rider'
-                                ? "Verify Information"
-                                : "Back to Login",
-                            onPrimaryTap: () {
-                              // ignore: unrelated_type_equality_checks
-                              if (chooseRole.selectedRole == 'rider') {
-                                Get.to(() => RiderStepsScreen());
-                              } else {
-                                Get.offAllNamed(AppRouteNames.instance.login);
-                              }
-                            },
-                          ),
-                        );
-                      },
-                    );
+
+                     controller.otpVerify(context);
+
+
+                    // showDialog(
+                    //   context: context,
+                    //   builder: (context) {
+                    //     return AlertDialog(
+                    //       content: CustomDialog(
+                    //         imagePath: SvgAssetsPaths.instance.successBack,
+                    //         title: "Account verified Successfully",
+                    //         subtitle: "You can explore the app now",
+                    //         buttonFontSize: 16.spMin,
+                    //         primaryButtonText:
+                    //             // ignore: unrelated_type_equality_checks
+                    //             chooseRole.selectedRole == 'rider'
+                    //             ? "Verify Information"
+                    //             : "Back to Login",
+                    //         onPrimaryTap: () {
+                    //           // ignore: unrelated_type_equality_checks
+                    //           if (chooseRole.selectedRole == 'rider') {
+                    //             Get.to(() => RiderStepsScreen());
+                    //           } else {
+                    //             Get.offAllNamed(AppRouteNames.instance.login);
+                    //           }
+                    //         },
+                    //       ),
+                    //     );
+                    //   },
+                    // );
                   },
 
                   text: 'Continue',

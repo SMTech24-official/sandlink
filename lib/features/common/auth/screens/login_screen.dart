@@ -127,16 +127,12 @@ class LoginScreen extends StatelessWidget {
                 CustomButton(
                   onPressed: () {
                     if(controller.isChecked.value){
-                      if(roleController.selectedRole == 'user'){
-                        Get.toNamed(AppRouteNames.instance.userHome);
-                      } else {
-                        Get.toNamed(AppRouteNames.instance.ridernavnar);
-                      }
+                      controller.userlogin();
                     } else{
                       Get.snackbar('Remember Me', 'Places Check');
                     }
                   },
-                     // Get.offAllNamed(AppRouteNames.instance.userHome),
+
                   text: 'Login',
                 ),
                 15.verticalSpace,

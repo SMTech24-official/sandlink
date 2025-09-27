@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:sandlink/core/app_colors/app_colors.dart';
 import 'package:sandlink/core/app_routes/app_route_names.dart';
 import 'package:sandlink/core/config/constants/assets_paths/svg_assets_paths.dart';
+import 'package:sandlink/core/services/DBServices/local_db_services/storage_service.dart';
 import 'package:sandlink/core/wrappers/custom_text.dart';
 import 'package:sandlink/features/user/home/controllers/user_home_controller.dart';
 import '../../category_popular_list/screens/category_popular_details.dart';
@@ -26,7 +27,7 @@ class UserHomeScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _topAppBarWidget(),
+              _topAppBarWidget(controller: controller),
               20.verticalSpace,
 
               /// 🔹 Banner slider
@@ -34,39 +35,63 @@ class UserHomeScreen extends StatelessWidget {
               20.verticalSpace,
 
               /// 🔹 Our Products
-              CustomText(
-                text: 'Our Products',
-                fontSize: 20.spMin,
-                fontWeight: FontWeight.w600,
+              GestureDetector(
+                onTap: controller.getCategories,
+                child: CustomText(
+                  text: 'Our Products',
+                  fontSize: 20.spMin,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
               12.verticalSpace,
-              _productsWidget(),
+              _productsWidget(controller: controller),
               24.verticalSpace,
 
               /// 🔹 Most Popular
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  CustomText(
-                    text: 'Most Popular',
-                    fontSize: 20.spMin,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  GestureDetector(
-                    onTap: () => Get.to(
-                      () => CategoryPopularScreen(appbarTitle: 'Most Popular'),
-                    ),
-                    child: CustomText(
-                      text: 'See All',
-                      fontSize: 16.spMin,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.lightGrey,
-                    ),
-                  ),
-                ],
-              ),
+
               12.verticalSpace,
-              _popularProducts(),
+              Obx(() {
+                // Check if list is empty
+                if (controller.mostPopularProductList.isEmpty) {
+                  return Center(child: Text(" "));
+                } else {
+                  return Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          GestureDetector(
+                            onTap: (){
+                              controller.getMostPopularProduct();
+                            },
+                            child: CustomText(
+                              text: 'Most Popular',
+                              fontSize: 20.spMin,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () =>
+                                Get.to(
+                                      () =>
+                                      CategoryPopularScreen(
+                                          appbarTitle: 'Most Popular'),
+                                ),
+                            child: CustomText(
+                              text: 'See All',
+                              fontSize: 16.spMin,
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.lightGrey,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 15.h,),
+                      _popularProducts(controller: controller)
+                    ],
+                  );
+                }
+              })
             ],
           ),
         ),
@@ -106,37 +131,40 @@ class UserHomeScreen extends StatelessWidget {
         ),
         8.verticalSpace,
         Obx(
-          () => Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(controller.images.length, (index) {
-              return AnimatedContainer(
-                duration: const Duration(milliseconds: 300),
-                margin: EdgeInsets.symmetric(horizontal: 4.w),
-                height: 8.h,
-                width: controller.currentPage.value == index ? 24.w : 8.w,
-                decoration: BoxDecoration(
-                  color: controller.currentPage.value == index
-                      ? AppColors.primaryColor
-                      : AppColors.primaryColor.withValues(alpha: 0.3),
-                  borderRadius: BorderRadius.circular(4.r),
-                ),
-              );
-            }),
-          ),
+              () =>
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(controller.images.length, (index) {
+                  return AnimatedContainer(
+                    duration: const Duration(milliseconds: 300),
+                    margin: EdgeInsets.symmetric(horizontal: 4.w),
+                    height: 8.h,
+                    width: controller.currentPage.value == index ? 24.w : 8.w,
+                    decoration: BoxDecoration(
+                      color: controller.currentPage.value == index
+                          ? AppColors.primaryColor
+                          : AppColors.primaryColor.withValues(alpha: 0.3),
+                      borderRadius: BorderRadius.circular(4.r),
+                    ),
+                  );
+                }),
+              ),
         ),
       ],
     );
   }
 
   /// 🔹 Products category row
-  Widget _productsWidget() {
+  Widget _productsWidget({required UserHomeController controller}) {
     return SizedBox(
       height: Get.width * 0.27,
-      child: ListView.separated(
+      child: Obx(()=>ListView.separated(
         scrollDirection: Axis.horizontal,
-        itemCount: 5,
+        itemCount: controller.categoriesList.length,
         separatorBuilder: (_, __) => 15.horizontalSpace,
         itemBuilder: (context, index) {
+
+          final  items = controller.categoriesList[index];
           return GestureDetector(
             onTap: () {
               Get.to(() => CategoryPopularScreen(appbarTitle: 'Boulders'));
@@ -148,14 +176,15 @@ class UserHomeScreen extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     radius: 30.r,
-                    backgroundImage: const CachedNetworkImageProvider(
-                      "https://www.figma.com/file/jNz7l61vmikt0kYyCBqz6X/image/f08a40c5013d07e2b2fe4f7423a7220f5ba43e84",
+                    backgroundImage:  CachedNetworkImageProvider(
+                      "${items.image}",
+
                     ),
                   ),
                   8.verticalSpace,
                   Expanded(
                     child: CustomText(
-                      text: 'Boulders',
+                      text: "${items.name}",
                       fontSize: 14.spMin,
                       fontWeight: FontWeight.w500,
                       color: AppColors.lightGrey,
@@ -169,105 +198,116 @@ class UserHomeScreen extends StatelessWidget {
             ),
           );
         },
-      ),
+      )),
     );
   }
 
   /// 🔹 Popular products list
-  Widget _popularProducts() {
+  Widget _popularProducts({required UserHomeController controller}) {
     return SizedBox(
       height: 260.h,
-      child: ListView.separated(
-        scrollDirection: Axis.horizontal,
-        itemCount: 5,
-        separatorBuilder: (_, __) => 20.horizontalSpace,
-        itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () => Get.to(() => CategoryPopularDetailsScreen()),
-            child: Container(
-              width: 226.w,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12.r),
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 6,
-                    offset: const Offset(0, 3),
-                  ),
-                ],
+      child: Obx((){
+
+        return ListView.separated(
+          scrollDirection: Axis.horizontal,
+          itemCount: controller.mostPopularProductList.length,
+          separatorBuilder: (_, __) => 20.horizontalSpace,
+          itemBuilder: (context, index) {
+
+            final items = controller.mostPopularProductList[index];
+            return GestureDetector(
+              onTap: () => Get.to(() => CategoryPopularDetailsScreen(
+
               ),
-              padding: EdgeInsets.all(12.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  /// Product image
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(12.r),
-                    child: Image.network(
-                      "https://www.figma.com/file/jNz7l61vmikt0kYyCBqz6X/image/c7eb458c8334d622e53cf983844410ccf9686134",
-                      height: 160.h,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
+              ),
+              child: Container(
+                width: 226.w,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12.r),
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 6,
+                      offset: const Offset(0, 3),
                     ),
-                  ),
-                  10.verticalSpace,
+                  ],
+                ),
+                padding: EdgeInsets.all(12.w),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
 
-                  /// Title
-                  CustomText(
-                    text: 'Builder’s Choice Sand',
-                    fontSize: 16.spMin,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  8.verticalSpace,
+                    /// Product image
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(12.r),
+                      child: Image.network(
+                        "${items.image}",
+                        height: 160.h,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    10.verticalSpace,
 
-                  /// Rating + Price
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.star_rounded,
-                            color: const Color(0xFFFFC107),
-                            size: 18.sp,
-                          ),
-                          4.horizontalSpace,
-                          CustomText(
-                            text: '5.0',
-                            fontSize: 14.spMin,
-                            color: AppColors.lightGrey,
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          CustomText(
-                            text: '₦200',
-                            fontSize: 14.spMin,
-                            fontWeight: FontWeight.w600,
-                          ),
-                          4.horizontalSpace,
-                          CustomText(
-                            text: 'Ton',
-                            fontSize: 12.spMin,
-                            color: AppColors.lightGrey,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
+                    /// Title
+                    CustomText(
+                      text:  items.name??"",
+                      fontSize: 16.spMin,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    8.verticalSpace,
+
+                    /// Rating + Price
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.star_rounded,
+                              color: const Color(0xFFFFC107),
+                              size: 18.sp,
+                            ),
+                            4.horizontalSpace,
+                            CustomText(
+                              text: '5.0',
+                              fontSize: 14.spMin,
+                              color: AppColors.lightGrey,
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            CustomText(
+                              text: '₦${items.price}',
+                              fontSize: 14.spMin,
+                              fontWeight: FontWeight.w600,
+                            ),
+                            4.horizontalSpace,
+                            CustomText(
+                              text: 'Ton',
+                              fontSize: 12.spMin,
+                              color: AppColors.lightGrey,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          );
-        },
-      ),
+            );
+          },
+        );
+      }),
     );
   }
 
   /// 🔹 Top app bar
-  Widget _topAppBarWidget() {
+  Widget _topAppBarWidget({required UserHomeController controller}) {
+    var userName = StorageService().getData('name');
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -284,28 +324,33 @@ class UserHomeScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CustomText(
-                  text: 'Hi, Prince 👋',
+                  text: 'Hi, $userName',
                   fontSize: 18.spMin,
                   fontWeight: FontWeight.w600,
                 ),
                 4.verticalSpace,
                 Row(
                   children: [
-                    SvgPicture.asset(
-                      SvgAssetsPaths.instance.location,
-                      width: 16.w,
-                      height: 16.h,
-                      colorFilter: ColorFilter.mode(
-                        AppColors.lightGrey,
-                        BlendMode.srcIn,
+                    GestureDetector(
+                      onTap: () => controller.getCurrentLocation(),
+                      child: SvgPicture.asset(
+                        SvgAssetsPaths.instance.location,
+                        width: 16.w,
+                        height: 16.h,
+                        colorFilter: ColorFilter.mode(
+                          AppColors.lightGrey,
+                          BlendMode.srcIn,
+                        ),
                       ),
                     ),
                     6.horizontalSpace,
-                    CustomText(
-                      text: 'California, USA',
-                      fontSize: 14.spMin,
-                      color: AppColors.lightGrey,
-                    ),
+
+                    Obx(() => CustomText(
+                      text:controller.currentAddress.value == ''
+                          ? 'Address not found'
+                          : controller.currentAddress.value,
+
+                    )),
                   ],
                 ),
               ],
