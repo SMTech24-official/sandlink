@@ -1,14 +1,11 @@
-import 'dart:convert';
 import 'dart:developer';
-
+import 'package:flutter/foundation.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:sandlink/core/config/api_end_points/api_end_points.dart';
 import 'package:sandlink/core/network/network_caller.dart';
-
-import '../../../../core/services/DBServices/local_db_services/storage_service.dart';
 import '../model/categories_model.dart';
 import '../model/most_populer_product.dart';
 
@@ -47,9 +44,11 @@ class UserHomeController extends GetxController {
         Get.snackbar('Error', 'Location permission denied forever.');
         return;
       }
-
       Position position = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high);
+        locationSettings: const LocationSettings(
+          accuracy: LocationAccuracy.high,
+        ),
+      );
 
       latitude.value = position.latitude;
       longitude.value = position.longitude;
@@ -57,7 +56,9 @@ class UserHomeController extends GetxController {
       await getAddressFromCoordinates(latitude.value, longitude.value);
     } catch (e) {
       currentAddress.value = "Unable to get location";
-      print("Error getting location: $e");
+      if (kDebugMode) {
+        print("Error getting location: $e");
+      }
     }
   }
 
@@ -67,16 +68,16 @@ class UserHomeController extends GetxController {
       List<Placemark> placemarks = await placemarkFromCoordinates(lat, lng);
       if (placemarks.isNotEmpty) {
         Placemark place = placemarks[0];
-        currentAddress.value ="${place.street}";
+        currentAddress.value = "${place.street}";
         // "${place.street}, ${place.locality}, ${place.postalCode}, ${place.country}";
       }
     } catch (e) {
       currentAddress.value = "Unknown location";
-      print("Error getting address: $e");
+      if (kDebugMode) {
+        print("Error getting address: $e");
+      }
     }
   }
-
-
 
   @override
   void onInit() {
@@ -85,28 +86,25 @@ class UserHomeController extends GetxController {
     super.onInit();
   }
 
-
   // Get Categories //
 
- final categoriesList = <Result>[].obs;
+  final categoriesList = <Result>[].obs;
 
   Future<void> getCategories() async {
     EasyLoading.show(status: 'Loading...');
     try {
-      final response = await NetworkCaller().getRequest(ApiEndPoints.categories);
+      final response = await NetworkCaller().getRequest(
+        ApiEndPoints.categories,
+      );
 
       if (response.isSuccess) {
+        var getdata = response.responseData['result'] as List;
 
-         var getdata = response.responseData['result'] as List;
+        // Map JSON to model
+        categoriesList.value = getdata.map((e) => Result.fromJson(e)).toList();
 
-
-         // Map JSON to model
-         categoriesList.value = getdata.map((e) => Result.fromJson(e)).toList();
-
-
-        log("✅ Categories loaded: ${getdata}");
+        log("✅ Categories loaded: $getdata");
         log("✅  loaded: ");
-
       } else {
         Get.snackbar("Error", "Failed to load categories");
       }
@@ -117,25 +115,24 @@ class UserHomeController extends GetxController {
     }
   }
 
-
   final mostPopularProductList = <MostProductResult>[].obs;
 
-  Future<void> getMostPopularProduct()async{
+  Future<void> getMostPopularProduct() async {
     EasyLoading.show(status: 'Loading...');
     try {
-      final response = await NetworkCaller().getRequest(ApiEndPoints.mostPopular);
+      final response = await NetworkCaller().getRequest(
+        ApiEndPoints.mostPopular,
+      );
 
       if (response.isSuccess) {
-
         var getdata = response.responseData['result'] as List;
 
-
         // Map JSON to model
-        mostPopularProductList.value = getdata.map((e) => MostProductResult.fromJson(e)).toList();
+        mostPopularProductList.value = getdata
+            .map((e) => MostProductResult.fromJson(e))
+            .toList();
 
-        log("✅ Popular loaded: ${getdata}");
-
-
+        log("✅ Popular loaded: $getdata");
       } else {
         Get.snackbar("Error", "Failed to load categories");
       }
@@ -144,10 +141,5 @@ class UserHomeController extends GetxController {
     } finally {
       EasyLoading.dismiss();
     }
-
-
-
-}
-
-
+  }
 }

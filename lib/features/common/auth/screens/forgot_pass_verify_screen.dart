@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
 import 'package:sandlink/core/app_colors/app_colors.dart';
-import 'package:sandlink/core/app_routes/app_route_names.dart';
 import 'package:sandlink/core/widgets/custom_button.dart';
 import 'package:sandlink/core/wrappers/custom_text.dart';
 import 'package:sandlink/features/common/auth/controller/forgot_pass_verify_controller.dart';
@@ -152,11 +151,9 @@ class ForgotPassVerifyScreen extends StatelessWidget {
                 ),
                 20.verticalSpace,
                 CustomButton(
-                  onPressed: () {
+                  onPressed: () {},
 
-                  },
-
-                     // Get.toNamed(AppRouteNames.instance.resetPassword),
+                  // Get.toNamed(AppRouteNames.instance.resetPassword),
                   text: 'Continue',
                 ),
               ],
