@@ -88,9 +88,6 @@ class RegisterScreen extends StatelessWidget {
                           focusedBorder: _phoneOutlineInputBorder(),
                           border: _phoneOutlineInputBorder(),
                           focusedErrorBorder: _phoneOutlineInputBorder(),
-
-
-
                         ),
 
                         pickerDialogStyle: PickerDialogStyle(
@@ -180,10 +177,10 @@ class RegisterScreen extends StatelessWidget {
                 ),
                 20.verticalSpace,
                 CustomButton(
-                  onPressed: (){
-                   controller.createSignupUser();
+                  onPressed: () {
+                    controller.createSignupUser();
                   },
-                     // Get.toNamed(AppRouteNames.instance.registerVerify),
+                  // Get.toNamed(AppRouteNames.instance.registerVerify),
                   text: 'Register',
                 ),
                 15.verticalSpace,

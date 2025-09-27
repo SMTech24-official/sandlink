@@ -18,9 +18,9 @@ class Validation {
     if (value.length < 6) {
       return "Password must be at least 6 characters";
     }
-    if (!value.contains(RegExp(r'[A-Z]'))) {
-      return "Password must contain at least one uppercase letter";
-    }
+    // if (!value.contains(RegExp(r'[A-Z]'))) {
+    //   return "Password must contain at least one uppercase letter";
+    // }
     if (!value.contains(RegExp(r'[a-z]'))) {
       return "Password must contain at least one lowercase letter";
     }
@@ -39,7 +39,6 @@ class Validation {
     }
     return null;
   }
-
 
   String? phoneValidation(String? phone) {
     if (phone == null || phone.isEmpty) {

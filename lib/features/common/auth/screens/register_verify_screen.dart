@@ -3,22 +3,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
 import 'package:sandlink/core/app_colors/app_colors.dart';
-import 'package:sandlink/core/app_routes/app_route_names.dart';
-import 'package:sandlink/core/config/constants/assets_paths/svg_assets_paths.dart';
 import 'package:sandlink/core/widgets/custom_button.dart';
-import 'package:sandlink/core/widgets/custom_dialog.dart';
 import 'package:sandlink/core/wrappers/custom_text.dart';
 import 'package:sandlink/features/common/auth/controller/register_verify_controller.dart';
-import '../../../rider/driver_verification/screen/rider_steps_screen.dart';
-import '../../splash/controller/choose_role_controller.dart';
 
 class RegisterVerifyScreen extends StatelessWidget {
-  RegisterVerifyScreen({super.key});
+  const RegisterVerifyScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(RegisterVerifyController());
-   // controller.startResendTimer();
+    // controller.startResendTimer();
     final formKey = GlobalKey<FormState>();
     final defaultPinTheme = PinTheme(
       width: 60.w,
@@ -137,8 +132,8 @@ class RegisterVerifyScreen extends StatelessWidget {
                       TextButton(
                         onPressed: controller.isResendAvailable.value
                             ? () {
-                          controller.resendOtpCode();
-                        }
+                                controller.resendOtpCode();
+                              }
                             : null,
                         child: Text(
                           controller.isResendAvailable.value
@@ -159,9 +154,7 @@ class RegisterVerifyScreen extends StatelessWidget {
                 20.verticalSpace,
                 CustomButton(
                   onPressed: () {
-
-                     controller.otpVerify(context);
-
+                    controller.otpVerify(context);
 
                     // showDialog(
                     //   context: context,

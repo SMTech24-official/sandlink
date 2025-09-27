@@ -1,11 +1,10 @@
-
-
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
+
 import '../../../../core/app_colors/app_colors.dart';
 import '../../../../core/config/constants/assets_paths/icons_assets_paths.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
@@ -16,17 +15,13 @@ import '../../my_orders/screen/user_item_reviews.dart';
 import '../controllers/category_popular_details_controller.dart';
 
 class CategoryPopularDetailsScreen extends StatelessWidget {
-   CategoryPopularDetailsScreen({super.key, this.name});
+  CategoryPopularDetailsScreen({super.key, this.name});
   final controller = Get.put(CategoryPopularDetailsController());
-
-
 
   final String? name;
 
-  String discriptionText =
+  final String descriptionText =
       """Premium quality construction sand perfect for concrete mixing, masonry work, and general construction projects. Our Builder's Choice Sand is carefully screened and washed to ensure consistent quality...""";
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +53,7 @@ class CategoryPopularDetailsScreen extends StatelessWidget {
 
                         children: [
                           CustomText(
-                            text: "${name}",
+                            text: "$name",
                             color: AppColors.darkGreyColor,
                             fontWeight: FontWeight.w500,
                             fontSize: 20.sp,
@@ -146,7 +141,7 @@ class CategoryPopularDetailsScreen extends StatelessWidget {
                                 ),
                                 SizedBox(height: 8.h),
                                 CustomText(
-                                  text: discriptionText,
+                                  text: descriptionText,
                                   maxLines: controller.isExpanded.value
                                       ? null
                                       : 3,
@@ -260,7 +255,7 @@ class CategoryPopularDetailsScreen extends StatelessWidget {
               ),
             ),
 
-            _CustomButtonContainer(controller: controller),
+            _customButtonContainer(controller: controller),
           ],
         ),
       ),
@@ -367,7 +362,9 @@ Widget _reviewsSection({required CategoryPopularDetailsController controller}) {
                 itemBuilder: (context, _) =>
                     Icon(Icons.star, color: Colors.amber),
                 onRatingUpdate: (rating) {
-                  print(rating);
+                  if (kDebugMode) {
+                    print(rating);
+                  }
                 },
               ),
               SizedBox(height: 8.h),
@@ -387,7 +384,7 @@ Widget _reviewsSection({required CategoryPopularDetailsController controller}) {
   );
 }
 
-Widget _CustomButtonContainer({
+Widget _customButtonContainer({
   required CategoryPopularDetailsController controller,
 }) {
   return Positioned(
