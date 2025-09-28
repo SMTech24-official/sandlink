@@ -154,6 +154,8 @@ class ForgotPassVerifyScreen extends StatelessWidget {
                 CustomButton(
                   onPressed: () {
 
+                    controller.verifyOTPCode();
+
                   },
 
                      // Get.toNamed(AppRouteNames.instance.resetPassword),

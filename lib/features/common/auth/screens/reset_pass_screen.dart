@@ -23,99 +23,117 @@ class ResetPassScreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Center(
-            child: Column(
-              children: [
-                CustomText(
-                  text: 'Create New Password',
-                  fontSize: 26.spMin,
-                  fontWeight: FontWeight.w600,
-                ),
-                5.verticalSpace,
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: CustomText(
-                    text:
-                        'Your password must be different from previous used password',
-                    fontSize: 16.spMin,
-                    fontWeight: FontWeight.w400,
-                    color: AppColors.lightGrey,
-                    textAlign: TextAlign.center,
+            child: Form(
+              key:controller.passkey ,
+
+              child: Column(
+                children: [
+                  CustomText(
+                    text: 'Create New Password',
+                    fontSize: 26.spMin,
+                    fontWeight: FontWeight.w600,
                   ),
-                ),
-                20.verticalSpace,
-                Obx(
-                  () => CustomInputField(
-                    headerTitle: 'Password',
-                    textController: controller.newPassController,
-                    hintText: "Enter your password",
-                    isObsecure: !controller.isNewPassVisible.value,
-                    prefixIcon: Icons.lock_outline_rounded,
-                    formValidator: (value) =>
-                        Validation.validatePassword(value),
-                    suffixWidget: controller.isNewPassVisible.value
-                        ? GestureDetector(
-                            onTap: controller.toggleNewPasswordVisibility,
-                            child: Icon(
-                              Icons.visibility_outlined,
-                              color: AppColors.lightGrey,
-                            ),
-                          )
-                        : GestureDetector(
-                            onTap: controller.toggleNewPasswordVisibility,
-                            child: Icon(
-                              Icons.visibility_off_outlined,
-                              color: AppColors.lightGrey,
-                            ),
-                          ),
-                  ),
-                ),
-                20.verticalSpace,
-                Obx(
-                  () => CustomInputField(
-                    headerTitle: 'Confirm Password',
-                    textController: controller.confirmPassController,
-                    hintText: "Enter confirm password",
-                    isObsecure: !controller.isConfirmPassVisible.value,
-                    prefixIcon: Icons.lock_outline_rounded,
-                    formValidator: (value) =>
-                        Validation.validatePassword(value),
-                    suffixWidget: controller.isConfirmPassVisible.value
-                        ? GestureDetector(
-                            onTap: controller.toggleConfirmPasswordVisibility,
-                            child: Icon(
-                              Icons.visibility_outlined,
-                              color: AppColors.lightGrey,
-                            ),
-                          )
-                        : GestureDetector(
-                            onTap: controller.toggleConfirmPasswordVisibility,
-                            child: Icon(
-                              Icons.visibility_off_outlined,
-                              color: AppColors.lightGrey,
-                            ),
-                          ),
-                  ),
-                ),
-                20.verticalSpace,
-                CustomButton(
-                  onPressed: () => Get.dialog(
-                    AlertDialog(
-                      backgroundColor: Colors.white,
-                      content: CustomDialog(
-                        title: "Password Changed",
-                        subtitle:
-                            "Password changed successfully, you can login again with new password.",
-                        imagePath: SvgAssetsPaths.instance.successBack,
-                        primaryButtonText: "Back to Login",
-                        buttonFontSize: 16.spMin,
-                        onPrimaryTap: () =>
-                            Get.offAllNamed(AppRouteNames.instance.login),
-                      ),
+                  5.verticalSpace,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: CustomText(
+                      text:
+                          'Your password must be different from previous used password',
+                      fontSize: 16.spMin,
+                      fontWeight: FontWeight.w400,
+                      color: AppColors.lightGrey,
+                      textAlign: TextAlign.center,
                     ),
                   ),
-                  text: 'Reset Password',
-                ),
-              ],
+                  20.verticalSpace,
+                  Obx(
+                    () => CustomInputField(
+                      headerTitle: 'Password',
+                      textController: controller.newPassController,
+                      hintText: "Enter your password",
+                      isObsecure: !controller.isNewPassVisible.value,
+                      prefixIcon: Icons.lock_outline_rounded,
+                      formValidator: (value) =>
+                          Validation.validatePassword(value!),
+                      suffixWidget: controller.isNewPassVisible.value
+                          ? GestureDetector(
+                              onTap: controller.toggleNewPasswordVisibility,
+                              child: Icon(
+                                Icons.visibility_outlined,
+                                color: AppColors.lightGrey,
+                              ),
+                            )
+                          : GestureDetector(
+                              onTap: controller.toggleNewPasswordVisibility,
+                              child: Icon(
+                                Icons.visibility_off_outlined,
+                                color: AppColors.lightGrey,
+                              ),
+                            ),
+                    ),
+                  ),
+                  20.verticalSpace,
+                  Obx(
+                    () => CustomInputField(
+                      headerTitle: 'Confirm Password',
+                      textController: controller.confirmPassController,
+                      hintText: "Enter confirm password",
+                      isObsecure: !controller.isConfirmPassVisible.value,
+                      prefixIcon: Icons.lock_outline_rounded,
+                     formValidator: (value) {
+                  if (value == null || value.isEmpty) {
+                  return "Please confirm your password";
+                  }
+                  if (value != controller.newPassController.text) {
+                  return "Passwords do not match";
+                  }
+                  return null;
+                  },
+                      suffixWidget: controller.isConfirmPassVisible.value
+                          ? GestureDetector(
+                              onTap: controller.toggleConfirmPasswordVisibility,
+                              child: Icon(
+                                Icons.visibility_outlined,
+                                color: AppColors.lightGrey,
+                              ),
+                            )
+                          : GestureDetector(
+                              onTap: controller.toggleConfirmPasswordVisibility,
+                              child: Icon(
+                                Icons.visibility_off_outlined,
+                                color: AppColors.lightGrey,
+                              ),
+                            ),
+                    ),
+                  ),
+                  20.verticalSpace,
+                  CustomButton(
+                    onPressed:() {
+                      if(controller.passkey.currentState!.validate()){
+
+                   controller.createNewForgotPassword();
+                 // Get.dialog(
+                 //          AlertDialog(
+                 //            backgroundColor: Colors.white,
+                 //            content: CustomDialog(
+                 //              title: "Password Changed",
+                 //              subtitle:
+                 //                  "Password changed successfully, you can login again with new password.",
+                 //              imagePath: SvgAssetsPaths.instance.successBack,
+                 //              primaryButtonText: "Back to Login",
+                 //              buttonFontSize: 16.spMin,
+                 //              onPrimaryTap: () =>
+                 //                  Get.offAllNamed(AppRouteNames.instance.login),
+                 //            ),
+                 //          ),
+                 //        );
+                      }
+                    },
+
+                    text: 'Reset Password',
+                  ),
+                ],
+              ),
             ),
           ),
         ),

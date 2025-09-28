@@ -7,6 +7,8 @@ import 'package:sandlink/core/config/api_end_points/api_end_points.dart';
 import 'package:sandlink/core/network/network_caller.dart';
 
 import '../../../../core/app_routes/app_route_names.dart';
+import '../../../../core/services/DBServices/local_db_services/storage_service.dart';
+import '../model/forgotpassword_model.dart';
 import '../screens/forgot_pass_verify_screen.dart';
 
 class ForgotPassController extends GetxController {
@@ -15,6 +17,7 @@ class ForgotPassController extends GetxController {
   final emailController = TextEditingController();
 
 
+  var forgotPasswordData = Rxn<ForgotPasswordData>();
 
   Future<void> forgotPasswordEmail() async {
     try {
@@ -29,26 +32,30 @@ class ForgotPassController extends GetxController {
         body: forgotBody,
       );
 
-      log('Response Forgot: $response');
+      log('Response Forgot: ${response.responseData}');
 
       if (response.isSuccess) {
-        // ✅ Show success
+        final model = ForgotPasswordModel.fromJson(response.responseData);
+
         EasyLoading.dismiss();
-        EasyLoading.showSuccess(response.responseData['message'] ?? "Success");
+        EasyLoading.showSuccess(model.message ?? "Success");
 
-        log('verify Forgot OTP: ${response.responseData['otp']}');
-        Get.to(()=>ForgotPassVerifyScreen());
-
+        StorageService().saveData('token', response.responseData['resetToken']);
+          print('RESTOKEN:${response.responseData['resetToken']}');
+        // 👉 Pass required values to next screen
+        Get.to(() => ForgotPassVerifyScreen(),);
       } else {
         EasyLoading.dismiss();
-        EasyLoading.showError(response.responseData['message'] ?? "Invalid Email");
+        EasyLoading.showError(
+          response.responseData['message'] ?? "Invalid Email",
+        );
       }
-
     } catch (e) {
       EasyLoading.dismiss();
       EasyLoading.showError("Unexpected error: $e");
     }
   }
+
 
 
 

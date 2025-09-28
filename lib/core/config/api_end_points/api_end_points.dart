@@ -14,6 +14,9 @@ class ApiEndPoints {
   static const _baseUrl = 'http://206.162.244.143:5000/api/v1';
   static const register = '$_baseUrl/auth/register';
   static const login = '$_baseUrl/auth/login';
+  static const verify_forgetpassword = '$_baseUrl/auth/verify-otp-forget-password';
+  static const forgotpassword = '$_baseUrl/auth/forget-password';
+
    // Account Verify//
   static const verify_otp = '$_baseUrl/auth/verify-otp';
   static const resend_otp = '$_baseUrl/auth/send-otp-email';
