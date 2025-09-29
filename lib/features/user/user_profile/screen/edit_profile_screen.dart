@@ -32,11 +32,11 @@ class EditProfileScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                _userChangeProfile(),
+                _userChangeProfile(controller: conttroller),
                 SizedBox(height: 32.h,),
                 _changeUserinfo(controller:conttroller),
                 Spacer(),
-                _saveButton()
+                _saveButton(controller: conttroller)
               ],
             ),
           ),
@@ -48,19 +48,28 @@ class EditProfileScreen extends StatelessWidget {
 }
 
 
-Widget _userChangeProfile(){
+Widget _userChangeProfile({required EditUserProfileController controller}){
+
+
+
+
   return Column(
     children: [
       SizedBox(height: 16.h),
       CircleAvatar(
-        backgroundColor: Colors.amber,
-        backgroundImage: AssetImage(
-          IconsAssetsPaths.instance.userImage,
-        ),
-        radius: 56.r,
+        radius: 60,
+        backgroundImage: controller.profileImage.value != null
+            ? FileImage(controller.profileImage.value!)
+            : null,
+        child: controller.profileImage.value == null
+            ? Icon(Icons.person, size: 60)
+            : null,
       ),
       SizedBox(height: 16.h),
-      TextButton(onPressed: (){},
+      TextButton(onPressed: (){
+        print('click');
+        controller.pickImageFromGallery();
+      },
           child: CustomText(text: 'Change Profile Photo',color: AppColors.blueColor,fontSize: 20.sp,fontWeight: FontWeight.w500,))
 
     ],
@@ -68,6 +77,11 @@ Widget _userChangeProfile(){
 }
 
 Widget _changeUserinfo({required EditUserProfileController controller }){
+
+
+  controller.fullNameController.text = controller.userInfoController.getUserName.toString();
+  controller.numberController.text = controller.userInfoController.getUserphone.toString();
+  controller.emailController.text = controller.userInfoController.getUserEmail.toString();
 
   return Form(
     child: Column(
@@ -93,10 +107,11 @@ Widget _changeUserinfo({required EditUserProfileController controller }){
           headerFontWeight: FontWeight.w500,
           headerTextColor: AppColors.blackColor,
           fontSize: 14.sp,
+          isReadOnly: true,
           headerfontSize: 16.sp,
           hintTextFontWeight: FontWeight.w400,
           hintTextColor: AppColors.lightGrey,
-          hintText: 'princewargu@gmail.com',
+          hintText: '',
           keyboardType: TextInputType.emailAddress,
         ),
         SizedBox(height: 16.h),
@@ -120,6 +135,8 @@ Widget _changeUserinfo({required EditUserProfileController controller }){
 
 }
 
-Widget _saveButton(){
-  return CustomButton(onPressed: (){},text: 'Save',);
+Widget _saveButton({required EditUserProfileController controller }){
+  return CustomButton(onPressed: (){
+     controller.UpdateProfile();
+  },text: 'Save',);
 }

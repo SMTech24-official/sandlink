@@ -5,8 +5,9 @@ import 'package:sandlink/core/app/app.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  initStorage();
+  await initStorage();
   await GetStorage.init();
+
   runApp(const SandLink());
 }
 

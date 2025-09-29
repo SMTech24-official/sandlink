@@ -27,6 +27,12 @@ class ApiEndPoints {
   //Home categories and Most Popular //
  static const categories = '$_baseUrl/categories';
  static const mostPopular = '$_baseUrl/products';
+ // User Profile Update //
+
+ static const editProfileUpdate = "$_baseUrl/users/update-profile";
+ static const getUserProfile = "$_baseUrl/users/single-user-details";
+
+
 
 
 

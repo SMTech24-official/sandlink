@@ -79,7 +79,7 @@ class RiderOnboardingScreen extends StatelessWidget {
                     : "Next",
                 onPressed: () {
                   if (controller.currentIndex.value == sliderData.length - 1) {
-                    Get.offAllNamed(AppRouteNames.instance.login);
+                  Get.offAllNamed(AppRouteNames.instance.login);
                   }
                   controller.pageController.nextPage(
                     duration: Duration(milliseconds: 300),
