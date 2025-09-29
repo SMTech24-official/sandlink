@@ -8,6 +8,7 @@ import 'package:sandlink/core/app_routes/app_route_names.dart';
 import 'package:sandlink/core/services/DBServices/local_db_services/storage_service.dart';
 import 'package:sandlink/core/widgets/custom_app_bar.dart';
 import 'package:sandlink/core/wrappers/custom_text.dart';
+import 'package:sandlink/features/user/user_profile/controller/edit_profile_controller.dart';
 import 'package:sandlink/features/user/user_profile/screen/save_address_screen.dart';
 
 import '../../../../core/config/constants/assets_paths/icons_assets_paths.dart';
@@ -21,7 +22,8 @@ class UserProfileScreen extends StatelessWidget {
    UserProfileScreen({super.key});
 
   final controller = Get.put(UserProfileController());
-  
+  final editcontroller = Get.put(EditUserProfileController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +40,10 @@ class UserProfileScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                _userProfile(),
+                GestureDetector(
+            
+                    onTap: ()=>controller.getUserProfileData(),
+                    child: _userProfile(controller: controller, editController: editcontroller)),
                 SizedBox(height: 32.h,),
                 _profileMenuList(controller: controller),
               ],
@@ -51,22 +56,22 @@ class UserProfileScreen extends StatelessWidget {
 }
 
 
-Widget _userProfile(){
-  return Column(
+Widget _userProfile({required UserProfileController controller,required EditUserProfileController editController}){
+  return Obx(()=>Column(
     children: [
       SizedBox(height: 16.h),
       CircleAvatar(
         backgroundColor: Colors.amber,
-        backgroundImage: AssetImage(
-          IconsAssetsPaths.instance.userImage,
+        backgroundImage: NetworkImage(
+          '${controller.getUserProfile.value.isNotEmpty ? controller.getUserProfile.value : "https://cdn-icons-png.flaticon.com/512/180/180644.png"}',
         ),
         radius: 56.r,
       ),
       SizedBox(height: 16.h),
-      CustomText(text: 'Prince Waorgu',color: AppColors.blackColor,fontSize: 24.sp,fontWeight: FontWeight.w500,),
-      CustomText(text: 'princewargu@gmail.com',color: AppColors.lightGrey,fontSize: 16.sp,fontWeight: FontWeight.w400,)
+      CustomText(text: controller.getUserName.value,color: AppColors.blackColor,fontSize: 24.sp,fontWeight: FontWeight.w500,),
+      CustomText(text: controller.getUserEmail.value,color: AppColors.lightGrey,fontSize: 16.sp,fontWeight: FontWeight.w400,)
     ],
-  );
+  ));
 }
 
 Widget _profileMenuList({required UserProfileController controller}){

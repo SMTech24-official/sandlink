@@ -53,5 +53,6 @@ class IconsAssetsPaths {
   String get show_icon=> "$_iconsAssetsPaths/show.png";
   String get upload_icon=> "$_iconsAssetsPaths/upload.png";
   String get man=> "$_iconsAssetsPaths/man.png";
+  String get banner=> "$_iconsAssetsPaths/banner_image.png";
 
 }

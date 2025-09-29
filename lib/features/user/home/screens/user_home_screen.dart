@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:sandlink/core/app_colors/app_colors.dart';
 import 'package:sandlink/core/app_routes/app_route_names.dart';
+import 'package:sandlink/core/config/constants/assets_paths/icons_assets_paths.dart';
 import 'package:sandlink/core/config/constants/assets_paths/svg_assets_paths.dart';
 import 'package:sandlink/core/services/DBServices/local_db_services/storage_service.dart';
 import 'package:sandlink/core/wrappers/custom_text.dart';
@@ -48,7 +49,6 @@ class UserHomeScreen extends StatelessWidget {
               24.verticalSpace,
 
               /// 🔹 Most Popular
-
               12.verticalSpace,
               Obx(() {
                 // Check if list is empty
@@ -61,7 +61,7 @@ class UserHomeScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           GestureDetector(
-                            onTap: (){
+                            onTap: () {
                               controller.getMostPopularProduct();
                             },
                             child: CustomText(
@@ -71,12 +71,11 @@ class UserHomeScreen extends StatelessWidget {
                             ),
                           ),
                           GestureDetector(
-                            onTap: () =>
-                                Get.to(
-                                      () =>
-                                      CategoryPopularScreen(
-                                          appbarTitle: 'Most Popular'),
-                                ),
+                            onTap: () => Get.to(
+                              () => CategoryPopularScreen(
+                                appbarTitle: 'Most Popular',
+                              ),
+                            ),
                             child: CustomText(
                               text: 'See All',
                               fontSize: 16.spMin,
@@ -86,12 +85,12 @@ class UserHomeScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(height: 15.h,),
-                      _popularProducts(controller: controller)
+                      SizedBox(height: 15.h),
+                      _popularProducts(controller: controller),
                     ],
                   );
                 }
-              })
+              }),
             ],
           ),
         ),
@@ -103,53 +102,155 @@ class UserHomeScreen extends StatelessWidget {
   Widget _bannerSlider(UserHomeController controller) {
     return Column(
       children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(12.r),
-          child: SizedBox(
-            height: Get.width * 0.45,
-            width: double.infinity,
-            child: CarouselSlider.builder(
-              itemCount: controller.images.length,
-              itemBuilder: (context, index, realIndex) {
-                return Image.network(
-                  controller.images[index],
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                );
-              },
-              options: CarouselOptions(
-                autoPlay: true,
-                autoPlayInterval: const Duration(seconds: 3),
-                viewportFraction: 1.0,
-                enableInfiniteScroll: true,
-                onPageChanged: (index, reason) {
-                  controller.currentPage.value = index;
-                },
-              ),
+        Container(
+          height: 180.h,
+          width: double.infinity.w,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(10.r)),
+            image: DecorationImage(
+              image: AssetImage(IconsAssetsPaths.instance.banner),
+            ),
+          ),
+          
+          child: Padding(
+            padding:  EdgeInsets.symmetric(horizontal: 16.w,vertical: 25.h),
+            child: Column(
+
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomText(text: 'Join Our Affiliate',fontWeight: FontWeight.w500,color: AppColors.whiteColor,fontSize: 16.sp,),
+            SizedBox(height: 8.h,),
+                CustomText(text: 'Network & Grow Faster',fontWeight: FontWeight.w400,color: AppColors.whiteColor,fontSize: 14.sp,),
+                SizedBox(height: 16.h,),
+                Container(
+                    height: 40.h,
+                  width: 90.w,
+
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(10.r)),
+                    color: AppColors.whiteColor,
+                  ),
+                  child: Center(child: CustomText(text: 'Join Now',fontSize: 16.sp,color: AppColors.primaryColor,fontWeight: FontWeight.w400,)),
+                )
+
+              ],
             ),
           ),
         ),
-        8.verticalSpace,
-        Obx(
-              () =>
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: List.generate(controller.images.length, (index) {
-                  return AnimatedContainer(
-                    duration: const Duration(milliseconds: 300),
-                    margin: EdgeInsets.symmetric(horizontal: 4.w),
-                    height: 8.h,
-                    width: controller.currentPage.value == index ? 24.w : 8.w,
-                    decoration: BoxDecoration(
-                      color: controller.currentPage.value == index
-                          ? AppColors.primaryColor
-                          : AppColors.primaryColor.withValues(alpha: 0.3),
-                      borderRadius: BorderRadius.circular(4.r),
-                    ),
-                  );
-                }),
-              ),
-        ),
+        //   Container(
+        //   width: double.infinity,
+        //   decoration: BoxDecoration(
+        //     borderRadius: BorderRadius.all(Radius.circular(8.r)),
+        //   ),
+        //   child: ClipPath(
+        //     clipper: TrapezoidClipper(),
+        //     child: Container(
+        //       height: 140.h,
+        //       width: double.infinity,
+        //       color: AppColors.primaryColor,
+        //       padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 16.h),
+        //       child: Column(
+        //         crossAxisAlignment: CrossAxisAlignment.start,
+        //         mainAxisAlignment: MainAxisAlignment.center,
+        //         children: [
+        //           CustomText(
+        //             text: 'Join Our Affiliate',
+        //             fontSize: 18.sp,
+        //             color: AppColors.whiteColor,
+        //             fontWeight: FontWeight.w500,
+        //           ),
+        //           CustomText(
+        //             text: 'Network & Grow Faster',
+        //             fontSize: 14.sp,
+        //             color: AppColors.whiteColor,
+        //             fontWeight: FontWeight.w400,
+        //           ),
+        //         ],
+        //       ),
+        //     ),
+        //   ),
+        // ),
+
+        // Expanded(
+        //   flex: 1,
+        //   child: ClipPath(
+        //     clipper: TrapezoidClipper(),
+        //     child: Container(
+        //       height: 140.h,
+        //       width: 180.w,
+        //      color: AppColors.redColor,
+        //       child: Padding(
+        //         padding:  EdgeInsets.symmetric(horizontal:12.w,vertical: 16.h),
+        //         child: Column(
+        //           crossAxisAlignment: CrossAxisAlignment.start,
+        //           children: [
+        //             CustomText(
+        //               text: 'Join Our Affiliate',
+        //               fontSize: 18.sp,
+        //               color: AppColors.whiteColor,
+        //               fontWeight: FontWeight.w500,
+        //             ),
+        //
+        //             CustomText(
+        //               text: 'Network & Grow Faster',
+        //               fontSize: 14.sp,
+        //               color: AppColors.whiteColor,
+        //               fontWeight: FontWeight.w400,
+        //             ),
+        //           ],
+        //         ),
+        //       ),
+        //     ),
+        //   ),
+        // ),
+
+        // ClipRRect(
+        //   borderRadius: BorderRadius.circular(12.r),
+        //   child: SizedBox(
+        //     height: Get.width * 0.45,
+        //     width: double.infinity,
+        //     child: CarouselSlider.builder(
+        //       itemCount: controller.images.length,
+        //       itemBuilder: (context, index, realIndex) {
+        //         return Image.network(
+        //           controller.images[index],
+        //           fit: BoxFit.cover,
+        //           width: double.infinity,
+        //         );
+        //       },
+        //       options: CarouselOptions(
+        //         autoPlay: true,
+        //         autoPlayInterval: const Duration(seconds: 3),
+        //         viewportFraction: 1.0,
+        //         enableInfiniteScroll: true,
+        //         onPageChanged: (index, reason) {
+        //           controller.currentPage.value = index;
+        //         },
+        //       ),
+        //     ),
+        //   ),
+        // ),
+        // 8.verticalSpace,
+        // Obx(
+        //       () =>
+        //       Row(
+        //         mainAxisAlignment: MainAxisAlignment.center,
+        //         children: List.generate(controller.images.length, (index) {
+        //           return AnimatedContainer(
+        //             duration: const Duration(milliseconds: 300),
+        //             margin: EdgeInsets.symmetric(horizontal: 4.w),
+        //             height: 8.h,
+        //             width: controller.currentPage.value == index ? 24.w : 8.w,
+        //             decoration: BoxDecoration(
+        //               color: controller.currentPage.value == index
+        //                   ? AppColors.primaryColor
+        //                   : AppColors.primaryColor.withValues(alpha: 0.3),
+        //               borderRadius: BorderRadius.circular(4.r),
+        //             ),
+        //           );
+        //         }),
+        //       ),
+        // ),
       ],
     );
   }
@@ -158,47 +259,47 @@ class UserHomeScreen extends StatelessWidget {
   Widget _productsWidget({required UserHomeController controller}) {
     return SizedBox(
       height: Get.width * 0.27,
-      child: Obx(()=>ListView.separated(
-        scrollDirection: Axis.horizontal,
-        itemCount: controller.categoriesList.length,
-        separatorBuilder: (_, __) => 15.horizontalSpace,
-        itemBuilder: (context, index) {
+      child: Obx(
+        () => ListView.separated(
+          scrollDirection: Axis.horizontal,
+          itemCount: controller.categoriesList.length,
+          separatorBuilder: (_, __) => 15.horizontalSpace,
+          itemBuilder: (context, index) {
+            final items = controller.categoriesList[index];
+            return GestureDetector(
+              onTap: () {
+                Get.to(() => CategoryPopularScreen(appbarTitle: 'Boulders'));
+              },
 
-          final  items = controller.categoriesList[index];
-          return GestureDetector(
-            onTap: () {
-              Get.to(() => CategoryPopularScreen(appbarTitle: 'Boulders'));
-            },
-
-            child: SizedBox(
-              width: 80.w,
-              child: Column(
-                children: [
-                  CircleAvatar(
-                    radius: 30.r,
-                    backgroundImage:  CachedNetworkImageProvider(
-                      "${items.image}",
-
+              child: SizedBox(
+                width: 80.w,
+                child: Column(
+                  children: [
+                    CircleAvatar(
+                      radius: 30.r,
+                      backgroundImage: CachedNetworkImageProvider(
+                        "${items.image}",
+                      ),
                     ),
-                  ),
-                  8.verticalSpace,
-                  Expanded(
-                    child: CustomText(
-                      text: "${items.name}",
-                      fontSize: 14.spMin,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.lightGrey,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.center,
+                    8.verticalSpace,
+                    Expanded(
+                      child: CustomText(
+                        text: "${items.name}",
+                        fontSize: 14.spMin,
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.lightGrey,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.center,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          );
-        },
-      )),
+            );
+          },
+        ),
+      ),
     );
   }
 
@@ -206,20 +307,15 @@ class UserHomeScreen extends StatelessWidget {
   Widget _popularProducts({required UserHomeController controller}) {
     return SizedBox(
       height: 260.h,
-      child: Obx((){
-
+      child: Obx(() {
         return ListView.separated(
           scrollDirection: Axis.horizontal,
           itemCount: controller.mostPopularProductList.length,
           separatorBuilder: (_, __) => 20.horizontalSpace,
           itemBuilder: (context, index) {
-
             final items = controller.mostPopularProductList[index];
             return GestureDetector(
-              onTap: () => Get.to(() => CategoryPopularDetailsScreen(
-
-              ),
-              ),
+              onTap: () => Get.to(() => CategoryPopularDetailsScreen()),
               child: Container(
                 width: 226.w,
                 decoration: BoxDecoration(
@@ -237,7 +333,6 @@ class UserHomeScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-
                     /// Product image
                     ClipRRect(
                       borderRadius: BorderRadius.circular(12.r),
@@ -252,7 +347,7 @@ class UserHomeScreen extends StatelessWidget {
 
                     /// Title
                     CustomText(
-                      text:  items.name??"",
+                      text: items.name ?? "",
                       fontSize: 16.spMin,
                       fontWeight: FontWeight.w600,
                     ),
@@ -332,7 +427,7 @@ class UserHomeScreen extends StatelessWidget {
                 Row(
                   children: [
                     GestureDetector(
-                      onTap: () => controller.getCurrentLocation(),
+                      onTap: () {},
                       child: SvgPicture.asset(
                         SvgAssetsPaths.instance.location,
                         width: 16.w,
@@ -345,12 +440,11 @@ class UserHomeScreen extends StatelessWidget {
                     ),
                     6.horizontalSpace,
 
-                    Obx(() => CustomText(
-                      text:controller.currentAddress.value == ''
+                    CustomText(
+                      text: controller.userlocation.toString() == ''
                           ? 'Address not found'
-                          : controller.currentAddress.value,
-
-                    )),
+                          : controller.userlocation.toString(),
+                    ),
                   ],
                 ),
               ],
@@ -381,3 +475,43 @@ class UserHomeScreen extends StatelessWidget {
     );
   }
 }
+
+// class TrapezoidClipper extends CustomClipper<Path> {
+//   @override
+//   Path getClip(Size size) {
+//     double topWidth = 75.w;
+//     double bottomWidth = 30.w;
+//     double height = size.height;
+//
+//     Path path = Path();
+//     path.moveTo((size.width - topWidth) / -2, 0); // top-left
+//     path.lineTo((size.width + topWidth) / 2, 0); // top-right
+//     path.lineTo((size.width + bottomWidth) / 3, height); // bottom-right
+//     path.lineTo((size.width - bottomWidth) / -2, height); // bottom-left
+//     path.close();
+//     return path;
+//   }
+//
+//   @override
+//   bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+// }
+//
+// class BackTrapezoidClipper extends CustomClipper<Path> {
+//   @override
+//   Path getClip(Size size) {
+//     double topWidth = 75.w;
+//     double bottomWidth = 30.w;
+//     double height = size.height;
+//
+//     Path path = Path();
+//     path.moveTo((size.width - topWidth) / 2, 0); // top-left
+//     path.lineTo((size.width + topWidth) / -2, 0); // top-right
+//     path.lineTo((size.width + bottomWidth) / -3, height); // bottom-right
+//     path.lineTo((size.width - bottomWidth) / 2, height); // bottom-left
+//     path.close();
+//     return path;
+//   }
+//
+//   @override
+//   bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+// }
