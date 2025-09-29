@@ -17,7 +17,6 @@ class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
       appBar: CustomAppBar(
         title: 'Cart',
         centerTitle: true,
@@ -28,7 +27,7 @@ class CartScreen extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(
-              height: Get.height/1.3.h,
+              height: Get.height / 1.3.h,
               child: ListView.separated(
                 separatorBuilder: (_, index) => SizedBox(height: 8.h),
                 itemCount: 10,
@@ -224,9 +223,8 @@ class CartScreen extends StatelessWidget {
                   );
                 },
               ),
-
             ),
-            _customCheckOutButton()
+            _customCheckOutButton(),
           ],
         ),
       ),

@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:get/get.dart';
 import 'package:sandlink/core/app_colors/app_colors.dart';
 import 'package:sandlink/core/widgets/custom_button.dart';
 import 'package:sandlink/core/wrappers/custom_text.dart';
 import 'package:sandlink/features/user/join_affiliates/screen/document_verification_screen.dart';
 import 'package:sandlink/features/user/join_affiliates/screen/payment_nformation_screen.dart';
-
 import 'package:sandlink/features/user/join_affiliates/screen/personal_information_screen.dart';
 import 'package:sandlink/features/user/join_affiliates/screen/phone_verification_screen.dart';
 import 'package:sandlink/features/user/join_affiliates/screen/review_your_information_screen.dart';
-
 import '../../../../core/widgets/custom_app_bar.dart';
 import '../controllers/steps_controllers.dart';
 

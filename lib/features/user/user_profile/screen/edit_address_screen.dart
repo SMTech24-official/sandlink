@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-
 import '../../../../core/app_colors/app_colors.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
 import '../../../../core/widgets/custom_button.dart';
@@ -11,9 +9,9 @@ import '../../../../core/wrappers/custom_text.dart';
 import '../controller/edit_address_controller.dart';
 
 class EditAddressScreen extends StatelessWidget {
-   EditAddressScreen({super.key});
+  EditAddressScreen({super.key});
 
-   final controller = Get.put(EditAddressController());
+  final controller = Get.put(EditAddressController());
 
   @override
   Widget build(BuildContext context) {
@@ -27,13 +25,13 @@ class EditAddressScreen extends StatelessWidget {
       body: SafeArea(
         child: Center(
           child: Padding(
-            padding:  EdgeInsets.symmetric(horizontal: 16.w),
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 _addAddressinfo(controller: controller),
                 Spacer(),
-                _addAddressButton()
+                _addAddressButton(),
               ],
             ),
           ),
@@ -43,16 +41,12 @@ class EditAddressScreen extends StatelessWidget {
   }
 }
 
-
-
-Widget _addAddressinfo({required EditAddressController controller }){
-
+Widget _addAddressinfo({required EditAddressController controller}) {
   return Form(
-
     child: Column(
       children: [
         CustomInputField(
-          textController:controller.editAddressLocationNameController ,
+          textController: controller.editAddressLocationNameController,
           borderSide: BorderSide(color: AppColors.lightGreyD1),
           headerTitle: 'Location Name',
           headerFontWeight: FontWeight.w500,
@@ -67,7 +61,7 @@ Widget _addAddressinfo({required EditAddressController controller }){
         SizedBox(height: 16.h),
         CustomInputField(
           maxLines: 4,
-          textController:controller.editAddressController ,
+          textController: controller.editAddressController,
           borderSide: BorderSide(color: AppColors.lightGreyD1),
           headerTitle: 'Address',
           headerFontWeight: FontWeight.w500,
@@ -80,20 +74,23 @@ Widget _addAddressinfo({required EditAddressController controller }){
           keyboardType: TextInputType.emailAddress,
         ),
         SizedBox(height: 16.h),
-
       ],
     ),
   );
-
 }
 
-
-Widget _addAddressButton(){
-  return CustomButton(onPressed: (){},
+Widget _addAddressButton() {
+  return CustomButton(
+    onPressed: () {},
     child: Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        CustomText(text: "Save Changes",color: AppColors.whiteColor,fontWeight: FontWeight.w500,fontSize: 18.sp,)
+        CustomText(
+          text: "Save Changes",
+          color: AppColors.whiteColor,
+          fontWeight: FontWeight.w500,
+          fontSize: 18.sp,
+        ),
       ],
     ),
   );

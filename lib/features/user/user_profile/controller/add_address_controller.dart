@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 class AddAddressController extends GetxController{
 
-  final address_key = GlobalKey<FormState>();
+  final addresskey = GlobalKey<FormState>();
 
  final addAddressLocationNameController = TextEditingController();
  final addAddressController = TextEditingController();

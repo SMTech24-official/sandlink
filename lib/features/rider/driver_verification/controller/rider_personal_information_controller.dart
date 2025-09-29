@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class RiderPersonalInformationController extends GetxController {
-  final basic_key = GlobalKey<FormState>();
+  final basickey = GlobalKey<FormState>();
 
   final nameController = TextEditingController();
   final phoneController = TextEditingController();

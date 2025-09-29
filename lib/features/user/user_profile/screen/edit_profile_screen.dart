@@ -17,28 +17,31 @@ class EditProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
       appBar: CustomAppBar(
         title: 'Profile',
         onLeadingPressed: () => Get.back(),
         centerTitle: true,
       ),
-      body: SafeArea(
-        child: Center(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                _userChangeProfile(controller: conttroller),
-                SizedBox(height: 32.h),
-                _changeUserinfo(controller: conttroller),
-                Spacer(),
-                _saveButton(controller: conttroller),
-              ],
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Center(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  _userChangeProfile(controller: conttroller),
+                  SizedBox(height: 32.h),
+                  _changeUserinfo(controller: conttroller),
+                ],
+              ),
             ),
           ),
         ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+        child: _saveButton(controller: conttroller),
       ),
     );
   }

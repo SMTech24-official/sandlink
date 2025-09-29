@@ -4,18 +4,15 @@ import 'package:sandlink/core/config/constants/assets_paths/icons_assets_paths.d
 
 import '../model/item_status_model.dart';
 
-class RiderOrderController extends GetxController with GetSingleTickerProviderStateMixin{
-
+class RiderOrderController extends GetxController
+    with GetSingleTickerProviderStateMixin {
   late TabController tabController;
 
-  var orderList = <ItemStatusModel> [].obs;
-   
-  
+  var orderList = <ItemStatusModel>[].obs;
 
   // List<ItemStatusModel> get activeOrders => orderList.where((o) => o.status == "active").toList();
   // List<ItemStatusModel> get completedOrders => orderList.where((o) => o.status == "completed").toList();
   // List<ItemStatusModel> get canceledOrders => orderList.where((o) => o.status == "canceled").toList();
-
 
   @override
   void onInit() {
@@ -23,7 +20,7 @@ class RiderOrderController extends GetxController with GetSingleTickerProviderSt
     tabController = TabController(length: 3, vsync: this);
     orderList.addAll([
       ItemStatusModel(
-        ID: 1,
+        iD: 1,
         imageUrl: '',
         quantity: '20',
         orderID: 'ORD-1234',
@@ -37,7 +34,7 @@ class RiderOrderController extends GetxController with GetSingleTickerProviderSt
       ),
 
       ItemStatusModel(
-        ID: 2,
+        iD: 2,
         imageUrl: '',
         quantity: '20',
         orderID: 'ORD-1234',
@@ -51,7 +48,7 @@ class RiderOrderController extends GetxController with GetSingleTickerProviderSt
       ),
 
       ItemStatusModel(
-        ID: 3,
+        iD: 3,
         imageUrl: IconsAssetsPaths.instance.orderimage,
         quantity: '20',
         orderID: 'ORD-1234',
@@ -71,5 +68,4 @@ class RiderOrderController extends GetxController with GetSingleTickerProviderSt
     tabController.dispose();
     super.onClose();
   }
-
 }

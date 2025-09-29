@@ -1,5 +1,5 @@
 class AvailableOrdersModel {
-  final int ID;
+  final int iD;
   final String imageUrl;
   final String productName;
   final String quantity;
@@ -11,7 +11,7 @@ class AvailableOrdersModel {
   final String deliveryDistance;
 
   AvailableOrdersModel({
-    required this.ID,
+    required this.iD,
     required this.imageUrl,
     required this.productName,
     required this.quantity,
