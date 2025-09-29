@@ -1,12 +1,11 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:sandlink/core/app_colors/app_colors.dart';
 import 'package:sandlink/core/widgets/custom_button.dart';
 import 'package:sandlink/core/wrappers/custom_text.dart';
 import 'package:sandlink/features/user/join_affiliates/screen/steps_screen.dart';
-
 import '../../../../core/config/constants/assets_paths/icons_assets_paths.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
 import '../controllers/pricing_plan_controller.dart';
@@ -66,7 +65,6 @@ class PricingPlanScreen extends StatelessWidget {
                   SizedBox(
                     height: Get.height / 1.4,
                     width: double.infinity.w,
-
                     child: ListView.separated(
                       separatorBuilder: (_, index) => SizedBox(height: 8.h),
                       itemCount: controller.purchasePlanList.length,
@@ -91,7 +89,7 @@ class PricingPlanScreen extends StatelessWidget {
                               ),
                               SizedBox(height: 12.h),
                               CustomText(
-                                text: '${items.planType}',
+                                text: items.planType,
                                 color: AppColors.blackColor,
                                 fontSize: 18.sp,
                                 fontWeight: FontWeight.w500,
@@ -146,7 +144,9 @@ class PricingPlanScreen extends StatelessWidget {
                                   onPressed: () {
                                     if (items.planID == 0) {
                                       Get.to(() => StepsScreen());
-                                      print('click');
+                                      if (kDebugMode) {
+                                        print('click');
+                                      }
                                     } else if (items.planID == 1) {
                                     } else if (items.planID == 3) {}
                                   },
