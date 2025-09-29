@@ -66,12 +66,12 @@ class PersonalInformationScreen extends StatelessWidget {
                           ),
                           SizedBox(height: 12.h),
                           CustomInputField(
-                            headerTitle: "Shop Name",
+                            headerTitle: "Company Name",
                             headerfontSize: 16.sp,
                             hintTextFontWeight: FontWeight.w500,
                             headerTextColor: AppColors.blackColor,
                             textController: controller.shopNameController,
-                            hintText: 'Enter your shop name',
+                            hintText: 'Enter your company name',
                             keyboardType: TextInputType.text,
                           ),
                           SizedBox(height: 12.h),
@@ -81,7 +81,7 @@ class PersonalInformationScreen extends StatelessWidget {
                             hintTextFontWeight: FontWeight.w500,
                             headerTextColor: AppColors.blackColor,
                             textController: controller.addressController,
-                            hintText: 'Gulshan 2',
+                            hintText: 'Enter your address',
                             onChanged: (value) {
                               controller.addressText.value = value;
                             },

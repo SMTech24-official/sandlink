@@ -1,12 +1,8 @@
-import 'dart:convert';
 import 'dart:developer';
-
 import 'package:flutter/widgets.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:sandlink/core/network/network_caller.dart';
-import 'package:sandlink/features/common/auth/controller/register_verify_controller.dart';
-
 import '../../../../core/config/api_end_points/api_end_points.dart';
 import '../../../../core/services/DBServices/local_db_services/storage_service.dart';
 import '../screens/register_verify_screen.dart';
@@ -49,7 +45,7 @@ class RegisterController extends GetxController {
       return false;
     }
 
-    final phoneRegex = RegExp(r'^\d{9,15}$'); // 10-15 digits
+    final phoneRegex = RegExp(r'^\d{1,15}$'); // 1-15 digits
     if (!phoneRegex.hasMatch(phoneController.text.trim())) {
       EasyLoading.showError("Enter a valid phone number");
       return false;
@@ -75,11 +71,8 @@ class RegisterController extends GetxController {
     return true;
   }
 
-
-
-  Future<void>createSignupUser()async{
-
-    try{
+  Future<void> createSignupUser() async {
+    try {
       if (!_validateInputs()) return;
       EasyLoading.show(status: 'Creating account...');
 
@@ -88,10 +81,10 @@ class RegisterController extends GetxController {
         "email": emailController.text.trim(),
         "phoneNumber": phoneController.text.trim(),
         "password": passController.text.trim(),
-        "role":StorageService().getData('role',),
-        "isAgreeTermsAndPrivacyPolicy":isChecked.value
+        "role": StorageService().getData('role'),
+        "isAgreeTermsAndPrivacyPolicy": isChecked.value,
       };
-      log("SignupData${body}");
+      log("SignupData: $body");
 
       final response = await NetworkCaller().postRequest(
         ApiEndPoints.register,
@@ -99,44 +92,31 @@ class RegisterController extends GetxController {
         token: StorageService().getData('token'),
       );
 
-      if(response.isSuccess){
-
-      // var otptime = response.responseData['data']['otpExpiry'];
-      //   log('OTP Time${otptime}');
+      if (response.isSuccess) {
+        // var otptime = response.responseData['data']['otpExpiry'];
+        //   log('OTP Time${otptime}');
 
         StorageService().saveData('otpemail', emailController.text);
 
-        Get.to(()=>RegisterVerifyScreen(),);
+        Get.to(() => RegisterVerifyScreen());
 
         nameController.clear();
         emailController.clear();
         phoneController.clear();
         passController.clear();
-        isChecked.value =false;
-        log("Signup Successfully${body}");
-
-      } else if(response.statusCode == 400){
-        EasyLoading.show(status:response.errorMessage);
+        isChecked.value = false;
+        log("Signup Successfully$body");
+      } else if (response.statusCode == 400) {
+        EasyLoading.show(status: response.errorMessage);
       } else {
-        EasyLoading.show(status:response.errorMessage);
-
+        EasyLoading.show(status: response.errorMessage);
       }
-
-    }
-    catch(e){
+    } catch (e) {
       EasyLoading.showError('Registration failed. Try again.');
-    }
-    finally{
+    } finally {
       EasyLoading.dismiss();
     }
-
-
   }
-
-
-
-
-
 
   @override
   void onClose() {
