@@ -6,6 +6,7 @@ import 'package:sandlink/core/app_colors/app_colors.dart';
 import 'package:sandlink/core/widgets/custom_button.dart';
 import 'package:sandlink/core/wrappers/custom_text.dart';
 import 'package:sandlink/features/common/auth/controller/forgot_pass_verify_controller.dart';
+// import 'package:sandlink/routes/app_routes.dart'; // uncomment if using routes
 
 class ForgotPassVerifyScreen extends StatelessWidget {
   const ForgotPassVerifyScreen({super.key});
@@ -15,6 +16,7 @@ class ForgotPassVerifyScreen extends StatelessWidget {
     final controller = Get.put(ForgotPassVerifyController());
     controller.startResendTimer();
     final formKey = GlobalKey<FormState>();
+
     final defaultPinTheme = PinTheme(
       width: 60.w,
       height: 60.h,
@@ -28,6 +30,7 @@ class ForgotPassVerifyScreen extends StatelessWidget {
         color: Colors.grey.shade200,
       ),
     );
+
     return Scaffold(
       appBar: AppBar(),
       body: SafeArea(
@@ -78,7 +81,7 @@ class ForgotPassVerifyScreen extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(30),
-                        border: Border.all(color: Color(0xFFE3E3E9), width: 2),
+                        border: Border.all(color: const Color(0xFFE3E3E9), width: 2),
                       ),
                     ),
                     focusedPinTheme: defaultPinTheme.copyWith(
@@ -111,7 +114,6 @@ class ForgotPassVerifyScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-
                     showCursor: true,
                     onCompleted: (pin) {
                       debugPrint("Entered OTP: $pin");
@@ -131,7 +133,10 @@ class ForgotPassVerifyScreen extends StatelessWidget {
                       ),
                       TextButton(
                         onPressed: controller.isResendAvailable.value
-                            ? () {}
+                            ? () {
+                                controller.startResendTimer();
+                                // call resend API here if needed
+                              }
                             : null,
                         child: Text(
                           controller.isResendAvailable.value
@@ -151,17 +156,13 @@ class ForgotPassVerifyScreen extends StatelessWidget {
                 ),
                 20.verticalSpace,
                 CustomButton(
-                  onPressed: () {},
-
-
-                    controller.verifyOTPCode();
-
+                  onPressed: () {
+                    if (formKey.currentState!.validate()) {
+                      controller.verifyOTPCode();
+                      // Navigate on success if needed:
+                      // Get.toNamed(AppRouteNames.instance.resetPassword);
+                    }
                   },
-
-                     // Get.toNamed(AppRouteNames.instance.resetPassword),
-
-                  // Get.toNamed(AppRouteNames.instance.resetPassword),
-
                   text: 'Continue',
                 ),
               ],

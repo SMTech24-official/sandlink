@@ -1,9 +1,7 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:sandlink/core/app_routes/app_route_names.dart';
 import 'package:sandlink/core/config/api_end_points/api_end_points.dart';
 import 'package:sandlink/core/network/network_caller.dart';
 import 'package:sandlink/core/services/DBServices/local_db_services/storage_service.dart';
@@ -45,44 +43,37 @@ class ForgotPassVerifyController extends GetxController {
     otpController.clear();
   }
 
+  Future<void> verifyOTPCode() async {
+    EasyLoading.show(status: 'Loading...');
+    try {
+      var forgotOtpBody = {"otp": otpController.text};
 
-  Future<void> verifyOTPCode()async{
-    EasyLoading.show(status:'Loading...' );
-      try{
-       var forgotOtpBody = {
-         "otp":otpController.text,
-       };
+      final response = await NetworkCaller().postRequest(
+        ApiEndPoints.verify_forgetpassword,
+        body: forgotOtpBody,
+        token: StorageService().getData('token'),
+      );
 
-       final response = await NetworkCaller().postRequest(ApiEndPoints.verify_forgetpassword,
-       body: forgotOtpBody,
-         token: StorageService().getData('token'),
-       );
+      if (response.isSuccess) {
+        EasyLoading.dismiss();
+        EasyLoading.showSuccess(response.responseData['message'] ?? "Success");
 
-       if(response.isSuccess){
-         EasyLoading.dismiss();
-         EasyLoading.showSuccess(response.responseData['message'] ?? "Success");
+        StorageService().saveData(
+          'otptoken',
+          response.responseData['resetToken'],
+        );
 
-         StorageService().saveData('otptoken', response.responseData['resetToken']);
-
-         Get.to(()=>ResetPassScreen());
-
-       } else {
-         EasyLoading.dismiss();
-         EasyLoading.showError(response.responseData['message'] ?? "Invalid Email");
-       }
-
-
-     }catch(e){
-       EasyLoading.showError('Error:${e}');
-     }finally{
-       EasyLoading.dismiss();
+        Get.to(() => ResetPassScreen());
+      } else {
+        EasyLoading.dismiss();
+        EasyLoading.showError(
+          response.responseData['message'] ?? "Invalid Email",
+        );
+      }
+    } catch (e) {
+      EasyLoading.showError('Error:$e');
+    } finally {
+      EasyLoading.dismiss();
     }
-
-
-
-
   }
-
-
-
 }

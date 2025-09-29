@@ -36,7 +36,7 @@ class CheckoutScreen extends StatelessWidget {
                         SizedBox(height: 10.h,),
                         CustomText(text: 'Delivery Address',color: AppColors.blackColor,fontSize: 20.sp,fontWeight: FontWeight.w500,),
 
-                        Container(
+                        SizedBox(
                      height: Get.height/2.1,
                      width: double.infinity,
 

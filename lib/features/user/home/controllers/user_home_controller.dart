@@ -1,6 +1,3 @@
-
-
-
 import 'dart:developer';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -11,16 +8,14 @@ import 'package:sandlink/core/network/network_caller.dart';
 
 import 'package:sandlink/core/services/DBServices/local_db_services/storage_service.dart';
 import '../../../common/splash/controller/choose_role_controller.dart';
-
+import 'package:geolocator/geolocator.dart';
+import 'package:geocoding/geocoding.dart';
 
 import '../model/categories_model.dart';
 import '../model/most_populer_product.dart';
 
 class UserHomeController extends GetxController {
-
   final loctionController = Get.put(ChooseRoleController());
-
-
 
   var currentPage = 0.obs;
   final List<String> images = [
@@ -29,7 +24,6 @@ class UserHomeController extends GetxController {
     'https://www.figma.com/file/jNz7l61vmikt0kYyCBqz6X/image/7fb4ff2ac9294f42624fecf54617a99c024f8170',
     'https://www.figma.com/file/jNz7l61vmikt0kYyCBqz6X/image/7fb4ff2ac9294f42624fecf54617a99c024f8170',
   ];
-
 
   // var currentAddress = ''.obs;
   // var latitude = 0.0.obs;
@@ -147,7 +141,6 @@ class UserHomeController extends GetxController {
     }
   }
 
-
   @override
   void onInit() {
     getCategories();
@@ -210,16 +203,7 @@ class UserHomeController extends GetxController {
     } finally {
       EasyLoading.dismiss();
     }
-
-
-
-
-}
-
-  var userlocation = StorageService().getData('street');
-
-
-
   }
 
+  var userlocation = StorageService().getData('street');
 }

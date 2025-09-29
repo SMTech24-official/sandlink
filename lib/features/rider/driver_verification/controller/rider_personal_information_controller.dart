@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class RiderPersonalInformationController extends GetxController {
@@ -12,7 +12,6 @@ class RiderPersonalInformationController extends GetxController {
   final emailController = TextEditingController();
   final shopNameController = TextEditingController();
   final addressController = TextEditingController();
-
 
   var addressText = ''.obs;
 
@@ -25,7 +24,6 @@ class RiderPersonalInformationController extends GetxController {
         searchAddress(val);
       }
     }, time: Duration(milliseconds: 800));
-
   }
 
   var lat = 23.8103.obs;
@@ -47,12 +45,11 @@ class RiderPersonalInformationController extends GetxController {
         );
       }
     } catch (e) {
-      print("Address not found: $e");
+      if (kDebugMode) {
+        print("Address not found: $e");
+      }
     }
   }
 
   LatLng get currentLatLng => LatLng(lat.value, lon.value);
-
-
-
 }

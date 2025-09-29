@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:sandlink/core/app_colors/app_colors.dart';
 import 'package:sandlink/core/wrappers/custom_text.dart';
 
@@ -21,7 +20,7 @@ class CategoryPopularScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: CustomAppBar(
-        title: '$appbarTitle',
+        title: appbarTitle,
         onLeadingPressed: () => Get.back(),
       ),
       body: SafeArea(
@@ -57,11 +56,11 @@ class CategoryPopularScreen extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: Colors.amber,
                           borderRadius: BorderRadius.all(Radius.circular(8.r)),
-                          image: DecorationImage(image: NetworkImage("${itemdata.imageUrl}"),fit: BoxFit.cover)
+                          image: DecorationImage(image: NetworkImage(itemdata.imageUrl),fit: BoxFit.cover)
                         ),
                       ),
                       SizedBox(height: 5.h),
-                      CustomText(text: '${itemdata.title}',maxLines: 1,),
+                      CustomText(text: itemdata.title,maxLines: 1,),
                       SizedBox(height: 5.h),
 
                       Padding(
@@ -74,14 +73,14 @@ class CategoryPopularScreen extends StatelessWidget {
                                 child: Row(children: [
                                Icon(Icons.star,color: Colors.amber,size:12 ,),
                                   SizedBox(width: 3.h),
-                                  CustomText(text: '${itemdata.rating}',fontWeight: FontWeight.w400,color: AppColors.lightGrey,),
+                                  CustomText(text: itemdata.rating,fontWeight: FontWeight.w400,color: AppColors.lightGrey,),
 
                                 ],)),
 
                             Expanded(
 
                                 child: Row(children: [
-                                  CustomText(text: '${itemdata.quantity}',fontWeight: FontWeight.w400,color: AppColors.lightGrey,),
+                                  CustomText(text: itemdata.quantity,fontWeight: FontWeight.w400,color: AppColors.lightGrey,),
                             ],)),
                           ],
                         ),

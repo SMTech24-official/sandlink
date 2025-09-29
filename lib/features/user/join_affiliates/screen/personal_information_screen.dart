@@ -25,9 +25,8 @@ class PersonalInformationScreen extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(height: 20.h),
-                Container(
+                SizedBox(
                   width: double.infinity.w,
-
                   child: Form(
                     key: controller.basic_key,
                     child: SingleChildScrollView(

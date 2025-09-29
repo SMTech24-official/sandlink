@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -111,28 +110,43 @@ class UserHomeScreen extends StatelessWidget {
               image: AssetImage(IconsAssetsPaths.instance.banner),
             ),
           ),
-          
-          child: Padding(
-            padding:  EdgeInsets.symmetric(horizontal: 16.w,vertical: 25.h),
-            child: Column(
 
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 25.h),
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CustomText(text: 'Join Our Affiliate',fontWeight: FontWeight.w500,color: AppColors.whiteColor,fontSize: 16.sp,),
-            SizedBox(height: 8.h,),
-                CustomText(text: 'Network & Grow Faster',fontWeight: FontWeight.w400,color: AppColors.whiteColor,fontSize: 14.sp,),
-                SizedBox(height: 16.h,),
+                CustomText(
+                  text: 'Join Our Affiliate',
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.whiteColor,
+                  fontSize: 16.sp,
+                ),
+                SizedBox(height: 8.h),
+                CustomText(
+                  text: 'Network & Grow Faster',
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.whiteColor,
+                  fontSize: 14.sp,
+                ),
+                SizedBox(height: 16.h),
                 Container(
-                    height: 40.h,
+                  height: 40.h,
                   width: 90.w,
 
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(10.r)),
                     color: AppColors.whiteColor,
                   ),
-                  child: Center(child: CustomText(text: 'Join Now',fontSize: 16.sp,color: AppColors.primaryColor,fontWeight: FontWeight.w400,)),
-                )
-
+                  child: Center(
+                    child: CustomText(
+                      text: 'Join Now',
+                      fontSize: 16.sp,
+                      color: AppColors.primaryColor,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ),
               ],
             ),
           ),

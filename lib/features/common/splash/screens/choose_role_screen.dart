@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,11 +7,8 @@ import 'package:sandlink/core/app_routes/app_route_names.dart';
 import 'package:sandlink/core/config/constants/assets_paths/icons_assets_paths.dart';
 import 'package:sandlink/core/services/DBServices/local_db_services/storage_service.dart';
 import 'package:sandlink/core/widgets/custom_button.dart';
-import 'package:sandlink/core/widgets/custom_dialog.dart';
 import 'package:sandlink/core/wrappers/custom_text.dart';
 import 'package:sandlink/features/common/splash/controller/choose_role_controller.dart';
-
-import '../../locations/controllers/locations_controllers.dart';
 
 // class ChooseRoleScreen extends StatelessWidget {
 //   const ChooseRoleScreen({super.key});
@@ -161,8 +156,6 @@ class ChooseRoleScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(ChooseRoleController());
-    final locationController = Get.put(LocationsControllers());
-
     return Scaffold(
       backgroundColor: AppColors.whiteColor,
       body: Padding(
@@ -396,38 +389,54 @@ class ChooseRoleScreen extends StatelessWidget {
       bottomNavigationBar: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 30.h),
         child: CustomButton(
-          onPressed: ()async {
+          onPressed: () async {
             final role = controller.selectedRole.value;
             if (kDebugMode) {
               print("Role.................................... $role");
             }
 
-
-            if (role == "CUSTOMER"){
+            if (role == "CUSTOMER") {
               StorageService().saveData('role', role);
               Get.toNamed(AppRouteNames.instance.userOnboarding);
               await controller.getCurrentLocation();
-              StorageService().saveData('Location',controller.currentAddress.value );
-              StorageService().saveData('street',controller.street.value );
-              StorageService().saveData('locality',controller.locality.value );
-              StorageService().saveData('postalCode',controller.postalCode.value );
-              StorageService().saveData('country',controller.country.value );
-
-
+              StorageService().saveData(
+                'Location',
+                controller.currentAddress.value,
+              );
+              StorageService().saveData('street', controller.street.value);
+              StorageService().saveData('locality', controller.locality.value);
+              StorageService().saveData(
+                'postalCode',
+                controller.postalCode.value,
+              );
+              StorageService().saveData('country', controller.country.value);
             } else if (role == "RIDER") {
               StorageService().saveData('role', role);
               await controller.getCurrentLocation();
-              if(controller.currentAddress.value == true){
-
+              if (controller.currentAddress.value == true) {
                 Get.toNamed(AppRouteNames.instance.riderOnboarding);
-                StorageService().saveData('RiderLocation',controller.currentAddress.value );
-                StorageService().saveData('Riderstreet',controller.street.value );
-                StorageService().saveData('Riderlocality',controller.locality.value );
-                StorageService().saveData('RiderpostalCode',controller.postalCode.value );
-                StorageService().saveData('Ridercountry',controller.country.value );
+                StorageService().saveData(
+                  'RiderLocation',
+                  controller.currentAddress.value,
+                );
+                StorageService().saveData(
+                  'Riderstreet',
+                  controller.street.value,
+                );
+                StorageService().saveData(
+                  'Riderlocality',
+                  controller.locality.value,
+                );
+                StorageService().saveData(
+                  'RiderpostalCode',
+                  controller.postalCode.value,
+                );
+                StorageService().saveData(
+                  'Ridercountry',
+                  controller.country.value,
+                );
               }
-            }
-            else {
+            } else {
               Get.snackbar(
                 "Selection Required",
                 "Please select a role to proceed.",

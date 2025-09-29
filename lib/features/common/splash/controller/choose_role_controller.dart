@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:flutter/foundation.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -64,7 +65,9 @@ class ChooseRoleController extends GetxController {
       await getAddressFromCoordinates(latitude.value, longitude.value);
     } catch (e) {
       currentAddress.value = "Unable to get location";
-      print("Error getting location: $e");
+      if (kDebugMode) {
+        print("Error getting location: $e");
+      }
     }
   }
 
@@ -86,7 +89,9 @@ class ChooseRoleController extends GetxController {
       }
     } catch (e) {
       currentAddress.value = "Unknown location";
-      print("Error getting address: $e");
+      if (kDebugMode) {
+        print("Error getting address: $e");
+      }
     }
   }
 

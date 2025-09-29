@@ -82,7 +82,7 @@ class RiderEarningsScreen extends StatelessWidget {
                                       color: AppColors.blackColor,
                                     ),
                                     CustomText(
-                                      text: '${controller.amounts[index]}',
+                                      text: controller.amounts[index],
                                       fontSize: 14,
                                       fontWeight: FontWeight.w500,
                                       color: AppColors.blackColor,
@@ -112,7 +112,7 @@ class RiderEarningsScreen extends StatelessWidget {
                         ), Center(
                           child: Obx(() =>
                           controller.selectedIndex.value != -1
-                              ? CustomText(text:"${controller.amounts[controller.selectedIndex.value]}",fontWeight:FontWeight.w500,fontSize: 32.sp,color: AppColors.blackColor,)
+                              ? CustomText(text:controller.amounts[controller.selectedIndex.value],fontWeight:FontWeight.w500,fontSize: 32.sp,color: AppColors.blackColor,)
                               : const Text("")),
                         ),
 

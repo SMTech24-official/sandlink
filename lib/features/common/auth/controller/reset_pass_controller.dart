@@ -81,7 +81,7 @@ class ResetPassController extends GetxController {
     }
         catch(e){
       EasyLoading.dismiss();
-      EasyLoading.showError('Error:${e}');
+      EasyLoading.showError('Error:$e');
 
 
         }
