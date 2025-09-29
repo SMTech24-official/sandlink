@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:sandlink/core/app_colors/app_colors.dart';
-import 'package:sandlink/core/app_routes/app_route_names.dart';
-import 'package:sandlink/core/config/constants/assets_paths/svg_assets_paths.dart';
 import 'package:sandlink/core/helpers/validations/form_validations.dart';
 import 'package:sandlink/core/widgets/custom_button.dart';
-import 'package:sandlink/core/widgets/custom_dialog.dart';
 import 'package:sandlink/core/widgets/custom_text_field.dart';
 import 'package:sandlink/core/wrappers/custom_text.dart';
 import 'package:sandlink/features/common/auth/controller/reset_pass_controller.dart';
@@ -24,7 +21,7 @@ class ResetPassScreen extends StatelessWidget {
           padding: const EdgeInsets.all(16.0),
           child: Center(
             child: Form(
-              key:controller.passkey ,
+              key: controller.passkey,
 
               child: Column(
                 children: [
@@ -80,15 +77,15 @@ class ResetPassScreen extends StatelessWidget {
                       hintText: "Enter confirm password",
                       isObsecure: !controller.isConfirmPassVisible.value,
                       prefixIcon: Icons.lock_outline_rounded,
-                     formValidator: (value) {
-                  if (value == null || value.isEmpty) {
-                  return "Please confirm your password";
-                  }
-                  if (value != controller.newPassController.text) {
-                  return "Passwords do not match";
-                  }
-                  return null;
-                  },
+                      formValidator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Please confirm your password";
+                        }
+                        if (value != controller.newPassController.text) {
+                          return "Passwords do not match";
+                        }
+                        return null;
+                      },
                       suffixWidget: controller.isConfirmPassVisible.value
                           ? GestureDetector(
                               onTap: controller.toggleConfirmPasswordVisibility,
@@ -108,25 +105,24 @@ class ResetPassScreen extends StatelessWidget {
                   ),
                   20.verticalSpace,
                   CustomButton(
-                    onPressed:() {
-                      if(controller.passkey.currentState!.validate()){
-
-                   controller.createNewForgotPassword();
-                 // Get.dialog(
-                 //          AlertDialog(
-                 //            backgroundColor: Colors.white,
-                 //            content: CustomDialog(
-                 //              title: "Password Changed",
-                 //              subtitle:
-                 //                  "Password changed successfully, you can login again with new password.",
-                 //              imagePath: SvgAssetsPaths.instance.successBack,
-                 //              primaryButtonText: "Back to Login",
-                 //              buttonFontSize: 16.spMin,
-                 //              onPrimaryTap: () =>
-                 //                  Get.offAllNamed(AppRouteNames.instance.login),
-                 //            ),
-                 //          ),
-                 //        );
+                    onPressed: () {
+                      if (controller.passkey.currentState!.validate()) {
+                        controller.createNewForgotPassword();
+                        // Get.dialog(
+                        //          AlertDialog(
+                        //            backgroundColor: Colors.white,
+                        //            content: CustomDialog(
+                        //              title: "Password Changed",
+                        //              subtitle:
+                        //                  "Password changed successfully, you can login again with new password.",
+                        //              imagePath: SvgAssetsPaths.instance.successBack,
+                        //              primaryButtonText: "Back to Login",
+                        //              buttonFontSize: 16.spMin,
+                        //              onPrimaryTap: () =>
+                        //                  Get.offAllNamed(AppRouteNames.instance.login),
+                        //            ),
+                        //          ),
+                        //        );
                       }
                     },
 

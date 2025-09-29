@@ -72,7 +72,7 @@ class RiderNotificationScreen extends StatelessWidget {
                               CircleAvatar(
                                 radius: 30.r,
                                 backgroundColor: AppColors.orangeColor,
-                                child: Image.asset("${messageData.ImageUrl}", scale: 0.6),
+                                child: Image.asset(messageData.ImageUrl, scale: 0.6),
                               ),
 
                               SizedBox(width: 8.w),
@@ -88,14 +88,14 @@ class RiderNotificationScreen extends StatelessWidget {
                                       children: [
                                         Expanded(
                                           child: CustomText(
-                                            text: "${messageData.orderStatus}",
+                                            text: messageData.orderStatus,
                                             color: AppColors.blackColor,
                                             fontWeight: FontWeight.w500,
                                             fontSize: 14.sp,
                                           ),
                                         ),
                                         CustomText(
-                                          text: "${messageData.messageTime}",
+                                          text: messageData.messageTime,
                                           color: AppColors.lightGrey,
                                           fontWeight: FontWeight.w400,
                                           fontSize: 12.sp,
@@ -108,7 +108,7 @@ class RiderNotificationScreen extends StatelessWidget {
                                     // Message text
                                     CustomText(
                                       maxLines: 4,
-                                      text: "${messageData.message}",
+                                      text: messageData.message,
                                       color: AppColors.blackColor,
                                       fontWeight: FontWeight.w400,
                                       fontSize: 12.sp,

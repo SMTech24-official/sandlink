@@ -1,24 +1,16 @@
-import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
-
-
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:sandlink/core/config/api_end_points/api_end_points.dart';
 import 'package:sandlink/core/network/network_caller.dart';
 import 'package:sandlink/core/services/DBServices/local_db_services/storage_service.dart';
 import 'package:sandlink/features/user/user_profile/controller/user_profile_controller.dart';
 
-import '../model/edit_user_profile_model.dart';
-
-
 class EditUserProfileController extends GetxController {
-
   final userInfoController = Get.put(UserProfileController());
 
   final fullNameController = TextEditingController();
@@ -28,10 +20,8 @@ class EditUserProfileController extends GetxController {
   final userEmail = StorageService().getData('email');
   final token = StorageService().getData('token');
 
-
   final RxBool isUploadingImage = false.obs;
   final profileImageUrl = ''.obs;
-
 
   // createGMap() async {
   //   try {
@@ -80,15 +70,12 @@ class EditUserProfileController extends GetxController {
 
   // Update //]
 
-
-
   var profileImage = Rx<File?>(null);
 
   pickImageFromGallery() async {
     try {
       final pickedFile = await ImagePicker().pickImage(
         source: ImageSource.gallery,
-
       );
 
       if (pickedFile != null) {
@@ -96,10 +83,11 @@ class EditUserProfileController extends GetxController {
         log("ImagePath: ${profileImage.value!.path}");
       }
     } catch (e) {
-      print("Error picking image: $e");
+      if (kDebugMode) {
+        print("Error picking image: $e");
+      }
     }
   }
-
 
   // Future<void> updateUserProfile() async {
   //   EasyLoading.show(status: 'Loading...');
@@ -143,17 +131,13 @@ class EditUserProfileController extends GetxController {
   //   }
   // }
 
-
-  Future<void> UpdateProfile()async{
+  Future<void> updateProfile() async {
     EasyLoading.show(status: "Loading...");
-    try{
-
+    try {
       var editBody = {
-        'image':profileImage.value?.path,
-        'name':fullNameController.text.trim(),
-        'phoneNumber':numberController.text.trim(),
-
-
+        'image': profileImage.value?.path,
+        'name': fullNameController.text.trim(),
+        'phoneNumber': numberController.text.trim(),
       };
 
       final response = await NetworkCaller().patchRequest(
@@ -161,29 +145,17 @@ class EditUserProfileController extends GetxController {
         body: editBody,
         token: token,
       );
-       log('Edit${response.responseData}');
-      if(response.isSuccess){
-
+      log('Edit${response.responseData}');
+      if (response.isSuccess) {
         EasyLoading.dismiss();
         EasyLoading.showSuccess(response.responseData['message'] ?? "Success");
-
-
-
       }
-
-
-
-    }
-        catch(e){
+    } catch (e) {
       EasyLoading.dismiss();
-      EasyLoading.showError('Error:${e}');
-
-        }
-    finally{
+      EasyLoading.showError('Error:$e');
+    } finally {
       EasyLoading.dismiss();
     }
-
-
   }
 
   @override
@@ -192,31 +164,5 @@ class EditUserProfileController extends GetxController {
     fullNameController.text = userInfoController.getUserName.value;
     numberController.text = userInfoController.getUserphone.value;
     emailController.text = userInfoController.getUserEmail.value;
-
   }
-
-
 }
-
-
-//}
-    //    catch(e){
-   //   EasyLoading.dismiss();
-   //   EasyLoading.showError('Error:$e');
-
-  //  finally{
-   //   EasyLoading.dismiss();
-   // }
-
-
-
-
-
-
-
-
-
-
-
-
-
