@@ -7,9 +7,9 @@ import 'package:sandlink/core/app_colors/app_colors.dart';
 import 'package:sandlink/core/app_routes/app_route_names.dart';
 import 'package:sandlink/core/config/constants/assets_paths/icons_assets_paths.dart';
 import 'package:sandlink/core/config/constants/assets_paths/svg_assets_paths.dart';
-import 'package:sandlink/core/services/DBServices/local_db_services/storage_service.dart';
 import 'package:sandlink/core/wrappers/custom_text.dart';
 import 'package:sandlink/features/user/home/controllers/user_home_controller.dart';
+import 'package:sandlink/features/user/user_profile/controller/user_profile_controller.dart';
 import '../../category_popular_list/screens/category_popular_details.dart';
 import '../../category_popular_list/screens/category_popular_list.dart';
 
@@ -20,7 +20,6 @@ class UserHomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(UserHomeController());
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F8F8),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
@@ -415,7 +414,7 @@ class UserHomeScreen extends StatelessWidget {
 
   /// 🔹 Top app bar
   Widget _topAppBarWidget({required UserHomeController controller}) {
-    var userName = StorageService().getData('name');
+    final profileController = Get.find<UserProfileController>();
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -424,8 +423,8 @@ class UserHomeScreen extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 25.r,
-              backgroundImage: const CachedNetworkImageProvider(
-                "https://www.figma.com/file/jNz7l61vmikt0kYyCBqz6X/image/06807ac8c348095e2e65bed0030cefb4c025cac4",
+              backgroundImage: CachedNetworkImageProvider(
+                "${profileController.getUserProfile}",
               ),
             ),
             16.horizontalSpace,
@@ -433,7 +432,7 @@ class UserHomeScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CustomText(
-                  text: 'Hi, $userName',
+                  text: 'Hi, ${profileController.getUserName}',
                   fontSize: 18.spMin,
                   fontWeight: FontWeight.w600,
                 ),

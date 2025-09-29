@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:sandlink/core/app_colors/app_colors.dart';
 import 'package:sandlink/core/widgets/custom_app_bar.dart';
 import 'package:sandlink/core/widgets/custom_button.dart';
@@ -12,34 +11,37 @@ import '../controllers/track_order_controllers.dart';
 import 'live_map_screen.dart';
 
 class TrackOrderScreen extends StatelessWidget {
-   TrackOrderScreen({super.key});
+  TrackOrderScreen({super.key});
 
-   final controller = Get.put(TrackOrderController());
+  final controller = Get.put(TrackOrderController());
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: CustomAppBar(
         title: 'Track Order',
         centerTitle: true,
-        onLeadingPressed: ()=>Get.back(),
+        onLeadingPressed: () => Get.back(),
       ),
-      body:  Padding(
-        padding:  EdgeInsets.symmetric(horizontal: 24.w),
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 24.w),
         child: Column(
           children: [
-            Container(
-              height: Get.height/1.30,
-              child:
-              ListView.builder(
+            SizedBox(
+              height: Get.height / 1.30,
+              child: ListView.builder(
                 shrinkWrap: true,
                 itemCount: controller.steps.length,
                 itemBuilder: (context, index) {
                   bool isCompleted = index <= controller.deliveryStatus.value;
 
-                  Color statusColor = isCompleted ? AppColors.blackColor : AppColors.lightGrey;
-                  Color circleColors = isCompleted ? AppColors.orangeColor : AppColors.lightGrey;
+                  Color statusColor = isCompleted
+                      ? AppColors.blackColor
+                      : AppColors.lightGrey;
+                  Color circleColors = isCompleted
+                      ? AppColors.orangeColor
+                      : AppColors.lightGrey;
 
                   return TimelineTile(
                     alignment: TimelineAlign.start,
@@ -82,14 +84,15 @@ class TrackOrderScreen extends StatelessWidget {
                       thickness: 3.w,
                     ),
                     endChild: Padding(
-                      padding:  EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
+                      padding: EdgeInsets.symmetric(
+                        vertical: 10.h,
+                        horizontal: 10.w,
+                      ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          SizedBox(
-                            height: 20.h,
-                          ),
+                          SizedBox(height: 20.h),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -122,24 +125,20 @@ class TrackOrderScreen extends StatelessWidget {
             ),
             Spacer(),
             _mapButton(),
-            SizedBox(
-              height: 40.h,
-            )
+            SizedBox(height: 40.h),
           ],
         ),
       ),
     );
-
-
   }
 }
 
-
-Widget _mapButton(){
-  return   Container(
+Widget _mapButton() {
+  return SizedBox(
     height: 52.h,
     width: double.infinity.w,
-    child: CustomButton(onPressed: ()=>Get.to(()=>LiveMapScreen()),
+    child: CustomButton(
+      onPressed: () => Get.to(() => LiveMapScreen()),
       text: 'Check Location Map',
     ),
   );

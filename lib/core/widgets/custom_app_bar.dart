@@ -10,7 +10,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.centerTitle,
     this.title,
     this.actions,
-    this.onLeadingPressed, this.child,
+    this.onLeadingPressed,
+    this.child,
   });
 
   final bool? centerTitle;
@@ -27,14 +28,16 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         onPressed: onLeadingPressed ?? () => Get.back(),
         icon: Icon(Icons.arrow_back),
       ),
-      title: child?? Text(
-        title ?? '',
-        style: TextStyle(
-          fontSize: 18.sp,
-          fontWeight: FontWeight.w500,
-          color: AppColors.darkGreyColor,
-        ),
-      ),
+      title:
+          child ??
+          Text(
+            title ?? '',
+            style: TextStyle(
+              fontSize: 18.sp,
+              fontWeight: FontWeight.w500,
+              color: AppColors.darkGreyColor,
+            ),
+          ),
       actions: actions,
     );
   }

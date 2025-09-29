@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:sandlink/core/app_colors/app_colors.dart';
 import 'package:sandlink/core/widgets/custom_app_bar.dart';
 import 'package:sandlink/core/widgets/custom_button.dart';
@@ -55,13 +54,13 @@ class MyOrdersScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 CustomText(
-                                  text: '${orderData.orderId}',
+                                  text: orderData.orderId,
                                   color: AppColors.blackColor,
                                   fontWeight: FontWeight.w500,
                                   fontSize: 16.sp,
                                 ),
                                 CustomText(
-                                  text: '${orderData.placeDate}',
+                                  text: orderData.placeDate,
                                   color: AppColors.lightGrey,
                                   fontWeight: FontWeight.w400,
                                   fontSize: 12.sp,
@@ -73,10 +72,16 @@ class MyOrdersScreen extends StatelessWidget {
                               width: 83.w,
                               decoration: BoxDecoration(
                                 color: orderData.deliveryStatus == 0
-                                    ? AppColors.orangeColor.withOpacity(0.2)
+                                    ? AppColors.orangeColor.withValues(
+                                        alpha: 0.2,
+                                      )
                                     : orderData.deliveryStatus == 1
-                                    ? AppColors.greenColor.withOpacity(0.2)
-                                    : AppColors.blueColor.withOpacity(0.2),
+                                    ? AppColors.greenColor.withValues(
+                                        alpha: 0.2,
+                                      )
+                                    : AppColors.blueColor.withValues(
+                                        alpha: 0.2,
+                                      ),
 
                                 borderRadius: BorderRadius.all(
                                   Radius.circular(30.r),
@@ -114,7 +119,7 @@ class MyOrdersScreen extends StatelessWidget {
                                 ),
                                 color: Colors.amber,
                                 image: DecorationImage(
-                                  image: NetworkImage('${orderData.imageUrl}'),
+                                  image: NetworkImage(orderData.imageUrl),
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -124,7 +129,7 @@ class MyOrdersScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 CustomText(
-                                  text: '${orderData.title}',
+                                  text: orderData.title,
                                   color: AppColors.blackColor,
                                   fontWeight: FontWeight.w500,
                                   fontSize: 14.sp,
@@ -176,8 +181,8 @@ class MyOrdersScreen extends StatelessWidget {
                               height: 8.h,
                               width: 115.w,
                               onPressed: () {
-                                if (orderData.deliveryStatus == 0) {}
-                                else if (orderData.deliveryStatus == 1) {
+                                if (orderData.deliveryStatus == 0) {
+                                } else if (orderData.deliveryStatus == 1) {
                                   Get.to(() => UserItemReviewsScreen());
                                 } else {
                                   Get.to(() => TrackOrderScreen());

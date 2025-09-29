@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:sandlink/core/app_colors/app_colors.dart';
 import 'package:sandlink/core/widgets/custom_app_bar.dart';
 import 'package:sandlink/core/widgets/custom_button.dart';
@@ -30,22 +29,16 @@ class TermsConditionsScreen extends StatelessWidget {
           child: Column(
             children: [
               // ✅ Scrollable Terms text
-              Expanded(
-                child: SingleChildScrollView(
-                  child: _termsText(),
-                ),
-              ),
+              Expanded(child: SingleChildScrollView(child: _termsText())),
 
               // ✅ Fixed Checkbox + Button at bottom
-              _checkBox_Button(controller: controller),
+              _checkBoxButton(controller: controller),
             ],
           ),
         ),
       ),
     );
   }
-
-
 }
 
 Widget _termsText() {
@@ -225,7 +218,7 @@ Widget _prohibitedActivities() {
   );
 }
 
-Widget _checkBox_Button({required TermsConditionControllers controller}) {
+Widget _checkBoxButton({required TermsConditionControllers controller}) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -253,23 +246,23 @@ Widget _checkBox_Button({required TermsConditionControllers controller}) {
       ),
       SizedBox(height: 24.h),
 
-      CustomButton(text: 'Continue', fontSize: 18.sp, onPressed: () {
-        if (controller.isChecked.value) {
-
-        Get.to(() => PricingPlanScreen());
-
-        } else {
-
-          Get.snackbar(
-            'Unchecked',
-            'Please check the box before continuing',
-            snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: AppColors.primaryColor,
-            colorText: Colors.white,
-          );
-        }
-
-      }),
+      CustomButton(
+        text: 'Continue',
+        fontSize: 18.sp,
+        onPressed: () {
+          if (controller.isChecked.value) {
+            Get.to(() => PricingPlanScreen());
+          } else {
+            Get.snackbar(
+              'Unchecked',
+              'Please check the box before continuing',
+              snackPosition: SnackPosition.BOTTOM,
+              backgroundColor: AppColors.primaryColor,
+              colorText: Colors.white,
+            );
+          }
+        },
+      ),
     ],
   );
 }
