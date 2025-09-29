@@ -59,7 +59,7 @@ void showCustomDialog({
 
                 Expanded(
                   flex: 1,
-                  child: Container(
+                  child: SizedBox(
                     height:45.h,
                     child: OutlinedButton(
                       style: OutlinedButton.styleFrom(

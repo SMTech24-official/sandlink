@@ -361,7 +361,7 @@ Future<void> _customShowDialog({required RiderArrivesController controller}) {
             ),
             SizedBox(height: 20.h),
             Form(
-              key: controller.otp_key,
+              key: controller.otpkey,
               child: CustomInputField(
                 textController: controller.deliveryOtp,
                 keyboardType: TextInputType.number,
@@ -400,8 +400,8 @@ Future<void> _customShowDialog({required RiderArrivesController controller}) {
                   flex: 1,
                   child: CustomButton(
                     onPressed: () {
-                      if (controller.otp_key.currentState!.validate()) {
-                        // ✅ OTP valid
+                      if (controller.otpkey.currentState!.validate()) {
+                        // OTP valid
                         Get.snackbar(
                           "Success",
                           "OTP Verified",
@@ -410,7 +410,7 @@ Future<void> _customShowDialog({required RiderArrivesController controller}) {
                           colorText: Colors.white,
                         );
                       } else {
-                        // ❌ OTP empty or invalid
+                        // OTP empty or invalid
                         Get.snackbar(
                           "Error",
                           "Empty OTP Code",

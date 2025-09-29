@@ -1,6 +1,4 @@
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
-
 import '../model/available_orders_model.dart';
 
 class RiderHomeController extends GetxController {
@@ -14,7 +12,7 @@ class RiderHomeController extends GetxController {
 
   final List<AvailableOrdersModel> availabelOrderList = [
     AvailableOrdersModel(
-      ID: 1,
+      iD: 1,
       imageUrl: '',
       quantity: '20',
       orderID: 'ORD-1234',
@@ -26,7 +24,7 @@ class RiderHomeController extends GetxController {
       productName: 'Ton Sand',
     ),
     AvailableOrdersModel(
-      ID: 2,
+      iD: 2,
       imageUrl: '',
       quantity: '25',
       orderID: 'ORD-1200',
@@ -38,7 +36,7 @@ class RiderHomeController extends GetxController {
       productName: 'Ton Sand',
     ),
     AvailableOrdersModel(
-      ID: 3,
+      iD: 3,
       imageUrl: '',
       quantity: '20',
       orderID: 'ORD-1234',
@@ -50,7 +48,7 @@ class RiderHomeController extends GetxController {
       productName: 'Ton Sand',
     ),
     AvailableOrdersModel(
-      ID: 4,
+      iD: 4,
       imageUrl: '',
       quantity: '20',
       orderID: 'ORD-1234',
@@ -62,7 +60,7 @@ class RiderHomeController extends GetxController {
       productName: 'Ton Sand',
     ),
     AvailableOrdersModel(
-      ID: 5,
+      iD: 5,
       imageUrl: '',
       quantity: '20',
       orderID: 'ORD-1234',

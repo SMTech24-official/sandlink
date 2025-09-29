@@ -1,5 +1,5 @@
 class ItemStatusModel {
-  final int ID;
+  final int iD;
   final String imageUrl;
   final String productName;
   final String quantity;
@@ -12,7 +12,7 @@ class ItemStatusModel {
   final String status;
 
   ItemStatusModel({
-    required this.ID,
+    required this.iD,
     required this.imageUrl,
     required this.productName,
     required this.quantity,

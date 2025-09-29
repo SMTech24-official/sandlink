@@ -51,7 +51,7 @@ class PaymentScreen extends StatelessWidget {
 
 Widget _customTextFormFiled({required PaymentController controller}) {
   return Form(
-    key: controller.payment_Key,
+    key: controller.paymentKey,
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

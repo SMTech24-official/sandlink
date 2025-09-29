@@ -68,7 +68,7 @@ class NotificationScreen extends StatelessWidget {
                                   radius: 30.r,
                                   backgroundColor: AppColors.orangeColor,
                                   child: Image.asset(
-                                    messageData.ImageUrl,
+                                    messageData.imageUrl,
                                     scale: 0.6,
                                   ),
                                 ),

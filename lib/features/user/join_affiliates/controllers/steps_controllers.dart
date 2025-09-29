@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 
-
-class StepsController extends GetxController{
-
+class StepsController extends GetxController {
   var currentStep = 0.obs;
   var title = "Basic Information".obs;
 
@@ -44,8 +41,8 @@ class StepsController extends GetxController{
     currentStep.value = step;
     goToStep(step);
   }
-  void cancelStep() {
 
+  void cancelStep() {
     if (currentStep.value > 0) {
       goToStep(currentStep.value - 1);
     }
@@ -53,11 +50,9 @@ class StepsController extends GetxController{
 
   final List<IconData> stepIcons = const [
     Icons.person_2_outlined, // Step 1
-    Icons.phone_outlined,   // Step 2
-    Icons.file_present_outlined,// Step 3
-    Icons.wallet_outlined,// Step 4
-    Icons.check,  // Step 5
+    Icons.phone_outlined, // Step 2
+    Icons.file_present_outlined, // Step 3
+    Icons.wallet_outlined, // Step 4
+    Icons.check, // Step 5
   ];
-
-
 }

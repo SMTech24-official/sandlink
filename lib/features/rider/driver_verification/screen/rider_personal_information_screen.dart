@@ -28,7 +28,7 @@ class RiderPersonalInformationScreen extends StatelessWidget {
                 width: double.infinity.w,
 
                 child: Form(
-                  key: controller.basic_key,
+                  key: controller.basickey,
                   child: SingleChildScrollView(
                     scrollDirection: Axis.vertical,
                     child: Column(

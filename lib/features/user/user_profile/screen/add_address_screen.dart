@@ -8,10 +8,9 @@ import '../../../../core/widgets/custom_text_field.dart';
 import '../../../../core/wrappers/custom_text.dart';
 import '../controller/add_address_controller.dart';
 
-
 class AddAddressScreen extends StatelessWidget {
-   AddAddressScreen({super.key});
- final controller = Get.put(AddAddressController());
+  AddAddressScreen({super.key});
+  final controller = Get.put(AddAddressController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,13 +23,13 @@ class AddAddressScreen extends StatelessWidget {
       body: SafeArea(
         child: Center(
           child: Padding(
-            padding:  EdgeInsets.symmetric(horizontal: 16.w),
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 _addAddressinfo(controller: controller),
                 Spacer(),
-                _addAddressButton()
+                _addAddressButton(),
               ],
             ),
           ),
@@ -40,15 +39,13 @@ class AddAddressScreen extends StatelessWidget {
   }
 }
 
-
-Widget _addAddressinfo({required AddAddressController controller }){
-
+Widget _addAddressinfo({required AddAddressController controller}) {
   return Form(
-    key: controller.address_key,
+    key: controller.addresskey,
     child: Column(
       children: [
         CustomInputField(
-          textController:controller.addAddressLocationNameController ,
+          textController: controller.addAddressLocationNameController,
           borderSide: BorderSide(color: AppColors.lightGreyD1),
           headerTitle: 'Location Name',
           headerFontWeight: FontWeight.w500,
@@ -63,7 +60,7 @@ Widget _addAddressinfo({required AddAddressController controller }){
         SizedBox(height: 16.h),
         CustomInputField(
           maxLines: 4,
-          textController:controller.addAddressController ,
+          textController: controller.addAddressController,
           borderSide: BorderSide(color: AppColors.lightGreyD1),
           headerTitle: 'Address',
           headerFontWeight: FontWeight.w500,
@@ -76,20 +73,23 @@ Widget _addAddressinfo({required AddAddressController controller }){
           keyboardType: TextInputType.emailAddress,
         ),
         SizedBox(height: 16.h),
-
       ],
     ),
   );
-
 }
 
-
-Widget _addAddressButton(){
-  return CustomButton(onPressed: (){},
+Widget _addAddressButton() {
+  return CustomButton(
+    onPressed: () {},
     child: Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        CustomText(text: "Save",color: AppColors.whiteColor,fontWeight: FontWeight.w500,fontSize: 18.sp,)
+        CustomText(
+          text: "Save",
+          color: AppColors.whiteColor,
+          fontWeight: FontWeight.w500,
+          fontSize: 18.sp,
+        ),
       ],
     ),
   );
