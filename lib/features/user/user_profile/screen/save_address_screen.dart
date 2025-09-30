@@ -95,7 +95,7 @@ Widget _addressTile(AddressController controller, address) {
             );
           },
           child: Image.asset(
-            IconsAssetsPaths.instance.edit_icon,
+            IconsAssetsPaths.instance.editicon,
             height: 20.h,
             width: 20.w,
             color: AppColors.blackColor,
@@ -115,7 +115,7 @@ Widget _addressTile(AddressController controller, address) {
           },
 
           child: Image.asset(
-            IconsAssetsPaths.instance.delete_icon,
+            IconsAssetsPaths.instance.deleteicon,
             height: 20.h,
             width: 20.w,
             color: AppColors.redColor,

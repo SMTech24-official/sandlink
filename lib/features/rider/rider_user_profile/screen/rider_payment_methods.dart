@@ -45,7 +45,7 @@ class RiderPaymentMethodsScreen extends StatelessWidget {
                       CircleAvatar(
                         radius: 25.r,
                         backgroundImage: AssetImage(
-                          IconsAssetsPaths.instance.strip_icon,
+                          IconsAssetsPaths.instance.stripicon,
                         ),
                       ),
                       SizedBox(width: 8.w),
@@ -67,7 +67,7 @@ class RiderPaymentMethodsScreen extends StatelessWidget {
                         ],
                       ),
                       Spacer(),
-                      Image.asset(IconsAssetsPaths.instance.delete_icon),
+                      Image.asset(IconsAssetsPaths.instance.deleteicon),
                     ],
                   ),
                 ),

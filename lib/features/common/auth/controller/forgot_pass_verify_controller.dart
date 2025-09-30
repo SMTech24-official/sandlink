@@ -49,7 +49,7 @@ class ForgotPassVerifyController extends GetxController {
       var forgotOtpBody = {"otp": otpController.text};
 
       final response = await NetworkCaller().postRequest(
-        ApiEndPoints.verify_forgetpassword,
+        ApiEndPoints.verifyforgetpassword,
         body: forgotOtpBody,
         token: StorageService().getData('token'),
       );

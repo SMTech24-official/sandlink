@@ -93,7 +93,7 @@ Widget _orderInfo(){
           DottedBorder(
               options: CustomPathDottedBorderOptions(
                 padding: const EdgeInsets.all(8),
-                color:AppColors.GreyColors9E,
+                color:AppColors.greyColors9E,
                 strokeWidth: 2,
                 dashPattern: [10, 5],
                 customPath: (size) => Path()
@@ -150,13 +150,13 @@ Widget _deliveryAddress(){
               GestureDetector(
                 onTap: (){
                 },
-                child: Image.asset(IconsAssetsPaths.instance.edit_icon,height: 20.h,width: 20.w,color: AppColors.blackColor,),
+                child: Image.asset(IconsAssetsPaths.instance.editicon,height: 20.h,width: 20.w,color: AppColors.blackColor,),
               ),
               SizedBox(width: 12.w,),
               GestureDetector(
                 onTap: (){
                 },
-                child: Image.asset(IconsAssetsPaths.instance.delete_icon,height: 20.h,width: 20.w,color: AppColors.redColor,),
+                child: Image.asset(IconsAssetsPaths.instance.deleteicon,height: 20.h,width: 20.w,color: AppColors.redColor,),
               ),
 
             ],
@@ -192,13 +192,13 @@ Widget _deliveryAddress(){
               GestureDetector(
                 onTap: (){
                 },
-                child: Image.asset(IconsAssetsPaths.instance.edit_icon,height: 20.h,width: 20.w,color: AppColors.blackColor,),
+                child: Image.asset(IconsAssetsPaths.instance.editicon,height: 20.h,width: 20.w,color: AppColors.blackColor,),
               ),
               SizedBox(width: 12.w,),
               GestureDetector(
                 onTap: (){
                 },
-                child: Image.asset(IconsAssetsPaths.instance.delete_icon,height: 20.h,width: 20.w,color: AppColors.redColor,),
+                child: Image.asset(IconsAssetsPaths.instance.deleteicon,height: 20.h,width: 20.w,color: AppColors.redColor,),
               ),
 
             ],

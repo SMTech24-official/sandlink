@@ -104,7 +104,7 @@ class TrackOrderScreen extends StatelessWidget {
                               ),
                               CustomText(
                                 text: '08:10 AM',
-                                color: AppColors.GeryColorC9,
+                                color: AppColors.geryColorC9,
                                 fontWeight: FontWeight.w500,
                                 fontSize: 12.sp,
                               ),

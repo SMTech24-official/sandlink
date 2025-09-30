@@ -6,7 +6,7 @@ import '../model/pricing_plan_model.dart';
 class PricingPlanController extends GetxController {
   final List<PricingPlanModel> purchasePlanList = [
     PricingPlanModel(
-      imageUrl: IconsAssetsPaths.instance.purches_icon,
+      imageUrl: IconsAssetsPaths.instance.purchesicon,
       planType: 'Basic plan',
       planDetails:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.',
@@ -15,7 +15,7 @@ class PricingPlanController extends GetxController {
       planID: 0,
     ),
     PricingPlanModel(
-      imageUrl: IconsAssetsPaths.instance.purches_icon,
+      imageUrl: IconsAssetsPaths.instance.purchesicon,
       planType: 'Standard',
       planDetails:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.',
@@ -24,7 +24,7 @@ class PricingPlanController extends GetxController {
       planID: 1,
     ),
     PricingPlanModel(
-      imageUrl: IconsAssetsPaths.instance.purches_icon,
+      imageUrl: IconsAssetsPaths.instance.purchesicon,
       planType: 'Premium',
       planDetails:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.',

@@ -83,7 +83,7 @@ class PricingPlanScreen extends StatelessWidget {
                             children: [
                               SizedBox(height: 16.h),
                               Image.asset(
-                                IconsAssetsPaths.instance.purches_icon,
+                                IconsAssetsPaths.instance.purchesicon,
                                 height: 48.h,
                                 width: 48.w,
                               ),

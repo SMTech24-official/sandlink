@@ -156,7 +156,7 @@ class MyOrdersScreen extends StatelessWidget {
                         thickness: 1,
                         indent: 5,
                         endIndent: 5,
-                        color: AppColors.GeryColorE4,
+                        color: AppColors.geryColorE4,
                       ),
                       SizedBox(height: 12.h),
 

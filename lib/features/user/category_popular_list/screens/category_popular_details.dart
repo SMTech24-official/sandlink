@@ -102,7 +102,7 @@ class CategoryPopularDetailsScreen extends StatelessWidget {
                               CircleAvatar(
                                 radius: 10.r,
                                 backgroundImage: AssetImage(
-                                  IconsAssetsPaths.instance.buildmart_image,
+                                  IconsAssetsPaths.instance.buildmartimage,
                                 ),
                               ),
                               SizedBox(width: 5.w),
@@ -494,7 +494,7 @@ Widget _customButtonContainer({
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.asset(
-                    IconsAssetsPaths.instance.cart_image,
+                    IconsAssetsPaths.instance.cartimage,
                     height: 24.h,
                   ),
                   SizedBox(width: 5.w),

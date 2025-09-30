@@ -162,7 +162,7 @@ Widget _identityVerification(){
     children: [
       Row(
         children: [
-          Image.asset(IconsAssetsPaths.instance.right_circle_icon,color: AppColors.blackColor,),
+          Image.asset(IconsAssetsPaths.instance.rightcircleicon,color: AppColors.blackColor,),
           SizedBox(width: 8.w,),
           CustomText(
             text: 'Identity Verification',
@@ -190,7 +190,7 @@ Widget _identityVerification(){
             children: [
               Row(
                 children: [
-                  Image.asset(IconsAssetsPaths.instance.gellary_icon,height: 24.h,width: 24.w,),
+                  Image.asset(IconsAssetsPaths.instance.gellaryicon,height: 24.h,width: 24.w,),
 
                   SizedBox(width: 5.w,),
                   CustomText(
@@ -204,7 +204,7 @@ Widget _identityVerification(){
               SizedBox(height: 6.h),
               Row(
                 children: [
-                  Image.asset(IconsAssetsPaths.instance.gellary_icon,height: 24.h,width: 24.w,),
+                  Image.asset(IconsAssetsPaths.instance.gellaryicon,height: 24.h,width: 24.w,),
 
                   SizedBox(width: 5.w,),
                   CustomText(
@@ -218,7 +218,7 @@ Widget _identityVerification(){
               SizedBox(height: 6.h),
               Row(
                 children: [
-                  Image.asset(IconsAssetsPaths.instance.pdf_icon,height: 24.h,width: 24.w,),
+                  Image.asset(IconsAssetsPaths.instance.pdficon,height: 24.h,width: 24.w,),
 
                   SizedBox(width: 5.w,),
                   CustomText(
@@ -232,7 +232,7 @@ Widget _identityVerification(){
               SizedBox(height: 6.h),
               Row(
                 children: [
-                  Image.asset(IconsAssetsPaths.instance.pdf_icon,height: 24.h,width: 24.w,),
+                  Image.asset(IconsAssetsPaths.instance.pdficon,height: 24.h,width: 24.w,),
 
                   SizedBox(width: 5.w,),
                   CustomText(
@@ -290,7 +290,7 @@ Widget _paymentVerification(){
             children: [
               Row(
                 children: [
-                  Image.asset(IconsAssetsPaths.instance.strip_icon,height: 32.h,width: 32.w,fit: BoxFit.cover,),
+                  Image.asset(IconsAssetsPaths.instance.stripicon,height: 32.h,width: 32.w,fit: BoxFit.cover,),
 
                   SizedBox(width: 5.w,),
                   CustomText(
@@ -331,7 +331,7 @@ Widget _allDocuments(){
             children: [
               Row(
                 children: [
-                  Image.asset(IconsAssetsPaths.instance.tick_circle_icon,height: 24.h,width: 24.w,fit: BoxFit.cover,),
+                  Image.asset(IconsAssetsPaths.instance.tickcircleicon,height: 24.h,width: 24.w,fit: BoxFit.cover,),
 
                   SizedBox(width: 10.w,),
                   CustomText(
