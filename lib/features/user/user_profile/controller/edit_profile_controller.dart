@@ -1,12 +1,13 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:sandlink/core/config/api_end_points/api_end_points.dart';
-import 'package:sandlink/core/network/network_caller.dart';
 import 'package:sandlink/core/services/DBServices/local_db_services/storage_service.dart';
 import 'package:sandlink/features/user/user_profile/controller/user_profile_controller.dart';
 
@@ -22,53 +23,6 @@ class EditUserProfileController extends GetxController {
 
   final RxBool isUploadingImage = false.obs;
   final profileImageUrl = ''.obs;
-
-  // createGMap() async {
-  //   try {
-  //     isLoading.value = true;
-  //
-  //     var uri = Uri.parse(ApiUrl.baseUrl + ApiUrl.api + ApiUrl.createGMap);
-  //
-  //     var reuqest = await http.MultipartRequest("POST", uri);
-  //
-  //     reuqest.fields['name'] = titleController.text;
-  //     reuqest.fields['details'] = detailsController.text;
-  //
-  //     if (kIsWeb) {
-  //       final bytes = await selectedImage.value!.readAsBytes();
-  //       final filename = await selectedImage.value!.name;
-  //       reuqest.files.add(await http.MultipartFile.fromBytes('mapPhoto', bytes,
-  //           filename: filename));
-  //     } else {
-  //       reuqest.files.add(await http.MultipartFile.fromPath(
-  //           'mapPhoto', selectedImage.value!.path));
-  //     }
-  //
-  //     final response = await reuqest.send();
-  //     if (response.statusCode == 201) {
-  //       final resbody = await response.stream.bytesToString();
-  //       final decoded = await jsonDecode(resbody);
-  //       final createModel = await CreateGMapModel.fromJson(decoded);
-  //       await Future.delayed(Duration(seconds: 2));
-  //       Get.back();
-  //       Get.snackbar("G Map", "${createModel.message}",
-  //           colorText: Colors.white);
-  //       await getGMap();
-  //       titleController.clear();
-  //       detailsController.clear();
-  //       selectedImage.value = null;
-  //     } else {
-  //       Get.snackbar("G Map", "Create Failed", colorText: Colors.white);
-  //     }
-  //   } catch (e) {
-  //     errorMessage.value = e.toString();
-  //     Get.snackbar("Error", "${e.toString()}", colorText: Colors.white);
-  //   } finally {
-  //     isLoading.value = false;
-  //   }
-  // }
-
-  // Update //]
 
   var profileImage = Rx<File?>(null);
 
@@ -89,70 +43,44 @@ class EditUserProfileController extends GetxController {
     }
   }
 
-  // Future<void> updateUserProfile() async {
-  //   EasyLoading.show(status: 'Loading...');
-  //
-  //   try {
-  //     var uri = Uri.parse(ApiEndPoints.editProfileUpdate);
-  //
-  //     final request = http.MultipartRequest('PATCH', uri);
-  //     request.headers['Authorization'] = token;
-  //
-  //     // Add fields
-  //     request.fields['name'] = updateNameController.text.trim();
-  //     request.fields['phoneNumber'] = updatePhoneController.text.trim();
-  //
-  //     // Add image if available
-  //     if (profileImage.value != null) {
-  //       request.files.add(await http.MultipartFile.fromPath(
-  //         'image',
-  //         profileImage.value!.path,
-  //       ));
-  //     }
-  //
-  //
-  //
-  //     final response = await request.send();
-  //     if (response.statusCode == 201) {
-  //       final resbody = await response.stream.bytesToString();
-  //       final decoded = await jsonDecode(resbody);
-  //      // final createModel = await EditUserProfileModelData.fromJson(decoded);
-  //       await Future.delayed(Duration(seconds: 2));
-  //       Get.back();
-  //       EasyLoading.show(status: decoded);
-  //
-  //
-  //     } else {
-  //       EasyLoading.showError('Upload Failed');
-  //     }
-  //   } catch (e) {
-  //     EasyLoading.dismiss();
-  //     EasyLoading.showError("Something went wrong: $e");
-  //   }
-  // }
-
   Future<void> updateProfile() async {
     EasyLoading.show(status: "Loading...");
     try {
-      var editBody = {
-        'image': profileImage.value?.path,
-        'name': fullNameController.text.trim(),
-        'phoneNumber': numberController.text.trim(),
-      };
+      var uri = Uri.parse(ApiEndPoints.editProfileUpdate);
 
-      final response = await NetworkCaller().patchRequest(
-        ApiEndPoints.editProfileUpdate,
-        body: editBody,
-        token: token,
-      );
-      log('Edit${response.responseData}');
-      if (response.isSuccess) {
-        EasyLoading.dismiss();
-        EasyLoading.showSuccess(response.responseData['message'] ?? "Success");
+      var request = http.MultipartRequest("PATCH", uri);
+      // ✅ Token header add
+      request.headers['Authorization'] = "$token";
+      request.headers['Accept'] = "application/json";
+      // ✅ Image add
+      if (profileImage.value != null) {
+        request.files.add(
+          await http.MultipartFile.fromPath("image", profileImage.value!.path),
+        );
+      }
+
+      // ✅ bodyData add as JSON string
+      request.fields["bodyData"] = jsonEncode({
+        "name": fullNameController.text.trim(),
+        "phoneNumber": numberController.text.trim(),
+      });
+
+      // ✅ Send request
+      var streamedResponse = await request.send();
+      var responseBody = await streamedResponse.stream.bytesToString();
+
+      log("Edit Response: $responseBody");
+
+      if (streamedResponse.statusCode == 201 ||
+          streamedResponse.statusCode == 200) {
+        await userInfoController.getUserProfileData();
+        EasyLoading.showSuccess("Profile updated successfully");
+        Get.back();
+      } else {
+        EasyLoading.showError("Failed: $responseBody");
       }
     } catch (e) {
-      EasyLoading.dismiss();
-      EasyLoading.showError('Error:$e');
+      EasyLoading.showError("Error: $e");
     } finally {
       EasyLoading.dismiss();
     }

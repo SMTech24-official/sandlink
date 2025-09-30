@@ -34,6 +34,13 @@ class ApiEndPoints {
 
 
 
+// added by mahmud
+  static const addAddress = '$_baseUrl/users/create-address';
+  static const getAddress = '$_baseUrl/users/single-address';
+  static const deleteadress = '$_baseUrl/users/delete-address';
+
+
+
 
 
 }
