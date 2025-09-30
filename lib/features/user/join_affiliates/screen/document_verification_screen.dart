@@ -296,7 +296,7 @@ Widget _address() {
       Row(
         children: [
           Image.asset(
-            IconsAssetsPaths.instance.locations_icon,
+            IconsAssetsPaths.instance.locationsicon,
             color: AppColors.blackColor,
           ),
           SizedBox(width: 5.w),

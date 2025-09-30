@@ -89,7 +89,7 @@ class PhoneVerificationScreens extends StatelessWidget {
                                             Image.asset(
                                               IconsAssetsPaths
                                                   .instance
-                                                  .right_circle_icon,
+                                                  .rightcircleicon,
                                               height: 24,
                                             ),
                                           ],

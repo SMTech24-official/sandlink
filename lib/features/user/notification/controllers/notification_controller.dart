@@ -6,53 +6,53 @@ import '../model/notification_model.dart';
 class NotificationController extends GetxController {
   final List<NotificationModel> messageList = [
     NotificationModel(
-      imageUrl: IconsAssetsPaths.instance.notification_icon,
+      imageUrl: IconsAssetsPaths.instance.notificationicon,
       orderStatus: 'Rate your experience',
       messageTime: '5min',
       message: 'Please left a review about our product.',
     ),
     NotificationModel(
-      imageUrl: IconsAssetsPaths.instance.notification_icon,
+      imageUrl: IconsAssetsPaths.instance.notificationicon,
       orderStatus: 'Order Confirmation',
       messageTime: '5min',
       message: 'Your order #ORD-4521 for 15 tons of Cement has been confirmed.',
     ),
     NotificationModel(
-      imageUrl: IconsAssetsPaths.instance.notification_icon,
+      imageUrl: IconsAssetsPaths.instance.notificationicon,
       orderStatus: 'Order Delivered',
       messageTime: '5min',
       message:
           'Your order #ORD-4521 has been delivered successfully. Thank you for shopping with us!',
     ),
     NotificationModel(
-      imageUrl: IconsAssetsPaths.instance.notification_icon,
+      imageUrl: IconsAssetsPaths.instance.notificationicon,
       orderStatus: 'Order Cancelled',
       messageTime: '5min',
       message:
           'Order #ORD-4502 was cancelled. Refund of ₦300 has been initiated.',
     ),
     NotificationModel(
-      imageUrl: IconsAssetsPaths.instance.notification_icon,
+      imageUrl: IconsAssetsPaths.instance.notificationicon,
       orderStatus: 'Payment Successful',
       messageTime: '5min',
       message: 'Your payment of ₦1,200 for order #ORD-4521 was successful.',
     ),
     NotificationModel(
-      imageUrl: IconsAssetsPaths.instance.notification_icon,
+      imageUrl: IconsAssetsPaths.instance.notificationicon,
       orderStatus: 'Refund Processed',
       messageTime: '5min',
       message:
           'Refund of ₦300 for order #ORD-4502 has been credited to your account.',
     ),
     NotificationModel(
-      imageUrl: IconsAssetsPaths.instance.notification_icon,
+      imageUrl: IconsAssetsPaths.instance.notificationicon,
       orderStatus: 'Pending Payment Reminder',
       messageTime: '5min',
       message:
           'Your order #ORD-4525 is pending payment. Complete payment to confirm delivery.',
     ),
     NotificationModel(
-      imageUrl: IconsAssetsPaths.instance.notification_icon,
+      imageUrl: IconsAssetsPaths.instance.notificationicon,
       orderStatus: 'Order Successful',
       messageTime: '5min',
       message: 'Please left a review about our product.',

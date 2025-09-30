@@ -57,7 +57,7 @@ Widget _termsText() {
               Row(
                 children: [
                   Image.asset(
-                    IconsAssetsPaths.instance.file_icon,
+                    IconsAssetsPaths.instance.fileicon,
                     height: 24.h,
                     width: 24.w,
                   ),

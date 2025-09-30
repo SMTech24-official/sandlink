@@ -16,19 +16,15 @@ import '../../../rider/driver_verification/screen/rider_steps_screen.dart';
 import '../../splash/controller/choose_role_controller.dart';
 
 class RegisterVerifyController extends GetxController {
-
-  final chooseRoleController  = Get.put(ChooseRoleController());
+  final chooseRoleController = Get.put(ChooseRoleController());
 
   final otpController = TextEditingController();
 
-
-   var emailverify =  StorageService().getData('otpemail',);
+  var emailverify = StorageService().getData('otpemail');
 
   RxInt remainingSeconds = 300.obs; // 5 minutes
   Timer? _timer;
   RxBool isResendAvailable = false.obs;
-
-
 
   void startResendTimer() {
     isResendAvailable.value = false;
@@ -51,8 +47,6 @@ class RegisterVerifyController extends GetxController {
     return "$minutes:$seconds";
   }
 
-
-
   @override
   void onClose() {
     _timer?.cancel();
@@ -67,26 +61,19 @@ class RegisterVerifyController extends GetxController {
     super.onInit();
   }
 
-
   void resendCode() {
     debugPrint("Resend OTP called.");
     startResendTimer();
   }
 
-
-
-
   Future<void> otpVerify(BuildContext context) async {
     EasyLoading.show(status: "Loading...");
 
     try {
-      var otpBody = {
-        "email": emailverify,
-        "otp": otpController.text.trim(),
-      };
+      var otpBody = {"email": emailverify, "otp": otpController.text.trim()};
 
       var response = await NetworkCaller().postRequest(
-        ApiEndPoints.verify_otp,
+        ApiEndPoints.verifyotp,
         body: otpBody,
         token: StorageService().getData('token'),
       );
@@ -95,21 +82,24 @@ class RegisterVerifyController extends GetxController {
         EasyLoading.dismiss();
 
         showDialog(
+          // ignore: use_build_context_synchronously
           context: context,
           barrierDismissible: false,
-          builder: (context) {
+          builder: (dialogContext) {
             return AlertDialog(
               content: CustomDialog(
                 imagePath: SvgAssetsPaths.instance.successBack,
                 title: "Account Verified Successfully 🎉",
                 subtitle: "You can explore the app now",
                 buttonFontSize: 16.spMin,
-                primaryButtonText:
-                chooseRoleController.selectedRole == 'RIDER'
+                // ignore: unrelated_type_equality_checks
+                primaryButtonText: chooseRoleController.selectedRole == 'RIDER'
                     ? "Verify Information"
                     : "Back to Login",
                 onPrimaryTap: () {
-                  Navigator.of(context).pop(); // ✅ close dialog first
+                  Get.back(); // ✅ close dialog safely (no BuildContext issue)
+
+                  // ignore: unrelated_type_equality_checks
                   if (chooseRoleController.selectedRole == 'RIDER') {
                     Get.to(() => RiderStepsScreen());
                   } else {
@@ -120,8 +110,6 @@ class RegisterVerifyController extends GetxController {
             );
           },
         );
-
-
       } else {
         EasyLoading.dismiss();
         EasyLoading.showError("Invalid OTP ❌");
@@ -131,23 +119,19 @@ class RegisterVerifyController extends GetxController {
     } catch (e) {
       EasyLoading.dismiss();
       EasyLoading.showError("Error: $e");
-    }
-    finally{
+    } finally {
       EasyLoading.dismiss();
     }
   }
 
-  Future<void>resendOtpCode()async{
+  Future<void> resendOtpCode() async {
     EasyLoading.show(status: "Loading...");
 
     try {
-      var resendotpBody = {
-        "email": emailverify,
-
-      };
+      var resendotpBody = {"email": emailverify};
 
       var response = await NetworkCaller().patchRequest(
-        ApiEndPoints.resend_otp,
+        ApiEndPoints.resendotp,
         body: resendotpBody,
         token: StorageService().getData('token'),
       );
@@ -155,8 +139,6 @@ class RegisterVerifyController extends GetxController {
       if (response.isSuccess) {
         EasyLoading.dismiss();
         startResendTimer();
-
-
       } else {
         EasyLoading.dismiss();
         EasyLoading.showError("Invalid OTP ❌");
@@ -166,17 +148,8 @@ class RegisterVerifyController extends GetxController {
     } catch (e) {
       EasyLoading.dismiss();
       EasyLoading.showError("Error: $e");
-    }
-    finally{
+    } finally {
       EasyLoading.dismiss();
     }
-
-
-
   }
-
-
 }
-
-
-

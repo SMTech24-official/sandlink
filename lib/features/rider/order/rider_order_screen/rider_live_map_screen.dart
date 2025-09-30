@@ -111,13 +111,13 @@ Widget _liveMapTimeLine({required RiderLiveMapControllers controller}) {
                   children: [
                     CustomText(
                       text: controller.steps[index].title,
-                      color: AppColors.GeryColorC9,
+                      color: AppColors.geryColorC9,
                       fontWeight: FontWeight.w400,
                       fontSize: 16.sp,
                     ),
                     CustomText(
                       text: '08:10 AM',
-                      color: AppColors.GeryColorC9,
+                      color: AppColors.geryColorC9,
                       fontWeight: FontWeight.w500,
                       fontSize: 12.sp,
                     ),

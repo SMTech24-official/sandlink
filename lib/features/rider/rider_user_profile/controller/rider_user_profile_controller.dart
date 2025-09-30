@@ -15,34 +15,34 @@ class RiderUserProfileController extends GetxController{
 
   final List<RiderProfileMenuItem> profilemenuList = [
     RiderProfileMenuItem(
-      leadingImage: IconsAssetsPaths.instance.edits_icon,
+      leadingImage: IconsAssetsPaths.instance.editsicon,
       title: 'Edit Profile',
       bgColor: AppColors.lightGreen3,
-      trailingImage: IconsAssetsPaths.instance.rightarrow_Icon,
+      trailingImage: IconsAssetsPaths.instance.rightarrowIcon,
     ),
     RiderProfileMenuItem(
-      leadingImage: IconsAssetsPaths.instance.doc_icon,
+      leadingImage: IconsAssetsPaths.instance.docicon,
       title: 'Documents',
-      trailingImage: IconsAssetsPaths.instance.rightarrow_Icon,
+      trailingImage: IconsAssetsPaths.instance.rightarrowIcon,
       bgColor: AppColors.lightGreen3,
     ),
 
     RiderProfileMenuItem(
-      leadingImage: IconsAssetsPaths.instance.joind_icon,
+      leadingImage: IconsAssetsPaths.instance.joindicon,
       title: 'Payment Methods',
-      trailingImage: IconsAssetsPaths.instance.rightarrow_Icon,
+      trailingImage: IconsAssetsPaths.instance.rightarrowIcon,
       bgColor: AppColors.lightGreen3,
     ),
     RiderProfileMenuItem(
-      leadingImage: IconsAssetsPaths.instance.delete_icon,
+      leadingImage: IconsAssetsPaths.instance.deleteicon,
       title: 'Delete Account',
-      trailingImage: IconsAssetsPaths.instance.rightarrow_Icon,
+      trailingImage: IconsAssetsPaths.instance.rightarrowIcon,
       bgColor: AppColors.lightGreen3,
     ),
     RiderProfileMenuItem(
-      leadingImage: IconsAssetsPaths.instance.logout_Icon,
+      leadingImage: IconsAssetsPaths.instance.logoutIcon,
       title: 'Logout',
-      trailingImage: IconsAssetsPaths.instance.rightarrow_Icon,
+      trailingImage: IconsAssetsPaths.instance.rightarrowIcon,
       bgColor: AppColors.redlightColor,
     ),
   ];

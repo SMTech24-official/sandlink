@@ -32,7 +32,7 @@ void showCustomBottomSheet(
             height: 5.h,
             width: 38.w,
             decoration: BoxDecoration(
-                color: AppColors.GreyColors9E,
+                color: AppColors.greyColors9E,
                 borderRadius: BorderRadius.all(Radius.circular(60.r))
             ),
           ),

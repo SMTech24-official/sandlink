@@ -22,7 +22,7 @@ class LiveMapControllers extends GetxController {
     OrderStep(
       title: "Delivery Location",
       subtitle: "43 La Sierra St. Fremont, CA 94538",
-      imageUrl: IconsAssetsPaths.instance.locations_icon,
+      imageUrl: IconsAssetsPaths.instance.locationsicon,
     ),
   ];
 

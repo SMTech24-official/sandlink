@@ -17,39 +17,39 @@ class UserProfileController extends GetxController {
 
   final List<ProfileMenuItem> profilemenuList = [
     ProfileMenuItem(
-      leadingImage: IconsAssetsPaths.instance.edits_icon,
+      leadingImage: IconsAssetsPaths.instance.editsicon,
       title: 'Edit Profile',
       bgColor: AppColors.lightGreen3,
-      trailingImage: IconsAssetsPaths.instance.rightarrow_Icon,
+      trailingImage: IconsAssetsPaths.instance.rightarrowIcon,
     ),
     ProfileMenuItem(
-      leadingImage: IconsAssetsPaths.instance.doc_icon,
+      leadingImage: IconsAssetsPaths.instance.docicon,
       title: 'My Orders',
-      trailingImage: IconsAssetsPaths.instance.rightarrow_Icon,
+      trailingImage: IconsAssetsPaths.instance.rightarrowIcon,
       bgColor: AppColors.lightGreen3,
     ),
     ProfileMenuItem(
-      leadingImage: IconsAssetsPaths.instance.send_icon,
+      leadingImage: IconsAssetsPaths.instance.sendicon,
       title: 'Saved Address',
-      trailingImage: IconsAssetsPaths.instance.rightarrow_Icon,
+      trailingImage: IconsAssetsPaths.instance.rightarrowIcon,
       bgColor: AppColors.lightGreen3,
     ),
     ProfileMenuItem(
-      leadingImage: IconsAssetsPaths.instance.joind_icon,
+      leadingImage: IconsAssetsPaths.instance.joindicon,
       title: 'Join Affiliates',
-      trailingImage: IconsAssetsPaths.instance.rightarrow_Icon,
+      trailingImage: IconsAssetsPaths.instance.rightarrowIcon,
       bgColor: AppColors.lightGreen3,
     ),
     ProfileMenuItem(
-      leadingImage: IconsAssetsPaths.instance.delete_icon,
+      leadingImage: IconsAssetsPaths.instance.deleteicon,
       title: 'Delete Account',
-      trailingImage: IconsAssetsPaths.instance.rightarrow_Icon,
+      trailingImage: IconsAssetsPaths.instance.rightarrowIcon,
       bgColor: AppColors.lightGreen3,
     ),
     ProfileMenuItem(
-      leadingImage: IconsAssetsPaths.instance.logout_Icon,
+      leadingImage: IconsAssetsPaths.instance.logoutIcon,
       title: 'Logout',
-      trailingImage: IconsAssetsPaths.instance.rightarrow_Icon,
+      trailingImage: IconsAssetsPaths.instance.rightarrowIcon,
       bgColor: AppColors.redlightColor,
     ),
   ];

@@ -83,7 +83,7 @@ class RiderPhoneVerificationScreens extends StatelessWidget {
                                   child: Column(
                                     children: [
                                       SizedBox(height: 16.h,),
-                                      Image.asset(IconsAssetsPaths.instance.right_circle_icon,height: 24,),
+                                      Image.asset(IconsAssetsPaths.instance.rightcircleicon,height: 24,),
 
                                     ],
                                   ),),

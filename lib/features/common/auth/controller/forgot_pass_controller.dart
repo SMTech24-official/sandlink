@@ -22,7 +22,7 @@ class ForgotPassController extends GetxController {
       var forgotBody = {"email": emailController.text.trim()};
 
       var response = await NetworkCaller().postRequest(
-        ApiEndPoints.verify_user_by_email,
+        ApiEndPoints.verifyuserbyemail,
         body: forgotBody,
       );
 
