@@ -14,7 +14,6 @@ class AddAddressScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
       appBar: CustomAppBar(
         title: 'Add Address',
         onLeadingPressed: () => Get.back(),
@@ -79,8 +78,11 @@ Widget _addAddressinfo({required AddAddressController controller}) {
 }
 
 Widget _addAddressButton() {
+  final controller = Get.put(AddAddressController());
   return CustomButton(
-    onPressed: () {},
+    onPressed: () {
+      controller.addAddress();
+    },
     child: Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [

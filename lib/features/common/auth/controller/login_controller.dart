@@ -25,8 +25,8 @@ class LoginController extends GetxController {
 
   Future<void> userlogin() async {
     EasyLoading.show(status: 'Loading...');
-     try {
-     var loginBody = {
+    try {
+      var loginBody = {
         "email": emailController.text.trim(),
         "password": passController.text.trim(),
       };
@@ -37,16 +37,17 @@ class LoginController extends GetxController {
       );
 
       if (response.isSuccess) {
-       var token = response.responseData['accessToken']??"";
-       var userID = response.responseData['id']??"";
-       var role = response.responseData['role']??"";
-       var name = response.responseData['name']??"";
-       var email = response.responseData['email']??"";
+        var token = response.responseData['accessToken'] ?? "";
+        var userID = response.responseData['id'] ?? "";
+        var role = response.responseData['role'] ?? "";
+        var name = response.responseData['name'] ?? "";
+        var email = response.responseData['email'] ?? "";
 
-        log("ResponseSave: Name: $name UserID: $userID Role: $role Email: $email Token: $token");
+        log(
+          "ResponseSave: Name: $name UserID: $userID Role: $role Email: $email Token: $token",
+        );
 
-
-        await StorageService().saveData('token', token);
+        await StorageService().saveData('accessToken', token);
         await StorageService().saveData('UserID', userID);
         await StorageService().saveData('role', role);
         await StorageService().saveData('name', name);
@@ -55,31 +56,24 @@ class LoginController extends GetxController {
         EasyLoading.dismiss();
         EasyLoading.showSuccess("Login Successful");
 
-
         if (role == "CUSTOMER") {
           Get.offAllNamed(AppRouteNames.instance.userHome);
-        } else if(role == "RIDER") {
+        } else if (role == "RIDER") {
           Get.offAllNamed(AppRouteNames.instance.ridernavnar);
-        } else if (response.statusCode == 404){
+        } else if (response.statusCode == 404) {
           EasyLoading.showError("User not found. Please check your email.");
         }
-      }
-
-      else {
+      } else {
         EasyLoading.dismiss();
         EasyLoading.showError(
           response.responseData['message'] ?? "Invalid credentials ❌",
         );
       }
-
+    } catch (e) {
+      EasyLoading.dismiss();
+      EasyLoading.showError("Unexpected error: $e");
+    } finally {
+      EasyLoading.dismiss();
     }
-    catch (e) {
-     EasyLoading.dismiss();
-     EasyLoading.showError("Unexpected error: $e");
-   } finally{
-       EasyLoading.dismiss();
-     }
   }
-
 }
-

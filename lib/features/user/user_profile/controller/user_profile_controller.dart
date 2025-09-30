@@ -68,7 +68,7 @@ class UserProfileController extends GetxController {
   var getUserphone = ''.obs;
 
   Future<void> getUserProfileData() async {
-    EasyLoading.show(status: 'Loading...');
+    // EasyLoading.show(status: 'Loading...');
     try {
       final response = await NetworkCaller().getRequest(
         ApiEndPoints.getUserProfile,

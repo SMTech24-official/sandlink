@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:sandlink/core/app_routes/app_route_names.dart';
 import 'package:sandlink/core/app_routes/app_route_pages.dart';
 
-
 class SandLink extends StatelessWidget {
   const SandLink({super.key});
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:sandlink/core/services/DBServices/local_db_services/storage_service.dart';
 import 'package:sandlink/core/widgets/custom_button.dart';
 import '../../../../core/app_colors/app_colors.dart';
 import '../../../../core/config/constants/assets_paths/icons_assets_paths.dart';
@@ -15,36 +16,38 @@ import 'edit_address_screen.dart';
 class SaveAddressScreen extends StatelessWidget {
   SaveAddressScreen({super.key});
 
-  final controller = Get.put(SaveAddressController());
+  final controller = Get.put(AddressController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
       appBar: CustomAppBar(
         title: 'Saved Address',
         onLeadingPressed: () => Get.back(),
         centerTitle: true,
       ),
       body: SafeArea(
-        child: Center(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: Get.height / 1.25,
-                  width: double.infinity.w,
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.vertical,
-                    child: _saveAddress(),
-                  ),
-                ),
-                Spacer(),
-                _addAddressButton(),
-              ],
-            ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
+          child: Column(
+            children: [
+              Expanded(
+                child: Obx(() {
+                  final address = controller.addressResponse.value;
+                  if (address == null) {
+                    return const Center(child: Text('No saved address'));
+                  }
+                  return ListView.builder(
+                    itemCount: 1, // replace with address list if multiple
+                    itemBuilder: (context, index) {
+                      return _addressTile(controller, address);
+                    },
+                  );
+                }),
+              ),
+              _addAddressButton(),
+              SizedBox(height: 16.h),
+            ],
           ),
         ),
       ),
@@ -52,125 +55,71 @@ class SaveAddressScreen extends StatelessWidget {
   }
 }
 
-Widget _saveAddress() {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      SizedBox(height: 16.h),
-      Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: AppColors.whiteColor,
-          border: BoxBorder.all(color: Color(0xff0A2833)),
-          borderRadius: BorderRadius.all(Radius.circular(8.r)),
-        ),
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 6.h),
-          child: Row(
+Widget _addressTile(AddressController controller, address) {
+  return Container(
+    margin: EdgeInsets.only(bottom: 12.h),
+    padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+    decoration: BoxDecoration(
+      color: AppColors.whiteColor,
+      border: Border.all(color: const Color(0xff0A2833)),
+      borderRadius: BorderRadius.circular(8.r),
+    ),
+    child: Row(
+      children: [
+        SvgPicture.asset(SvgAssetsPaths.instance.location),
+        SizedBox(width: 8.w),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SvgPicture.asset(SvgAssetsPaths.instance.location),
-              SizedBox(width: 8.w),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CustomText(
-                    text: 'Home',
-                    color: AppColors.blackColor,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 16.sp,
-                  ),
-                  CustomText(
-                    text: '123 Main Street, City, State',
-                    color: AppColors.lightGrey,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 14.sp,
-                  ),
-                ],
+              CustomText(
+                text: address.locationType ?? 'Home',
+                color: AppColors.blackColor,
+                fontWeight: FontWeight.w500,
+                fontSize: 16.sp,
               ),
-
-              Spacer(),
-              GestureDetector(
-                onTap: () {
-                  Get.to(() => EditAddressScreen());
-                },
-                child: Image.asset(
-                  IconsAssetsPaths.instance.edit_icon,
-                  height: 20.h,
-                  width: 20.w,
-                  color: AppColors.blackColor,
-                ),
-              ),
-              SizedBox(width: 12.w),
-              GestureDetector(
-                onTap: () {},
-                child: Image.asset(
-                  IconsAssetsPaths.instance.delete_icon,
-                  height: 20.h,
-                  width: 20.w,
-                  color: AppColors.redColor,
-                ),
+              CustomText(
+                text: address.address ?? '123 Main Street, City, State',
+                color: AppColors.lightGrey,
+                fontWeight: FontWeight.w400,
+                fontSize: 14.sp,
               ),
             ],
           ),
         ),
-      ),
-      SizedBox(height: 24.h),
-      Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: AppColors.whiteColor,
-          border: BoxBorder.all(color: Color(0xff0A2833)),
-          borderRadius: BorderRadius.all(Radius.circular(8.r)),
-        ),
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 6.h),
-          child: Row(
-            children: [
-              SvgPicture.asset(SvgAssetsPaths.instance.location),
-              SizedBox(width: 8.w),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CustomText(
-                    text: 'Office',
-                    color: AppColors.blackColor,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 16.sp,
-                  ),
-                  CustomText(
-                    text: '456 Business Avenue, City, State',
-                    color: AppColors.lightGrey,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 14.sp,
-                  ),
-                ],
-              ),
-
-              Spacer(),
-              GestureDetector(
-                onTap: () {},
-                child: Image.asset(
-                  IconsAssetsPaths.instance.edit_icon,
-                  height: 20.h,
-                  width: 20.w,
-                  color: AppColors.blackColor,
-                ),
-              ),
-              SizedBox(width: 12.w),
-              GestureDetector(
-                onTap: () {},
-                child: Image.asset(
-                  IconsAssetsPaths.instance.delete_icon,
-                  height: 20.h,
-                  width: 20.w,
-                  color: AppColors.redColor,
-                ),
-              ),
-            ],
+        GestureDetector(
+          onTap: () {
+            Get.to(() => EditAddressScreen());
+          },
+          child: Image.asset(
+            IconsAssetsPaths.instance.edit_icon,
+            height: 20.h,
+            width: 20.w,
+            color: AppColors.blackColor,
           ),
         ),
-      ),
-    ],
+        SizedBox(width: 12.w),
+        GestureDetector(
+          onTap: () {
+            final String? addressId = StorageService().getData(
+              'id',
+            ); // get the stored id
+            if (addressId != null) {
+              controller.deleteAddress(addressId);
+            } else {
+              Get.snackbar('Error', 'Address ID not found');
+            }
+          },
+
+          child: Image.asset(
+            IconsAssetsPaths.instance.delete_icon,
+            height: 20.h,
+            width: 20.w,
+            color: AppColors.redColor,
+          ),
+        ),
+      ],
+    ),
   );
 }
 

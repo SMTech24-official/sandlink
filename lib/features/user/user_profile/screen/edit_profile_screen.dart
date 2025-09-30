@@ -51,14 +51,16 @@ Widget _userChangeProfile({required EditUserProfileController controller}) {
   return Column(
     children: [
       SizedBox(height: 16.h),
-      CircleAvatar(
-        radius: 60,
-        backgroundImage: controller.profileImage.value != null
-            ? FileImage(controller.profileImage.value!)
-            : null,
-        child: controller.profileImage.value == null
-            ? Icon(Icons.person, size: 60)
-            : null,
+      Obx(
+        () => CircleAvatar(
+          radius: 60,
+          backgroundImage: controller.profileImage.value != null
+              ? FileImage(controller.profileImage.value!)
+              : null,
+          child: controller.profileImage.value == null
+              ? Icon(Icons.person, size: 60)
+              : null,
+        ),
       ),
       SizedBox(height: 16.h),
       TextButton(
