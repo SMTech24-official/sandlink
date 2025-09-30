@@ -24,11 +24,7 @@ class UserProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-        title: 'Profile',
-        onLeadingPressed: () => Get.back(),
-        centerTitle: true,
-      ),
+      appBar: CustomAppBar(title: 'Profile', centerTitle: true),
       body: SafeArea(
         child: Center(
           child: Padding(

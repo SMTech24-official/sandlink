@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:sandlink/core/services/DBServices/local_db_services/storage_service.dart';
 import '../../../../core/app_colors/app_colors.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
 import '../../../../core/widgets/custom_button.dart';
@@ -10,7 +11,7 @@ import '../controller/edit_address_controller.dart';
 
 class EditAddressScreen extends StatelessWidget {
   EditAddressScreen({super.key});
-
+  final data = Get.arguments;
   final controller = Get.put(EditAddressController());
 
   @override
@@ -79,8 +80,13 @@ Widget _addAddressinfo({required EditAddressController controller}) {
 }
 
 Widget _addAddressButton() {
+  final controller = Get.put(EditAddressController());
+
   return CustomButton(
-    onPressed: () {},
+    onPressed: () {
+      final String? addressId = StorageService().getData('id');
+      controller.saveChanges(addressId);
+    },
     child: Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
