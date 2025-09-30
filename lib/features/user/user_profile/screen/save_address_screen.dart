@@ -89,7 +89,10 @@ Widget _addressTile(AddressController controller, address) {
         ),
         GestureDetector(
           onTap: () {
-            Get.to(() => EditAddressScreen());
+            Get.to(
+              () => EditAddressScreen(),
+              arguments: controller.addressResponse.value,
+            );
           },
           child: Image.asset(
             IconsAssetsPaths.instance.edit_icon,
