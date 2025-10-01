@@ -15,7 +15,7 @@ class UserProfileController extends GetxController {
 
   final userToken = StorageService().getData('accessToken');
 
-  /// Menu list
+  /// Menu list 
   final List<ProfileMenuItem> profilemenuList = [
     ProfileMenuItem(
       leadingImage: IconsAssetsPaths.instance.editsicon,

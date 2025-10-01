@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
@@ -18,13 +19,13 @@ class EditUserProfileController extends GetxController {
   final numberController = TextEditingController();
 
   final userEmail = StorageService().getData('email');
+  final token = StorageService().getData('token');
 
   final RxBool isUploadingImage = false.obs;
   final profileImageUrl = ''.obs;
 
   var profileImage = Rx<File?>(null);
 
-  /// Pick image from gallery
   pickImageFromGallery() async {
     try {
       final pickedFile = await ImagePicker().pickImage(
@@ -42,44 +43,27 @@ class EditUserProfileController extends GetxController {
     }
   }
 
-  /// Update user profile API call
   Future<void> updateProfile() async {
     EasyLoading.show(status: "Loading...");
     try {
-      final token = StorageService().getData('accessToken');
-      if (token == null || token.toString().isEmpty) {
-        EasyLoading.showError("No token found!");
-        return;
-      }
-
       var uri = Uri.parse(ApiEndPoints.editProfileUpdate);
+
       var request = http.MultipartRequest("PATCH", uri);
-
-      // ✅ Authorization header (Bearer prefix is required)
-      request.headers['Authorization'] = "Bearer $token";
+      // ✅ Token header add
+      request.headers['Authorization'] = "$token";
       request.headers['Accept'] = "application/json";
-
-      log("Request Headers: ${request.headers}");
-
-      // ✅ Attach image if user selected one
+      // ✅ Image add
       if (profileImage.value != null) {
         request.files.add(
           await http.MultipartFile.fromPath("image", profileImage.value!.path),
         );
       }
 
-      // ✅ Send as separate fields (if backend expects multipart form-data)
-      request.fields["name"] = fullNameController.text.trim();
-      request.fields["phoneNumber"] = numberController.text.trim();
-
-      // ✅ If backend requires JSON body inside a single field,
-      // uncomment the following instead:
-      /*
+      // ✅ bodyData add as JSON string
       request.fields["bodyData"] = jsonEncode({
         "name": fullNameController.text.trim(),
         "phoneNumber": numberController.text.trim(),
       });
-      */
 
       // ✅ Send request
       var streamedResponse = await request.send();
@@ -87,8 +71,8 @@ class EditUserProfileController extends GetxController {
 
       log("Edit Response: $responseBody");
 
-      if (streamedResponse.statusCode == 200 ||
-          streamedResponse.statusCode == 201) {
+      if (streamedResponse.statusCode == 201 ||
+          streamedResponse.statusCode == 200) {
         await userInfoController.getUserProfileData();
         EasyLoading.showSuccess("Profile updated successfully");
         Get.back();
