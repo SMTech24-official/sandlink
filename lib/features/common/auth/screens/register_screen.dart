@@ -181,7 +181,7 @@ class RegisterScreen extends StatelessWidget {
                     onPressed: () {
                       controller.createSignupUser();
                     },
-                    // Get.toNamed(AppRouteNames.instance.registerVerify),
+
                     text: 'Register',
                   ),
                   15.verticalSpace,

@@ -11,10 +11,9 @@ class ApiEndPoints {
   // Account Verify//
   static const verifyotp = '$_baseUrl/auth/verify-otp';
   static const resendotp = '$_baseUrl/auth/send-otp-email';
-
   static const verifyuserbyemail = '$_baseUrl/auth/verify-user-by-email';
 
-  //Home categories and Most Popular //
+  //Home categories and Most Popular
   static const categories = '$_baseUrl/categories';
   static const mostPopular = '$_baseUrl/products';
   // User Profile Update //
@@ -27,7 +26,6 @@ class ApiEndPoints {
   static const getAddress = '$_baseUrl/users/single-address';
   static const deleteadress = '$_baseUrl/users/delete-address';
   static const updateAddress = '$_baseUrl/users/update-address';
-
 
   static const deleteaccunt = '$_baseUrl/users/delete-account';
 
