@@ -49,16 +49,10 @@ class AddressController extends GetxController {
       final response = await NetworkCaller().deleteRequest(
         "${ApiEndPoints.deleteadress}/$addressId",
         token: StorageService().getData('accessToken'),
-        body: {}, // send empty JSON instead of null
+        body: {},
       );
 
-      EasyLoading.dismiss();
-
-      // Success for 200/201/204
-      if (response.isSuccess ||
-          response.statusCode == 200 ||
-          response.statusCode == 201 ||
-          response.statusCode == 204) {
+      if (response.isSuccess) {
         if (addressResponse.value?.id == addressId) {
           addressResponse.value = null;
         }
@@ -66,18 +60,12 @@ class AddressController extends GetxController {
         return;
       }
 
-      // Handle errors safely
-      final message =
-          (response.responseData != null &&
-              response.responseData is Map &&
-              response.responseData['message'] != null)
-          ? response.responseData['message']
-          : 'Failed to delete address';
-      EasyLoading.showError(message);
+      EasyLoading.showError("Failed to delete address");
     } catch (e) {
-      EasyLoading.dismiss();
       EasyLoading.showError('Something went wrong');
       if (kDebugMode) print('Delete address error: $e');
+    } finally {
+      EasyLoading.dismiss();
     }
   }
 }

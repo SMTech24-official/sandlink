@@ -130,11 +130,7 @@ Widget _profileMenuList({required UserProfileController controller}) {
                 buttonTitle2: 'Yes, Delete',
                 onTap1: () => Get.back(),
                 onTap2: () async {
-                  await StorageService().clearAll();
-
-                  EasyLoading.dismiss();
-                  EasyLoading.showSuccess('Account Delete Successfully');
-
+                  controller.deleteaccunt();
                   Get.offAllNamed(AppRouteNames.instance.login);
                 },
               );

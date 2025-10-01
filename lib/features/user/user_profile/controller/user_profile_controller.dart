@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:sandlink/core/config/api_end_points/api_end_points.dart';
@@ -106,6 +107,30 @@ class UserProfileController extends GetxController {
       }
     } catch (e) {
       EasyLoading.showError('Error: $e');
+    } finally {
+      EasyLoading.dismiss();
+    }
+  }
+
+  Future<void> deleteaccunt() async {
+    EasyLoading.show(status: 'Deleting...');
+
+    try {
+      final response = await NetworkCaller().deleteRequest(
+        ApiEndPoints.deleteaccunt,
+        token: StorageService().getData('accessToken'),
+        body: {},
+      );
+
+      if (response.isSuccess) {
+        EasyLoading.showSuccess('Accunt deleted successfully');
+        return;
+      }
+
+      EasyLoading.showError("Accunt deleted Faild");
+    } catch (e) {
+      EasyLoading.showError('Something went wrong');
+      if (kDebugMode) print('Delete address error: $e');
     } finally {
       EasyLoading.dismiss();
     }
