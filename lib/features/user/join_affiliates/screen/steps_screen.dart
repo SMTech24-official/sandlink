@@ -118,7 +118,7 @@ class StepsScreen extends StatelessWidget {
             ),
 
             Expanded(
-              child: Container(
+              child: SizedBox(
                 width: double.infinity.w,
                 child: Obx(() {
                   switch (controller.currentStep.value) {

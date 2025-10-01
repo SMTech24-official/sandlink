@@ -1,12 +1,11 @@
 import 'dart:developer';
-
 import 'package:flutter/foundation.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 
 class ChooseRoleController extends GetxController {
-  var selectedRole = " ".obs;
+  var selectedRole = ''.obs;
 
   var currentAddress = ''.obs;
   var latitude = 0.0.obs;
@@ -17,19 +16,11 @@ class ChooseRoleController extends GetxController {
   final postalCode = ''.obs;
   final country = ''.obs;
 
-  void selectRole(String role) async{
+  void selectRole(String role) {
     selectedRole.value = role;
-
   }
 
-
-
   /// Get current location with permission check
-
-
-
-
-
   Future<void> getCurrentLocation() async {
     try {
       bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
@@ -53,21 +44,22 @@ class ChooseRoleController extends GetxController {
       }
 
       Position position = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high);
+        locationSettings: const LocationSettings(
+          accuracy: LocationAccuracy.best,
+          timeLimit: Duration(seconds: 15), // optional safeguard
+        ),
+      );
 
       latitude.value = position.latitude;
       longitude.value = position.longitude;
 
-
-      log("lat:${position.latitude}");
-      log("log:${position.longitude}");
+      log("Latitude: ${position.latitude}");
+      log("Longitude: ${position.longitude}");
 
       await getAddressFromCoordinates(latitude.value, longitude.value);
     } catch (e) {
       currentAddress.value = "Unable to get location";
-      if (kDebugMode) {
-        print("Error getting location: $e");
-      }
+      if (kDebugMode) log("Error getting location: $e");
     }
   }
 
@@ -76,31 +68,22 @@ class ChooseRoleController extends GetxController {
     try {
       List<Placemark> placemarks = await placemarkFromCoordinates(lat, lng);
       if (placemarks.isNotEmpty) {
-        Placemark place = placemarks[0];
-        currentAddress.value = "${place.street}, ${place.locality}, ${place.postalCode}, ${place.country}";
+        Placemark place = placemarks.first;
+        currentAddress.value =
+            "${place.street}, ${place.locality}, ${place.postalCode}, ${place.country}";
 
-        street.value = "${place.street}";
-        locality.value = "${place.locality}";
-        postalCode.value = "${place.postalCode}";
-        country.value = "${place.country}";
+        street.value = place.street ?? "";
+        locality.value = place.locality ?? "";
+        postalCode.value = place.postalCode ?? "";
+        country.value = place.country ?? "";
 
-        log("LOC:${currentAddress.value}");
-
+        log("Full Address: ${currentAddress.value}");
+      } else {
+        currentAddress.value = "Unknown location";
       }
     } catch (e) {
       currentAddress.value = "Unknown location";
-      if (kDebugMode) {
-        print("Error getting address: $e");
-      }
+      if (kDebugMode) log("Error getting address: $e");
     }
   }
-
-
-  //
-  // void riderBasicScreen(String role){
-  //    if(role == 'rider'){
-  //      Get.to(()=>RiderPersonalInformationScreen());
-  //    }
-  //
-  // }
 }
