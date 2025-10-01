@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -27,7 +26,6 @@ class PricingPlanScreen extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.w),
           child: Container(
-            height: Get.height / 1,
             width: double.infinity.w,
             decoration: BoxDecoration(
               border: Border.all(color: AppColors.lightGreyD1),
@@ -37,39 +35,32 @@ class PricingPlanScreen extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: Column(
                 children: [
-                  SizedBox(
-                    height: Get.height / 7.2.h,
-                    width: double.infinity.w,
-
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 24.h),
-                      child: Column(
-                        children: [
-                          CustomText(
-                            text: 'Pricing Plan',
-                            color: AppColors.blackColor,
-                            fontSize: 18.sp,
-                            fontWeight: FontWeight.w600,
-                          ),
-                          SizedBox(height: 8.h),
-                          CustomText(
-                            text: 'Find the Perfect Plan for Your Goals',
-                            color: AppColors.lightGrey,
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ],
-                      ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 24.h),
+                    child: Column(
+                      children: [
+                        CustomText(
+                          text: 'Pricing Plan',
+                          color: AppColors.blackColor,
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        SizedBox(height: 8.h),
+                        CustomText(
+                          text: 'Find the Perfect Plan for Your Goals',
+                          color: AppColors.lightGrey,
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ],
                     ),
                   ),
-                  SizedBox(
-                    height: Get.height / 1.4,
-                    width: double.infinity.w,
+                  Expanded(
                     child: ListView.separated(
                       separatorBuilder: (_, index) => SizedBox(height: 8.h),
-                      itemCount: controller.purchasePlanList.length,
+                      itemCount: controller.subscriptionPlanList.length,
                       itemBuilder: (_, index) {
-                        final items = controller.purchasePlanList[index];
+                        final items = controller.subscriptionPlanList[index];
                         return Container(
                           height: 308.h,
                           width: double.infinity.w,
@@ -89,7 +80,7 @@ class PricingPlanScreen extends StatelessWidget {
                               ),
                               SizedBox(height: 12.h),
                               CustomText(
-                                text: items.planType,
+                                text: items.planName ?? '',
                                 color: AppColors.blackColor,
                                 fontSize: 18.sp,
                                 fontWeight: FontWeight.w500,
@@ -97,7 +88,7 @@ class PricingPlanScreen extends StatelessWidget {
                               SizedBox(height: 8.h),
                               CustomText(
                                 textAlign: TextAlign.center,
-                                text: items.planDetails,
+                                text: items.description ?? '',
                                 color: AppColors.lightGrey,
                                 fontSize: 14.sp,
                                 fontWeight: FontWeight.w400,
@@ -118,7 +109,8 @@ class PricingPlanScreen extends StatelessWidget {
                                     ),
                                     CustomText(
                                       textAlign: TextAlign.center,
-                                      text: items.amount,
+                                      text:
+                                          items.price?.toStringAsFixed(2) ?? '',
                                       color: AppColors.primaryColor,
                                       fontSize: 40.sp,
                                       fontWeight: FontWeight.w500,
@@ -127,7 +119,7 @@ class PricingPlanScreen extends StatelessWidget {
                                       alignment: Alignment.bottomRight,
                                       child: CustomText(
                                         textAlign: TextAlign.center,
-                                        text: '/ ${items.packageType}',
+                                        text: '/ ${items.interval}',
                                         color: AppColors.primaryColor,
                                         fontSize: 16.sp,
                                         fontWeight: FontWeight.w500,
@@ -142,13 +134,7 @@ class PricingPlanScreen extends StatelessWidget {
                                 child: CustomButton(
                                   text: 'Purchase Plan',
                                   onPressed: () {
-                                    if (items.planID == 0) {
-                                      Get.to(() => StepsScreen());
-                                      if (kDebugMode) {
-                                        print('click');
-                                      }
-                                    } else if (items.planID == 1) {
-                                    } else if (items.planID == 3) {}
+                                    Get.to(() => StepsScreen());
                                   },
                                 ),
                               ),
