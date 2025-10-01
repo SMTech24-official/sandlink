@@ -31,7 +31,7 @@ class AddAddressController extends GetxController {
 
       final body = {"locationType": locationName, "address": address};
 
-      final String token = StorageService().getData('token');
+      final String token = StorageService().getData('accessToken');
 
       final response = await NetworkCaller().postRequest(
         ApiEndPoints.addAddress,

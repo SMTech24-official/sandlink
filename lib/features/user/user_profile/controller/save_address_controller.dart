@@ -20,7 +20,7 @@ class AddressController extends GetxController {
     }
   }
 
-  Future<void> getAddress(String addressId) async {
+  Future<void> getAddress(String? addressId) async {
     EasyLoading.show(status: "Loading...");
 
     try {
@@ -42,7 +42,7 @@ class AddressController extends GetxController {
     }
   }
 
-  Future<void> deleteAddress(String addressId) async {
+  Future<void> deleteAddress(String? addressId) async {
     EasyLoading.show(status: 'Deleting...');
 
     try {
