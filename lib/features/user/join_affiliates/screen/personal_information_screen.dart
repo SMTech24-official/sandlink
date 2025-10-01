@@ -87,6 +87,71 @@ class PersonalInformationScreen extends StatelessWidget {
 
                             keyboardType: TextInputType.text,
                           ),
+                          // Address suggestions dropdown
+                          Obx(() {
+                            final suggestions = controller.addressSuggestions;
+                            if (suggestions.isEmpty) {
+                              return const SizedBox.shrink();
+                            }
+                            return Container(
+                              margin: EdgeInsets.only(top: 8.h),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(8.r),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.05),
+                                    blurRadius: 8,
+                                    offset: const Offset(0, 2),
+                                  ),
+                                ],
+                                border: Border.all(
+                                  color: AppColors.lightGreyD1,
+                                ),
+                              ),
+                              constraints: BoxConstraints(maxHeight: 220.h),
+                              child: ListView.separated(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: suggestions.length,
+                                separatorBuilder: (_, __) => Divider(
+                                  height: 1,
+                                  color: AppColors.lightGreyD1,
+                                ),
+                                itemBuilder: (_, idx) {
+                                  final s = suggestions[idx];
+                                  return ListTile(
+                                    dense: true,
+                                    contentPadding: EdgeInsets.symmetric(
+                                      horizontal: 12.w,
+                                      vertical: 6.h,
+                                    ),
+                                    leading: const Icon(
+                                      Icons.location_on_outlined,
+                                    ),
+                                    title: Text(
+                                      s.title,
+                                      style: TextStyle(
+                                        fontSize: 14.sp,
+                                        color: AppColors.blackColor,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                    subtitle: s.subtitle.isNotEmpty
+                                        ? Text(
+                                            s.subtitle,
+                                            style: TextStyle(
+                                              fontSize: 12.sp,
+                                              color: AppColors.lightGrey,
+                                            ),
+                                          )
+                                        : null,
+                                    onTap: () => controller.selectSuggestion(s),
+                                  );
+                                },
+                              ),
+                            );
+                          }),
                           SizedBox(height: 12.h),
                         ],
                       ),
@@ -131,25 +196,3 @@ class PersonalInformationScreen extends StatelessWidget {
     );
   }
 }
-
-// Widget _CustomButton({required StepsController controller}){
-//   return Padding(padding:  EdgeInsets.symmetric(horizontal: 16.w),
-//     child: Container(
-//       height: 56.h,
-//       width: double.infinity.w,
-//
-//         child: CustomButton(
-//
-//             onPressed: controller.nextStep,
-//         child: Row(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: [
-//             CustomText(text: 'Next',color: AppColors.whiteColor,fontSize: 18.sp,),
-//             SizedBox(width: 5.w,),
-//             Icon(Icons.arrow_forward,color: AppColors.whiteColor,size: 20,),
-//           ],
-//         ),
-//         ),
-//     ),
-//   );
-// }

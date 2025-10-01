@@ -56,11 +56,11 @@ class UserProfileController extends GetxController {
 
   @override
   void onInit() {
-    getUserProfileData();
     super.onInit();
+    getUserProfileData();
   }
 
-  final token = StorageService().getData('token');
+  final token = StorageService().getData('accessToken');
 
   var getUserName = ''.obs;
   var getUserEmail = ''.obs;
