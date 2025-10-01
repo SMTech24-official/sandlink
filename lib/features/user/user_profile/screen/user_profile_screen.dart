@@ -60,13 +60,30 @@ Widget _userProfile({
         SizedBox(height: 16.h),
         CircleAvatar(
           backgroundColor: Colors.amber,
-          backgroundImage: NetworkImage(
-            controller.getUserProfile.value.isNotEmpty
-                ? controller.getUserProfile.value
-                : "https://cdn-icons-png.flaticon.com/512/180/180644.png",
-          ),
           radius: 56.r,
+          child: ClipOval(
+            child: (controller.getUserProfile.value.isNotEmpty)
+                ? Image.network(
+                    controller.getUserProfile.value,
+                    width: 112.r,
+                    height: 112.r,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Image.network(
+                        "https://cdn-icons-png.flaticon.com/512/180/180644.png",
+                        width: 112.r,
+                        height: 112.r,
+                      );
+                    },
+                  )
+                : Image.network(
+                    "https://cdn-icons-png.flaticon.com/512/180/180644.png",
+                    width: 112.r,
+                    height: 112.r,
+                  ),
+          ),
         ),
+
         SizedBox(height: 16.h),
         CustomText(
           text: controller.getUserName.value,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:sandlink/core/services/DBServices/local_db_services/storage_service.dart';
+import 'package:sandlink/features/user/user_profile/model/address_model.dart';
 import '../../../../core/app_colors/app_colors.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
 import '../../../../core/widgets/custom_button.dart';
@@ -11,11 +12,15 @@ import '../controller/edit_address_controller.dart';
 
 class EditAddressScreen extends StatelessWidget {
   EditAddressScreen({super.key});
-  final data = Get.arguments;
+  final AddressData data = Get.arguments as AddressData;
   final controller = Get.put(EditAddressController());
 
   @override
   Widget build(BuildContext context) {
+    // Pre-fill controller fields
+    controller.editAddressLocationNameController.text = data.locationType;
+    controller.editAddressController.text = data.address;
+
     return Scaffold(
       appBar: CustomAppBar(
         title: 'Edit Address',
@@ -23,17 +28,15 @@ class EditAddressScreen extends StatelessWidget {
         centerTitle: true,
       ),
       body: SafeArea(
-        child: Center(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                _addAddressinfo(controller: controller),
-                Spacer(),
-                _addAddressButton(),
-              ],
-            ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              _addAddressInfo(controller: controller),
+              Spacer(),
+              _addAddressButton(controller: controller, data: data),
+            ],
           ),
         ),
       ),
@@ -41,7 +44,7 @@ class EditAddressScreen extends StatelessWidget {
   }
 }
 
-Widget _addAddressinfo({required EditAddressController controller}) {
+Widget _addAddressInfo({required EditAddressController controller}) {
   return Form(
     child: Column(
       children: [
@@ -49,14 +52,7 @@ Widget _addAddressinfo({required EditAddressController controller}) {
           textController: controller.editAddressLocationNameController,
           borderSide: BorderSide(color: AppColors.lightGreyD1),
           headerTitle: 'Location Name',
-          headerFontWeight: FontWeight.w500,
-          headerTextColor: AppColors.blackColor,
-          fontSize: 14.sp,
-          headerfontSize: 16.sp,
-          hintTextFontWeight: FontWeight.w400,
-          hintTextColor: AppColors.lightGrey,
           hintText: 'Home',
-          keyboardType: TextInputType.text,
         ),
         SizedBox(height: 16.h),
         CustomInputField(
@@ -64,14 +60,7 @@ Widget _addAddressinfo({required EditAddressController controller}) {
           textController: controller.editAddressController,
           borderSide: BorderSide(color: AppColors.lightGreyD1),
           headerTitle: 'Address',
-          headerFontWeight: FontWeight.w500,
-          headerTextColor: AppColors.blackColor,
-          fontSize: 14.sp,
-          headerfontSize: 16.sp,
-          hintTextFontWeight: FontWeight.w400,
-          hintTextColor: AppColors.lightGrey,
           hintText: '456 Business Avenue, City, State',
-          keyboardType: TextInputType.emailAddress,
         ),
         SizedBox(height: 16.h),
       ],
@@ -79,24 +68,22 @@ Widget _addAddressinfo({required EditAddressController controller}) {
   );
 }
 
-Widget _addAddressButton() {
-  final controller = Get.put(EditAddressController());
-
+Widget _addAddressButton({
+  required EditAddressController controller,
+  required AddressData data,
+}) {
   return CustomButton(
     onPressed: () {
-      final String? addressId = StorageService().getData('id');
+      var addressId = StorageService().getData('id');
       controller.saveChanges(addressId);
     },
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        CustomText(
-          text: "Save Changes",
-          color: AppColors.whiteColor,
-          fontWeight: FontWeight.w500,
-          fontSize: 18.sp,
-        ),
-      ],
+    child: Center(
+      child: CustomText(
+        text: "Save Changes",
+        color: AppColors.whiteColor,
+        fontWeight: FontWeight.w500,
+        fontSize: 18.sp,
+      ),
     ),
   );
 }
