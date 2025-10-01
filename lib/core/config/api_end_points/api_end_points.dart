@@ -26,7 +26,8 @@ class ApiEndPoints {
   static const addAddress = '$_baseUrl/users/create-address';
   static const getAddress = '$_baseUrl/users/single-address';
   static const deleteadress = '$_baseUrl/users/delete-address';
-  static const updateAddress = '$_baseUrl/users/update-address';
+  static const updateAddress = '$_baseUrl/users/update-address/';
+  static const deleteaccunt = '$_baseUrl/users/delete-account';
 
   //Lokman
   static const pricingPlan = '$_baseUrl/subscription-plans';
