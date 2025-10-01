@@ -69,12 +69,6 @@ class UserProfileController extends GetxController {
   var getUserProfile = ''.obs;
   var getUserphone = ''.obs;
 
-  @override
-  void onInit() {
-    getUserProfileData();
-    super.onInit();
-  }
-
   /// Fetch user profile
   Future<void> getUserProfileData() async {
     try {
