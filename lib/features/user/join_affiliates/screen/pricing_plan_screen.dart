@@ -27,7 +27,6 @@ class PricingPlanScreen extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.w),
           child: Container(
-            height: Get.height / 1,
             width: double.infinity.w,
             decoration: BoxDecoration(
               border: Border.all(color: AppColors.lightGreyD1),
@@ -37,34 +36,27 @@ class PricingPlanScreen extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: Column(
                 children: [
-                  SizedBox(
-                    height: Get.height / 7.2.h,
-                    width: double.infinity.w,
-
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 24.h),
-                      child: Column(
-                        children: [
-                          CustomText(
-                            text: 'Pricing Plan',
-                            color: AppColors.blackColor,
-                            fontSize: 18.sp,
-                            fontWeight: FontWeight.w600,
-                          ),
-                          SizedBox(height: 8.h),
-                          CustomText(
-                            text: 'Find the Perfect Plan for Your Goals',
-                            color: AppColors.lightGrey,
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ],
-                      ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 24.h),
+                    child: Column(
+                      children: [
+                        CustomText(
+                          text: 'Pricing Plan',
+                          color: AppColors.blackColor,
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        SizedBox(height: 8.h),
+                        CustomText(
+                          text: 'Find the Perfect Plan for Your Goals',
+                          color: AppColors.lightGrey,
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ],
                     ),
                   ),
-                  SizedBox(
-                    height: Get.height / 1.4,
-                    width: double.infinity.w,
+                  Expanded(
                     child: ListView.separated(
                       separatorBuilder: (_, index) => SizedBox(height: 8.h),
                       itemCount: controller.purchasePlanList.length,
