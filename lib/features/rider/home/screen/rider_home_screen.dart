@@ -20,239 +20,242 @@ class RiderHomeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFFF8F8F8),
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              flex: 1,
-              child: Column(
-                children: [
-                  _topAppBarWidget(),
-                  SizedBox(height: 24.h),
-                  _offlineCard(controller: controller),
-                ],
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                flex: 1,
+                child: Column(
+                  children: [
+                    _topAppBarWidget(),
+                    SizedBox(height: 24.h),
+                    _offlineCard(controller: controller),
+                  ],
+                ),
               ),
-            ),
-            Expanded(
-              flex: 3,
-              child: Obx(() {
-                if (!controller.isSwitched.value) {
-                  return Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 150.h,
-                    ),
-                    child: Container(
-                      height: 120.h,
-                      width: double.infinity.w,
-                      decoration: BoxDecoration(
-                        color: AppColors.whiteColor,
-                        borderRadius: BorderRadius.all(Radius.circular(8.r)),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          CustomText(
-                            text: '''You're offline''',
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.blackColor,
-                            fontSize: 20.sp,
-                          ),
-                          SizedBox(height: 6.h),
-                          CustomText(
-                            text: 'Switch online to see available jobs',
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.lightGrey,
-                            fontSize: 14.sp,
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                }
-                return ListView.separated(
-                  separatorBuilder: (_, index) => SizedBox(height: 12.h),
-                  itemCount: controller.availabelOrderList.length,
-                  itemBuilder: (_, index) {
-                    final itemData = controller.availabelOrderList[index];
+              Expanded(
+                flex: 3,
+                child: Obx(() {
+                  if (!controller.isSwitched.value) {
                     return Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.w),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 150.h,
+                      ),
                       child: Container(
+                        height: 120.h,
                         width: double.infinity.w,
                         decoration: BoxDecoration(
                           color: AppColors.whiteColor,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(8.r),
-                          ),
+                          borderRadius: BorderRadius.all(Radius.circular(8.r)),
                         ),
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 12.w,
-                            vertical: 12.h,
-                          ),
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Container(
-                                    height: 50.h,
-                                    width: 50.w,
-                                    decoration: BoxDecoration(
-                                      color: AppColors.blueColorF7,
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(8.r),
-                                      ),
-                                    ),
-              
-                                    child: Image.asset(
-                                      IconsAssetsPaths.instance.orderimage,
-                                      fit: BoxFit.fill,
-                                      height: 44.h,
-                                      width: 44.w,
-                                    ),
-                                  ),
-                                  SizedBox(width: 8.w),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          CustomText(
-                                            text: itemData.quantity,
-                                            fontSize: 16.sp,
-                                            fontWeight: FontWeight.w500,
-                                            color: AppColors.blackColor,
-                                          ),
-                                          SizedBox(width: 5.w),
-                                          CustomText(
-                                            text: itemData.productName,
-                                            fontSize: 16.sp,
-                                            fontWeight: FontWeight.w500,
-                                            color: AppColors.blackColor,
-                                          ),
-                                        ],
-                                      ),
-                                      CustomText(
-                                        text: itemData.orderID,
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.w400,
-                                        color: AppColors.lightGrey,
-                                      ),
-                                    ],
-                                  ),
-                                  Spacer(),
-                                  Container(
-                                    height: 25.h,
-                                    width: 80.w,
-                                    decoration: BoxDecoration(
-                                      color: AppColors.blueColorF7,
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(4.r),
-                                      ),
-                                    ),
-                                    child: Center(
-                                      child: CustomText(
-                                        text: itemData.price,
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.w500,
-                                        color: AppColors.primaryColor,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 12.h),
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.location_on_outlined,
-                                    size: 20,
-                                    color: AppColors.greenColor,
-                                  ),
-                                  SizedBox(width: 5.w),
-                                  CustomText(
-                                    maxLines: 2,
-                                    text: itemData.pickupLocation,
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.w400,
-                                    color: AppColors.blackColor,
-                                  ),
-                                  Spacer(),
-                                  CustomText(
-                                    text: "( ${itemData.pickupDistance} km)",
-                                    fontSize: 12.sp,
-                                    fontWeight: FontWeight.w400,
-                                    color: AppColors.blackColor,
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 6.h),
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.location_on_outlined,
-                                    size: 20,
-                                    color: AppColors.redColor,
-                                  ),
-                                  SizedBox(width: 5.w),
-                                  CustomText(
-                                    maxLines: 2,
-                                    text: itemData.deliveryLocation,
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.w400,
-                                    color: AppColors.blackColor,
-                                  ),
-                                  Spacer(),
-                                  CustomText(
-                                    text:
-                                        "( ${itemData.deliveryDistance} km)",
-                                    fontSize: 12.sp,
-                                    fontWeight: FontWeight.w400,
-                                    color: AppColors.blackColor,
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 16.h),
-                              Align(
-                                alignment: Alignment.bottomRight,
-                                child: SizedBox(
-                                  height: 45.h,
-                                  width: 120.w,
-                                  child: CustomButton(
-                                    onPressed: () {
-                                      Get.to(
-                                        () => OrderDetailsScreen(
-                                          itemName: itemData.productName,
-                                          itrmQuantity: itemData.quantity,
-                                          itemprice: itemData.price,
-                                          itemOrder: itemData.orderID,
-                                          imageurl: itemData.imageUrl,
-                                          pickupLocation:
-                                              itemData.pickupLocation,
-                                          pickupduration:
-                                              itemData.pickupDistance,
-                                          deliveryLocation:
-                                              itemData.deliveryLocation,
-                                          deliveryduration:
-                                              itemData.deliveryDistance,
-                                        ),
-                                      );
-                                    },
-                                    text: 'View Details',
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CustomText(
+                              text: '''You're offline''',
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.blackColor,
+                              fontSize: 20.sp,
+                            ),
+                            SizedBox(height: 6.h),
+                            CustomText(
+                              text: 'Switch online to see available jobs',
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.lightGrey,
+                              fontSize: 14.sp,
+                            ),
+                          ],
                         ),
                       ),
                     );
-                  },
-                );
-              }),
-            ),
-          ],
+                  }
+                  return ListView.separated(
+                    separatorBuilder: (_, index) => SizedBox(height: 12.h),
+                    itemCount: controller.availabelOrderList.length,
+                    itemBuilder: (_, index) {
+                      final itemData = controller.availabelOrderList[index];
+                      return Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16.w),
+                        child: Container(
+                          width: double.infinity.w,
+                          decoration: BoxDecoration(
+                            color: AppColors.whiteColor,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(8.r),
+                            ),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 12.w,
+                              vertical: 12.h,
+                            ),
+                            child: Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    Container(
+                                      height: 50.h,
+                                      width: 50.w,
+                                      decoration: BoxDecoration(
+                                        color: AppColors.blueColorF7,
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(8.r),
+                                        ),
+                                      ),
+
+                                      child: Image.asset(
+                                        IconsAssetsPaths.instance.orderimage,
+                                        fit: BoxFit.fill,
+                                        height: 44.h,
+                                        width: 44.w,
+                                      ),
+                                    ),
+                                    SizedBox(width: 8.w),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            CustomText(
+                                              text: itemData.quantity,
+                                              fontSize: 16.sp,
+                                              fontWeight: FontWeight.w500,
+                                              color: AppColors.blackColor,
+                                            ),
+                                            SizedBox(width: 5.w),
+                                            CustomText(
+                                              text: itemData.productName,
+                                              fontSize: 16.sp,
+                                              fontWeight: FontWeight.w500,
+                                              color: AppColors.blackColor,
+                                            ),
+                                          ],
+                                        ),
+                                        CustomText(
+                                          text: itemData.orderID,
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.w400,
+                                          color: AppColors.lightGrey,
+                                        ),
+                                      ],
+                                    ),
+                                    Spacer(),
+                                    Container(
+                                      height: 25.h,
+                                      width: 80.w,
+                                      decoration: BoxDecoration(
+                                        color: AppColors.blueColorF7,
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(4.r),
+                                        ),
+                                      ),
+                                      child: Center(
+                                        child: CustomText(
+                                          text: itemData.price,
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.w500,
+                                          color: AppColors.primaryColor,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 12.h),
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.location_on_outlined,
+                                      size: 20,
+                                      color: AppColors.greenColor,
+                                    ),
+                                    SizedBox(width: 5.w),
+                                    CustomText(
+                                      maxLines: 2,
+                                      text: itemData.pickupLocation,
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w400,
+                                      color: AppColors.blackColor,
+                                    ),
+                                    Spacer(),
+                                    CustomText(
+                                      text: "( ${itemData.pickupDistance} km)",
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w400,
+                                      color: AppColors.blackColor,
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 6.h),
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.location_on_outlined,
+                                      size: 20,
+                                      color: AppColors.redColor,
+                                    ),
+                                    SizedBox(width: 5.w),
+                                    CustomText(
+                                      maxLines: 2,
+                                      text: itemData.deliveryLocation,
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w400,
+                                      color: AppColors.blackColor,
+                                    ),
+                                    Spacer(),
+                                    CustomText(
+                                      text:
+                                          "( ${itemData.deliveryDistance} km)",
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w400,
+                                      color: AppColors.blackColor,
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 16.h),
+                                Align(
+                                  alignment: Alignment.bottomRight,
+                                  child: SizedBox(
+                                    height: 45.h,
+                                    width: 120.w,
+                                    child: CustomButton(
+                                      onPressed: () {
+                                        Get.to(
+                                          () => OrderDetailsScreen(
+                                            itemName: itemData.productName,
+                                            itrmQuantity: itemData.quantity,
+                                            itemprice: itemData.price,
+                                            itemOrder: itemData.orderID,
+                                            imageurl: itemData.imageUrl,
+                                            pickupLocation:
+                                                itemData.pickupLocation,
+                                            pickupduration:
+                                                itemData.pickupDistance,
+                                            deliveryLocation:
+                                                itemData.deliveryLocation,
+                                            deliveryduration:
+                                                itemData.deliveryDistance,
+                                          ),
+                                        );
+                                      },
+                                      text: 'View Details',
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                }),
+              ),
+            ],
+          ),
         ),
       ),
     );

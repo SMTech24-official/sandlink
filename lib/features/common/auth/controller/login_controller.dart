@@ -50,8 +50,6 @@ class LoginController extends GetxController {
         await StorageService().saveData('accessToken', token);
         await StorageService().saveData('UserID', userID);
         await StorageService().saveData('role', role);
-        await StorageService().saveData('name', name);
-        await StorageService().saveData('email', email);
 
         EasyLoading.dismiss();
         EasyLoading.showSuccess("Login Successful");
@@ -66,7 +64,7 @@ class LoginController extends GetxController {
       } else {
         EasyLoading.dismiss();
         EasyLoading.showError(
-          response.responseData['message'] ?? "Invalid credentials ❌",
+          response.responseData['message'] ?? "Invalid credentials",
         );
       }
     } catch (e) {

@@ -11,10 +11,11 @@ import '../model/get_user_profile_model.dart';
 import '../model/profile_menu_item.dart';
 
 class UserProfileController extends GetxController {
-  final userEmail = StorageService().getData('email');
-  final username = StorageService().getData('name');
+  /// Stored values
+
   final userToken = StorageService().getData('accessToken');
 
+  /// Menu list
   final List<ProfileMenuItem> profilemenuList = [
     ProfileMenuItem(
       leadingImage: IconsAssetsPaths.instance.editsicon,
@@ -54,40 +55,58 @@ class UserProfileController extends GetxController {
     ),
   ];
 
+  /// Token
+  final token = StorageService().getData('token');
+
+  /// Observables for UI
+  var getUserName = ''.obs;
+  var getUserEmail = ''.obs;
+  var getUserProfile = ''.obs;
+  var getUserphone = ''.obs;
+
   @override
   void onInit() {
     getUserProfileData();
     super.onInit();
   }
 
-  final token = StorageService().getData('token');
-
-  var getUserName = ''.obs;
-  var getUserEmail = ''.obs;
-  var getUserProfile = ''.obs;
-  var getUserphone = ''.obs;
-
+  /// Fetch user profile
   Future<void> getUserProfileData() async {
-    // EasyLoading.show(status: 'Loading...');
     try {
+      EasyLoading.show(status: 'Loading...');
       final response = await NetworkCaller().getRequest(
         ApiEndPoints.getUserProfile,
         token: token,
       );
+
       if (response.isSuccess) {
         var getdata = Data.fromJson(response.responseData);
-        getUserName.value = getdata.name ?? "N/A";
-        getUserEmail.value = getdata.email ?? "N/A";
-        getUserProfile.value =
-            getdata.image ??
-            "https://cdn-icons-png.flaticon.com/512/180/180644.png";
-        getUserphone.value = getdata.phoneNumber ?? "";
 
-        log('Show Data:${getdata.email}');
+        /// Set values safely with fallbacks
+        getUserName.value = (getdata.name?.isNotEmpty == true)
+            ? getdata.name!
+            : "N/A";
+        getUserEmail.value = (getdata.email?.isNotEmpty == true)
+            ? getdata.email!
+            : "N/A";
+        getUserphone.value = (getdata.phoneNumber?.isNotEmpty == true)
+            ? getdata.phoneNumber!
+            : "N/A";
+
+        /// ✅ Image must not be empty string
+        if (getdata.image != null && getdata.image!.isNotEmpty) {
+          getUserProfile.value = getdata.image!;
+        } else {
+          getUserProfile.value =
+              "https://cdn-icons-png.flaticon.com/512/180/180644.png";
+        }
+
+        log('Profile Loaded: ${getdata.email}');
+      } else {
+        EasyLoading.showError("Failed to load profile");
       }
     } catch (e) {
-      EasyLoading.dismiss();
-      EasyLoading.showError('Error:$e');
+      EasyLoading.showError('Error: $e');
     } finally {
       EasyLoading.dismiss();
     }
