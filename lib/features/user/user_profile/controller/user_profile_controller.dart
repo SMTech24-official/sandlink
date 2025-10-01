@@ -15,7 +15,7 @@ class UserProfileController extends GetxController {
 
   final userToken = StorageService().getData('accessToken');
 
-  /// Menu list 
+  /// Menu list
   final List<ProfileMenuItem> profilemenuList = [
     ProfileMenuItem(
       leadingImage: IconsAssetsPaths.instance.editsicon,
@@ -55,20 +55,19 @@ class UserProfileController extends GetxController {
     ),
   ];
 
-  /// Token
-  final token = StorageService().getData('token');
+  @override
+  void onInit() {
+    super.onInit();
+    getUserProfileData();
+  }
+
+  final token = StorageService().getData('accessToken');
 
   /// Observables for UI
   var getUserName = ''.obs;
   var getUserEmail = ''.obs;
   var getUserProfile = ''.obs;
   var getUserphone = ''.obs;
-
-  @override
-  void onInit() {
-    getUserProfileData();
-    super.onInit();
-  }
 
   /// Fetch user profile
   Future<void> getUserProfileData() async {

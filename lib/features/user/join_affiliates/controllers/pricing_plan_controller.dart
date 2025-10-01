@@ -26,11 +26,9 @@ class PricingPlanController extends GetxController {
       );
 
       if (response.isSuccess) {
-        final subscriptionPlanData = SubscriptionsPlanModel.fromJson(
-          response.responseData,
-        );
+        final subscriptionPlanData = Data.fromJson(response.responseData);
 
-        subscriptionPlanList.value = subscriptionPlanData.data?.result ?? [];
+        subscriptionPlanList.value = subscriptionPlanData.result ?? [];
       } else {
         EasyLoading.showError(response.errorMessage);
       }
