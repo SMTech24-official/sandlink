@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-
 import 'package:sandlink/core/network/network_caller.dart';
 import 'package:sandlink/core/config/api_end_points/api_end_points.dart';
 import 'package:sandlink/core/services/DBServices/local_db_services/storage_service.dart';
@@ -24,7 +23,6 @@ class EditAddressController extends GetxController {
         },
         token: token,
       );
-
       if (response.isSuccess) {
         EasyLoading.showSuccess("Address updated successfully!");
         await controller.getAddress(addressId);
@@ -35,7 +33,7 @@ class EditAddressController extends GetxController {
     } catch (e) {
       EasyLoading.showError("Something went wrong: ");
       if (kDebugMode) {
-        print("PUT Error: $e");
+        print("PATCH Error: $e");
       }
     } finally {
       EasyLoading.dismiss();
