@@ -19,7 +19,7 @@ class EditUserProfileController extends GetxController {
   final numberController = TextEditingController();
 
   final userEmail = StorageService().getData('email');
-  final token = StorageService().getData('token');
+  final token = StorageService().getData('accessToken');
 
   final RxBool isUploadingImage = false.obs;
   final profileImageUrl = ''.obs;
