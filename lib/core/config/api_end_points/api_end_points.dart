@@ -1,14 +1,5 @@
 class ApiEndPoints {
-  ApiEndPoints._internal();
-
-  static final ApiEndPoints _instance = ApiEndPoints._internal();
-
-  static ApiEndPoints get instance => _instance;
-
-  String get _baseApiEndPoint =>
-      "https://franklin-rosado-backend.vercel.app/api/v1";
-
-  String get createUserUrl => "$_baseApiEndPoint/users/pending";
+  ApiEndPoints._();
 
   static const _baseUrl = 'http://206.162.244.143:5000/api/v1';
   static const register = '$_baseUrl/auth/register';
@@ -36,4 +27,7 @@ class ApiEndPoints {
   static const getAddress = '$_baseUrl/users/single-address';
   static const deleteadress = '$_baseUrl/users/delete-address';
   static const updateAddress = '$_baseUrl/users/update-address';
+
+  //Lokman
+  static const pricingPlan = '$_baseUrl/subscription-plans';
 }

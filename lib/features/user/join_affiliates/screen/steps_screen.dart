@@ -117,33 +117,33 @@ class StepsScreen extends StatelessWidget {
               ),
             ),
 
-            Container(
-              height: Get.height / 1.3.h,
-              width: double.infinity.w,
-              color: Colors.red,
-              child: Obx(() {
-                switch (controller.currentStep.value) {
-                  case 0:
-                    // controller.title.value = 'Basic Information';
-                    return PersonalInformationScreen();
-                  case 1:
-                    //  controller.title.value = 'Phone Verification';
-                    return PhoneVerificationScreens();
+            Expanded(
+              child: Container(
+                width: double.infinity.w,
+                child: Obx(() {
+                  switch (controller.currentStep.value) {
+                    case 0:
+                      // controller.title.value = 'Basic Information';
+                      return PersonalInformationScreen();
+                    case 1:
+                      //  controller.title.value = 'Phone Verification';
+                      return PhoneVerificationScreens();
 
-                  case 2:
-                    return DocumentVerificationScreen();
-                  case 3:
-                    return PaymentNformationScreen();
-                  case 4:
-                    return ReviewYourInformationScreen();
-                  default:
-                    return const SizedBox.shrink();
-                }
-              }),
+                    case 2:
+                      return DocumentVerificationScreen();
+                    case 3:
+                      return PaymentNformationScreen();
+                    case 4:
+                      return ReviewYourInformationScreen();
+                    default:
+                      return const SizedBox.shrink();
+                  }
+                }),
+              ),
             ),
 
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.w),
+              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 6.0.h),
               child: SizedBox(
                 height: 56.h,
                 width: double.infinity,
