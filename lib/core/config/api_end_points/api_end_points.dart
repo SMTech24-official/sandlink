@@ -28,6 +28,7 @@ class ApiEndPoints {
   static const deleteadress = '$_baseUrl/users/delete-address';
   static const updateAddress = '$_baseUrl/users/update-address';
 
+
   static const deleteaccunt = '$_baseUrl/users/delete-account';
 
   //Lokman
