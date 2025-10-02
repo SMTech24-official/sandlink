@@ -15,7 +15,7 @@ class ApiEndPoints {
 
   //Home categories and Most Popular
   static const categories = '$_baseUrl/categories';
-  static const mostPopular = '$_baseUrl/products';
+  static const mostPopular = '$_baseUrl/products/most-popular';
   // User Profile Update //
 
   static const editProfileUpdate = "$_baseUrl/users/update-profile";
@@ -27,6 +27,8 @@ class ApiEndPoints {
   static const deleteadress = '$_baseUrl/users/delete-address';
   static const updateAddress = '$_baseUrl/users/update-address';
   static const deleteaccunt = '$_baseUrl/users/delete-account';
+  static const productdetails = '$_baseUrl/products/details';
+  static const addtocard = '$_baseUrl/carts/add';
 
 
   //Lokman

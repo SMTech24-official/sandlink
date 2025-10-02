@@ -4,27 +4,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
+import 'package:sandlink/features/user/home/controllers/user_home_controller.dart';
+import 'package:sandlink/features/user/home/model/most_populer_product.dart';
 import '../../../../core/app_colors/app_colors.dart';
 import '../../../../core/config/constants/assets_paths/icons_assets_paths.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
 import '../../../../core/widgets/custom_button.dart';
 import '../../../../core/wrappers/custom_text.dart';
-import '../../cart/screens/cart_screen.dart';
 import '../../my_orders/screen/user_item_reviews.dart';
 import '../controllers/category_popular_details_controller.dart';
 
 class CategoryPopularDetailsScreen extends StatelessWidget {
-  CategoryPopularDetailsScreen({super.key, this.name});
+  CategoryPopularDetailsScreen({super.key});
   final controller = Get.put(CategoryPopularDetailsController());
-
-  final String? name;
-
-  final String descriptionText =
-      """Premium quality construction sand perfect for concrete mixing, masonry work, and general construction projects. Our Builder's Choice Sand is carefully screened and washed to ensure consistent quality...""";
+  final homecontroller = Get.put(UserHomeController());
 
   @override
   Widget build(BuildContext context) {
+    final product = Get.arguments as MostProductResult;
+    if (kDebugMode) {
+      print("id...........$product");
+    }
     return Scaffold(
       appBar: CustomAppBar(
         title: 'Details',
@@ -33,232 +33,202 @@ class CategoryPopularDetailsScreen extends StatelessWidget {
       ),
 
       body: SafeArea(
-        child: Stack(
-          children: [
-            // Main content
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Column(
-                children: [
-                  _bannerSlider(controller: controller),
-                  SizedBox(height: 5.h),
-                  Container(
-                    height: 370.h,
-                    width: double.infinity.w,
-                    color: AppColors.backgroundColor,
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.vertical,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 12),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                _bannerSlider(controller: controller),
+                SizedBox(height: 5.h),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
 
+                  children: [
+                    CustomText(
+                      text: product.name ?? '',
+                      color: AppColors.darkGreyColor,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 20.sp,
+                    ),
+                    SizedBox(height: 8.h),
+
+                    Row(
+                      children: [
+                        Row(
+                          children: [
+                            CustomText(
+                              text: '₦ ${product.price}',
+                              fontSize: 16.spMin,
+                              fontWeight: FontWeight.w600,
+                            ),
+                            4.horizontalSpace,
+                            CustomText(
+                              text: 'Ton',
+                              fontSize: 14.spMin,
+                              color: AppColors.lightGrey,
+                            ),
+                          ],
+                        ),
+                        Spacer(),
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 5.h,
+                            vertical: 5.r,
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(4.r),
+                            ),
+                            color: AppColors.lightGreen,
+                          ),
+
+                          child: Center(
+                            child: CustomText(
+                              text: product.status ?? '',
+                              color: AppColors.greenColor,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 14.sp,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8.h),
+                    Row(
+                      children: [
+                        CircleAvatar(
+                          radius: 10.r,
+                          backgroundImage: AssetImage(
+                            IconsAssetsPaths.instance.buildmartimage,
+                          ),
+                        ),
+                        SizedBox(width: 5.w),
+                        CustomText(
+                          text: 'BuildMart',
+                          color: AppColors.darkGreyColor,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16.sp,
+                        ),
+                        Spacer(),
+                        Icon(Icons.star, size: 16, color: Colors.amber),
+                        SizedBox(width: 5.w),
+                        GestureDetector(
+                          onTap: () => Get.to(() => UserItemReviewsScreen()),
+                          child: CustomText(
+                            text: '5.0 (205 Reviews)',
+                            color: AppColors.lightGrey,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 16.sp,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8.h),
+
+                    Obx(
+                      () => Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           CustomText(
-                            text: "$name",
-                            color: AppColors.darkGreyColor,
+                            text: 'Description',
+                            color: AppColors.blackColor,
                             fontWeight: FontWeight.w500,
                             fontSize: 20.sp,
                           ),
                           SizedBox(height: 8.h),
-
-                          Row(
-                            children: [
-                              CustomText(
-                                text: 'Price: ',
-                                color: AppColors.darkGreyColor,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16.sp,
-                              ),
-                              CustomText(
-                                text: 'Ton',
-                                color: AppColors.lightGrey,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 10.sp,
-                              ),
-                              Spacer(),
-                              Container(
-                                height: 25.h,
-                                width: 70.w,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(4.r),
-                                  ),
-                                  color: AppColors.lightGreen,
-                                ),
-
-                                child: Center(
-                                  child: CustomText(
-                                    text: 'In Stock',
-                                    color: AppColors.greenColor,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 14.sp,
-                                  ),
-                                ),
-                              ),
-                            ],
+                          CustomText(
+                            text: product.description ?? '',
+                            maxLines: controller.isExpanded.value ? null : 3,
+                            overflow: controller.isExpanded.value
+                                ? TextOverflow.visible
+                                : TextOverflow.ellipsis,
+                            color: AppColors.lightGrey,
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w400,
                           ),
-                          SizedBox(height: 8.h),
-                          Row(
-                            children: [
-                              CircleAvatar(
-                                radius: 10.r,
-                                backgroundImage: AssetImage(
-                                  IconsAssetsPaths.instance.buildmartimage,
-                                ),
-                              ),
-                              SizedBox(width: 5.w),
-                              CustomText(
-                                text: 'BuildMart',
-                                color: AppColors.darkGreyColor,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16.sp,
-                              ),
-                              Spacer(),
-                              Icon(Icons.star, size: 16, color: Colors.amber),
-                              SizedBox(width: 5.w),
-                              GestureDetector(
-                                onTap: () =>
-                                    Get.to(() => UserItemReviewsScreen()),
-                                child: CustomText(
-                                  text: '5.0 (205 Reviews)',
-                                  color: AppColors.lightGrey,
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 16.sp,
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 8.h),
-
-                          Obx(
-                            () => Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                CustomText(
-                                  text: 'Description',
-                                  color: AppColors.blackColor,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 20.sp,
-                                ),
-                                SizedBox(height: 8.h),
-                                CustomText(
-                                  text: descriptionText,
-                                  maxLines: controller.isExpanded.value
-                                      ? null
-                                      : 3,
-                                  overflow: controller.isExpanded.value
-                                      ? TextOverflow.visible
-                                      : TextOverflow.ellipsis,
-                                  color: AppColors.lightGrey,
-                                  fontSize: 16.sp,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                                // Read more / less
-                                Align(
-                                  alignment: Alignment.centerRight,
-                                  child: InkWell(
-                                    onTap: controller.toggle,
-                                    child: Text(
-                                      controller.isExpanded.value
-                                          ? "Read Less"
-                                          : "Read More",
-                                      style: const TextStyle(
-                                        color: Colors.blue,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-
-                          SizedBox(height: 8.h),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              CustomText(
-                                text: 'Specifications',
-                                color: AppColors.darkGreyColor,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16.sp,
-                              ),
-                              SizedBox(height: 8.h),
-
-                              CustomText(
-                                text: 'Grain Size: 0.1mm - 2mm',
-                                color: AppColors.lightGrey,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 16.sp,
-                              ),
-                              CustomText(
-                                text: 'Moisture Content: <5%',
-                                color: AppColors.lightGrey,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 16.sp,
-                              ),
-                              CustomText(
-                                text: 'Clay Content: <3%',
-                                color: AppColors.lightGrey,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 16.sp,
-                              ),
-                              CustomText(
-                                text: 'Organic Matter: <0.5%',
-                                color: AppColors.lightGrey,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 16.sp,
-                              ),
-                            ],
-                          ),
-
-                          SizedBox(height: 8.h),
-                          Row(
-                            children: [
-                              CustomText(
-                                text: 'Reviews',
-                                color: AppColors.darkGreyColor,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 20.sp,
-                              ),
-                              Spacer(),
-                              GestureDetector(
-                                onTap: () {},
-                                child: Row(
-                                  children: [
-                                    CustomText(
-                                      text: 'See all',
-                                      color: AppColors.lightGrey,
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 14.sp,
-                                    ),
-                                    SizedBox(width: 5.w),
-                                    Icon(
-                                      Icons.arrow_forward_ios_outlined,
-                                      size: 12,
-                                      color: AppColors.lightGrey,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 300.h,
-                            width: double.infinity.w,
-                            child: _reviewsSection(controller: controller),
-                          ),
+                          // Read more / less
+                          // Align(
+                          //   alignment: Alignment.centerRight,
+                          //   child: InkWell(
+                          //     onTap: controller.toggle,
+                          //     child: Text(
+                          //       controller.isExpanded.value
+                          //           ? "Read Less"
+                          //           : "Read More",
+                          //       style: const TextStyle(
+                          //         color: Colors.blue,
+                          //         fontWeight: FontWeight.bold,
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
                         ],
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ),
 
-            _customButtonContainer(controller: controller),
-          ],
+                    SizedBox(height: 8.h),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomText(
+                          text: 'Specifications',
+                          color: AppColors.darkGreyColor,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16.sp,
+                        ),
+                        SizedBox(height: 8.h),
+
+                        CustomText(
+                          text: product.specification ?? '',
+                          color: AppColors.lightGrey,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 16.sp,
+                        ),
+                        // CustomText(
+                        //   text: 'Moisture Content: <5%',
+                        //   color: AppColors.lightGrey,
+                        //   fontWeight: FontWeight.w400,
+                        //   fontSize: 16.sp,
+                        // ),
+                        // CustomText(
+                        //   text: 'Clay Content: <3%',
+                        //   color: AppColors.lightGrey,
+                        //   fontWeight: FontWeight.w400,
+                        //   fontSize: 16.sp,
+                        // ),
+                        // CustomText(
+                        //   text: 'Organic Matter: <0.5%',
+                        //   color: AppColors.lightGrey,
+                        //   fontWeight: FontWeight.w400,
+                        //   fontSize: 16.sp,
+                        // ),
+                      ],
+                    ),
+
+                    SizedBox(height: 8.h),
+                    Row(
+                      children: [
+                        CustomText(
+                          text: 'Reviews',
+                          color: AppColors.darkGreyColor,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 20.sp,
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 300.h,
+                      width: double.infinity.w,
+                      child: _reviewsSection(controller: controller),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
         ),
       ),
+      bottomNavigationBar: _customButtonContainer(controller: controller),
     );
   }
 }
@@ -272,10 +242,12 @@ Widget _bannerSlider({required CategoryPopularDetailsController controller}) {
           height: Get.width * 0.45,
           width: double.infinity,
           child: CarouselSlider.builder(
-            itemCount: controller.images.length,
+            itemCount: controller.productdetails.length,
+
             itemBuilder: (context, index, realIndex) {
+              final itemdata = controller.productdetails[index];
               return Image.network(
-                controller.images[index],
+                itemdata.image ?? '',
                 fit: BoxFit.cover,
                 width: double.infinity,
               );
@@ -387,128 +359,26 @@ Widget _reviewsSection({required CategoryPopularDetailsController controller}) {
 Widget _customButtonContainer({
   required CategoryPopularDetailsController controller,
 }) {
-  return Positioned(
-    bottom: 0,
-    left: 0,
-    right: 0,
-    child: Container(
-      height: 140.h,
-      color: AppColors.whiteColor,
-      alignment: Alignment.center,
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 12.r, vertical: 12.r),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                CustomText(
-                  text: 'Quantity (tons)',
-                  color: AppColors.blackColor,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 16.sp,
-                ),
-                Spacer(),
-                Container(
-                  height: 35.h,
-                  width: 100.w,
-                  decoration: BoxDecoration(
-                    color: AppColors.lightGreen3,
-                    borderRadius: BorderRadius.all(Radius.circular(20.r)),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 8, right: 8),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GestureDetector(
-                          onTap: () => controller.decrement(),
+  return Padding(
+    padding: EdgeInsets.symmetric(horizontal: 12.h, vertical: 20.r),
+    child: CustomButton(
+      onPressed: () {
+        final product = Get.arguments as MostProductResult;
+        controller.addtocard(product.id.toString());
+      },
 
-                          child: Container(
-                            height: 24.h,
-                            width: 24.w,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              color: AppColors.whiteColor,
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(60.r),
-                              ),
-                            ),
-                            child: Column(
-                              children: [
-                                Icon(
-                                  Icons.minimize_outlined,
-                                  color: AppColors.blackColor,
-                                  size: 15.h,
-                                ),
-                                SizedBox(height: 8.h),
-                              ],
-                            ),
-                          ),
-                        ),
-
-                        Obx(
-                          () => CustomText(
-                            text: controller.quantity.value.toString().padLeft(
-                              2,
-                              '0',
-                            ),
-                            color: AppColors.blackColor,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () => controller.increment(),
-                          child: Container(
-                            height: 24.h,
-                            width: 24.w,
-                            decoration: BoxDecoration(
-                              color: AppColors.blackColor,
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(60.r),
-                              ),
-                            ),
-                            child: Center(
-                              child: Icon(
-                                Icons.add,
-                                color: AppColors.whiteColor,
-                                size: 15.h,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 24.h),
-
-            CustomButton(
-              onPressed: () {
-                Get.to(() => CartScreen());
-              },
-
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    IconsAssetsPaths.instance.cartimage,
-                    height: 24.h,
-                  ),
-                  SizedBox(width: 5.w),
-                  CustomText(
-                    text: 'Add to Cart - ₦200',
-                    color: AppColors.whiteColor,
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(IconsAssetsPaths.instance.cartimage, height: 24.h),
+          SizedBox(width: 5.w),
+          CustomText(
+            text: 'Add to Cart',
+            color: AppColors.whiteColor,
+            fontSize: 18.sp,
+            fontWeight: FontWeight.w500,
+          ),
+        ],
       ),
     ),
   );

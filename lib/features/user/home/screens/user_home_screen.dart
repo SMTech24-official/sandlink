@@ -8,6 +8,7 @@ import 'package:sandlink/core/app_routes/app_route_names.dart';
 import 'package:sandlink/core/config/constants/assets_paths/icons_assets_paths.dart';
 import 'package:sandlink/core/config/constants/assets_paths/svg_assets_paths.dart';
 import 'package:sandlink/core/wrappers/custom_text.dart';
+import 'package:sandlink/features/user/category/screen/category_screen.dart';
 import 'package:sandlink/features/user/home/controllers/user_home_controller.dart';
 import 'package:sandlink/features/user/join_affiliates/screen/terms_conditions_screen.dart';
 import 'package:sandlink/features/user/user_profile/controller/user_profile_controller.dart';
@@ -281,7 +282,7 @@ class UserHomeScreen extends StatelessWidget {
             final items = controller.categoriesList[index];
             return GestureDetector(
               onTap: () {
-                Get.to(() => CategoryPopularScreen(appbarTitle: 'Boulders'));
+                Get.to(() => CategoryScreen(appbarTitle: 'Boulders'));
               },
 
               child: SizedBox(
@@ -328,7 +329,11 @@ class UserHomeScreen extends StatelessWidget {
           itemBuilder: (context, index) {
             final items = controller.mostPopularProductList[index];
             return GestureDetector(
-              onTap: () => Get.to(() => CategoryPopularDetailsScreen()),
+              onTap: () => Get.to(
+                () => CategoryPopularDetailsScreen(),
+
+                arguments: items,
+              ),
               child: Container(
                 width: 226.w,
                 decoration: BoxDecoration(
