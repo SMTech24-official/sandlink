@@ -107,9 +107,9 @@ class RegisterController extends GetxController {
         isChecked.value = false;
         log("Signup Successfully$body");
       } else if (response.statusCode == 400) {
-        EasyLoading.show(status: response.errorMessage);
+        EasyLoading.showError(response.errorMessage);
       } else {
-        EasyLoading.show(status: response.errorMessage);
+        EasyLoading.showError(response.errorMessage);
       }
     } catch (e) {
       EasyLoading.showError('Registration failed. Try again.');

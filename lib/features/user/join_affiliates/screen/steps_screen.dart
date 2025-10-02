@@ -5,8 +5,8 @@
 // import 'package:sandlink/core/widgets/custom_button.dart';
 // import 'package:sandlink/core/wrappers/custom_text.dart';
 // import 'package:sandlink/features/user/join_affiliates/controllers/personal_information_controller.dart';
+// import 'package:sandlink/features/user/join_affiliates/controllers/phone_verification_controllers.dart';
 // import 'package:sandlink/features/user/join_affiliates/screen/document_verification_screen.dart';
-// import 'package:sandlink/features/user/join_affiliates/screen/payment_nformation_screen.dart';
 // import 'package:sandlink/features/user/join_affiliates/screen/personal_information_screen.dart';
 // import 'package:sandlink/features/user/join_affiliates/screen/phone_verification_screen.dart';
 // import 'package:sandlink/features/user/join_affiliates/screen/review_your_information_screen.dart';
@@ -19,10 +19,14 @@
 //   final PersonalInformationController personalInformationController = Get.put(
 //     PersonalInformationController(),
 //   );
+//   final PhoneVerificationController phoneVerificationController = Get.put(
+//     PhoneVerificationController(),
+//   );
 //   int? nextIndex;
 //   late String? appbarTitle;
 
 //   StepsScreen({super.key});
+
 //   @override
 //   Widget build(BuildContext context) {
 //     return Scaffold(
@@ -135,9 +139,9 @@
 
 //                     case 2:
 //                       return DocumentVerificationScreen();
+//                     // case 3:
+//                     //   return PaymentNformationScreen();
 //                     case 3:
-//                       return PaymentNformationScreen();
-//                     case 4:
 //                       return ReviewYourInformationScreen();
 //                     default:
 //                       return const SizedBox.shrink();
@@ -157,8 +161,7 @@
 //                   if (step == 0) {
 //                     return CustomButton(
 //                       onPressed: () async {
-//                         // await personalInformationController.phoneOtpSend();
-
+//                         await personalInformationController.phoneOtpSend();
 //                         controller.nextStep();
 //                       },
 //                       child: Row(
@@ -178,7 +181,78 @@
 //                         ],
 //                       ),
 //                     );
-//                   } else if (step == 4) {
+//                   } else if (step == 1) {
+//                     // Phone Verification Step
+//                     return Row(
+//                       children: [
+//                         Expanded(
+//                           flex: 1,
+//                           child: CustomButton(
+//                             onPressed: controller.cancelStep,
+//                             backgroundColor: AppColors.lightGreyD1,
+//                             child: Row(
+//                               mainAxisAlignment: MainAxisAlignment.center,
+//                               children: [
+//                                 Icon(
+//                                   Icons.arrow_back,
+//                                   color: AppColors.blackColor,
+//                                   size: 20,
+//                                 ),
+//                                 SizedBox(width: 5.w),
+//                                 CustomText(
+//                                   text: 'Previous',
+//                                   color: AppColors.blackColor,
+//                                   fontSize: 18.sp,
+//                                 ),
+//                               ],
+//                             ),
+//                           ),
+//                         ),
+//                         SizedBox(width: 10.w),
+//                         Expanded(
+//                           flex: 1,
+//                           child: CustomButton(
+//                             onPressed: () async {
+//                               // Validate OTP is entered
+//                               if (phoneVerificationController
+//                                       .otpController
+//                                       .text
+//                                       .length ==
+//                                   4) {
+//                                 await phoneVerificationController
+//                                     .verifyPhoneOtp();
+//                                 controller.nextStep();
+//                               } else {
+//                                 Get.snackbar(
+//                                   'Error',
+//                                   'Please enter a valid 4-digit OTP',
+//                                   snackPosition: SnackPosition.BOTTOM,
+//                                   backgroundColor: AppColors.redColor,
+//                                   colorText: AppColors.whiteColor,
+//                                 );
+//                               }
+//                             },
+//                             child: Row(
+//                               mainAxisAlignment: MainAxisAlignment.center,
+//                               children: [
+//                                 CustomText(
+//                                   text: 'Verify & Next',
+//                                   color: AppColors.whiteColor,
+//                                   fontSize: 18.sp,
+//                                 ),
+//                                 SizedBox(width: 5.w),
+//                                 Icon(
+//                                   Icons.arrow_forward,
+//                                   color: AppColors.whiteColor,
+//                                   size: 20,
+//                                 ),
+//                               ],
+//                             ),
+//                           ),
+//                         ),
+//                       ],
+//                     );
+//                   } else if (step == 3) {
 //                     return Expanded(
 //                       flex: 1,
 //                       child: CustomButton(
@@ -265,25 +339,26 @@ import 'package:sandlink/core/widgets/custom_button.dart';
 import 'package:sandlink/core/wrappers/custom_text.dart';
 import 'package:sandlink/features/user/join_affiliates/controllers/personal_information_controller.dart';
 import 'package:sandlink/features/user/join_affiliates/controllers/phone_verification_controllers.dart';
+import 'package:sandlink/features/user/join_affiliates/controllers/document_upload_controller.dart';
+import 'package:sandlink/features/user/join_affiliates/model/affiliate_data_model.dart';
 import 'package:sandlink/features/user/join_affiliates/screen/document_verification_screen.dart';
-import 'package:sandlink/features/user/join_affiliates/screen/payment_nformation_screen.dart';
 import 'package:sandlink/features/user/join_affiliates/screen/personal_information_screen.dart';
 import 'package:sandlink/features/user/join_affiliates/screen/phone_verification_screen.dart';
 import 'package:sandlink/features/user/join_affiliates/screen/review_your_information_screen.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
 import '../controllers/steps_controllers.dart';
 
-// ignore: must_be_immutable
 class StepsScreen extends StatelessWidget {
-  final controller = Get.put(StepsController());
+  final StepsController controller = Get.put(StepsController());
   final PersonalInformationController personalInformationController = Get.put(
     PersonalInformationController(),
   );
   final PhoneVerificationController phoneVerificationController = Get.put(
     PhoneVerificationController(),
   );
-  int? nextIndex;
-  late String? appbarTitle;
+  final DocumentVerificationController documentVerificationController = Get.put(
+    DocumentVerificationController(),
+  );
 
   StepsScreen({super.key});
 
@@ -310,13 +385,11 @@ class StepsScreen extends StatelessWidget {
             SizedBox(
               height: 50.h,
               width: double.infinity,
-
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.w),
                 child: SizedBox(
                   height: 50.h,
                   width: double.infinity.w,
-
                   child: Obx(
                     () => Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -324,7 +397,6 @@ class StepsScreen extends StatelessWidget {
                         controller.stepIcons.length * 2 - 1,
                         (index) {
                           int stepIndex = index ~/ 2;
-                          nextIndex = stepIndex;
                           bool isCompleted =
                               controller.currentStep.value > stepIndex;
                           bool isCurrent =
@@ -384,24 +456,18 @@ class StepsScreen extends StatelessWidget {
                 ),
               ),
             ),
-
             Expanded(
               child: SizedBox(
                 width: double.infinity.w,
                 child: Obx(() {
                   switch (controller.currentStep.value) {
                     case 0:
-                      // controller.title.value = 'Basic Information';
                       return PersonalInformationScreen();
                     case 1:
-                      //  controller.title.value = 'Phone Verification';
                       return PhoneVerificationScreens();
-
                     case 2:
                       return DocumentVerificationScreen();
                     case 3:
-                      return PaymentNformationScreen();
-                    case 4:
                       return ReviewYourInformationScreen();
                     default:
                       return const SizedBox.shrink();
@@ -409,7 +475,6 @@ class StepsScreen extends StatelessWidget {
                 }),
               ),
             ),
-
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 6.0.h),
               child: SizedBox(
@@ -421,8 +486,43 @@ class StepsScreen extends StatelessWidget {
                   if (step == 0) {
                     return CustomButton(
                       onPressed: () async {
-                        await personalInformationController.phoneOtpSend();
-                        controller.nextStep();
+                        if (personalInformationController.basickey.currentState!
+                            .validate()) {
+                          bool otpSent = await personalInformationController
+                              .phoneOtpSend();
+                          if (otpSent) {
+                            // Save personal info to steps controller
+                            controller.updateAffiliateData(
+                              AffiliateDataModel(
+                                fullName: personalInformationController
+                                    .nameController
+                                    .text
+                                    .trim(),
+                                phoneNumber: personalInformationController
+                                    .phoneController
+                                    .text
+                                    .trim(),
+                                email: personalInformationController
+                                    .emailController
+                                    .text
+                                    .trim(),
+                                companyName: personalInformationController
+                                    .shopNameController
+                                    .text
+                                    .trim(),
+                                address: personalInformationController
+                                    .addressController
+                                    .text
+                                    .trim(),
+                                latitude:
+                                    personalInformationController.lat.value,
+                                longitude:
+                                    personalInformationController.lon.value,
+                              ),
+                            );
+                            controller.nextStep();
+                          }
+                        }
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -442,7 +542,6 @@ class StepsScreen extends StatelessWidget {
                       ),
                     );
                   } else if (step == 1) {
-                    // Phone Verification Step
                     return Row(
                       children: [
                         Expanded(
@@ -473,17 +572,35 @@ class StepsScreen extends StatelessWidget {
                           flex: 1,
                           child: CustomButton(
                             onPressed: () async {
-                              // Validate OTP is entered
                               if (phoneVerificationController
                                       .otpController
                                       .text
                                       .length ==
                                   4) {
-                                await phoneVerificationController
-                                    .verifyPhoneOtp();
-                                // Only proceed to next step if verification is successful
-                                // You might want to check the response in verifyPhoneOtp and return a boolean
-                                controller.nextStep();
+                                bool verified =
+                                    await phoneVerificationController
+                                        .verifyPhoneOtp();
+                                if (verified) {
+                                  // Update affiliate data with OTP
+                                  var currentData =
+                                      controller.affiliateData.value;
+                                  controller.updateAffiliateData(
+                                    AffiliateDataModel(
+                                      fullName: currentData.fullName,
+                                      phoneNumber: currentData.phoneNumber,
+                                      email: currentData.email,
+                                      companyName: currentData.companyName,
+                                      address: currentData.address,
+                                      latitude: currentData.latitude,
+                                      longitude: currentData.longitude,
+                                      otp: phoneVerificationController
+                                          .otpController
+                                          .text
+                                          .trim(),
+                                    ),
+                                  );
+                                  controller.nextStep();
+                                }
                               } else {
                                 Get.snackbar(
                                   'Error',
@@ -514,21 +631,102 @@ class StepsScreen extends StatelessWidget {
                         ),
                       ],
                     );
-                  } else if (step == 4) {
-                    return Expanded(
-                      flex: 1,
-                      child: CustomButton(
-                        onPressed: () {},
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            CustomText(
-                              text: 'Submit',
-                              color: AppColors.whiteColor,
-                              fontSize: 18.sp,
+                  } else if (step == 2) {
+                    return Row(
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: CustomButton(
+                            onPressed: controller.cancelStep,
+                            backgroundColor: AppColors.lightGreyD1,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.arrow_back,
+                                  color: AppColors.blackColor,
+                                  size: 20,
+                                ),
+                                SizedBox(width: 5.w),
+                                CustomText(
+                                  text: 'Previous',
+                                  color: AppColors.blackColor,
+                                  fontSize: 18.sp,
+                                ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
+                        SizedBox(width: 10.w),
+                        Expanded(
+                          flex: 1,
+                          child: CustomButton(
+                            onPressed: () {
+                              // Save document data
+                              var currentData = controller.affiliateData.value;
+                              controller.updateAffiliateData(
+                                AffiliateDataModel(
+                                  fullName: currentData.fullName,
+                                  phoneNumber: currentData.phoneNumber,
+                                  email: currentData.email,
+                                  companyName: currentData.companyName,
+                                  address: currentData.address,
+                                  latitude: currentData.latitude,
+                                  longitude: currentData.longitude,
+                                  otp: currentData.otp,
+                                  nidFrontImage: documentVerificationController
+                                      .nidFrontImage
+                                      .value,
+                                  nidBackImage: documentVerificationController
+                                      .nidBackImage
+                                      .value,
+                                  licenceImage: documentVerificationController
+                                      .licenceImage
+                                      .value,
+                                  tinImage: documentVerificationController
+                                      .tinImage
+                                      .value,
+                                  addressImage: documentVerificationController
+                                      .addressImage
+                                      .value,
+                                ),
+                              );
+                              controller.nextStep();
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                CustomText(
+                                  text: 'Next',
+                                  color: AppColors.whiteColor,
+                                  fontSize: 18.sp,
+                                ),
+                                SizedBox(width: 5.w),
+                                Icon(
+                                  Icons.arrow_forward,
+                                  color: AppColors.whiteColor,
+                                  size: 20,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  } else if (step == 3) {
+                    return CustomButton(
+                      onPressed: () {
+                        _submitAffiliateData(controller.affiliateData.value);
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CustomText(
+                            text: 'Submit Application',
+                            color: AppColors.whiteColor,
+                            fontSize: 18.sp,
+                          ),
+                        ],
                       ),
                     );
                   } else {
@@ -590,5 +788,49 @@ class StepsScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _submitAffiliateData(AffiliateDataModel data) {
+    // Check if required documents are uploaded
+    if (!data.hasRequiredDocuments) {
+      Get.snackbar(
+        'Missing Documents',
+        'Please upload National ID Front & Back before submission',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: AppColors.redColor,
+        colorText: AppColors.whiteColor,
+      );
+      return;
+    }
+
+    // Implement your API call here to submit all data
+    print('=== SUBMITTING AFFILIATE DATA ===');
+    print('Full Name: ${data.fullName}');
+    print('Phone: ${data.phoneNumber}');
+    print('Email: ${data.email}');
+    print('Company: ${data.companyName}');
+    print('Address: ${data.address}');
+    print('Location: ${data.latitude}, ${data.longitude}');
+    print('OTP: ${data.otp}');
+    print('NID Front: ${data.nidFrontImage != null ? "Uploaded" : "Missing"}');
+    print('NID Back: ${data.nidBackImage != null ? "Uploaded" : "Missing"}');
+    print('License: ${data.licenceImage != null ? "Uploaded" : "Missing"}');
+    print('TIN: ${data.tinImage != null ? "Uploaded" : "Missing"}');
+    print(
+      'Address Proof: ${data.addressImage != null ? "Uploaded" : "Missing"}',
+    );
+    print('================================');
+
+    // Show success message
+    Get.snackbar(
+      'Success',
+      'Affiliate application submitted successfully!',
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: AppColors.greenColor,
+      colorText: AppColors.whiteColor,
+    );
+
+    // You can navigate back or reset the flow here
+    // Get.until((route) => route.isFirst);
   }
 }

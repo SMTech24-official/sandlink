@@ -49,12 +49,14 @@ SandLink is where mine over matter becomes a movement. A platform where contract
         ),
       ),
       bottomNavigationBar: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
-        child: CustomButton(
-          onPressed: () {
-            Get.to(() => const ChooseRoleScreen());
-          },
-          text: "Get Started",
+        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
+        child: SafeArea(
+          child: CustomButton(
+            onPressed: () {
+              Get.to(() => const ChooseRoleScreen());
+            },
+            text: "Get Started",
+          ),
         ),
       ),
     );

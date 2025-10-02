@@ -25,23 +25,16 @@ class RiderHomeScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              _topAppBarWidget(),
+              SizedBox(height: 24.h),
+              _offlineCard(controller: controller),
+              SizedBox(height: 24.h),
               Expanded(
-                flex: 1,
-                child: Column(
-                  children: [
-                    _topAppBarWidget(),
-                    SizedBox(height: 24.h),
-                    _offlineCard(controller: controller),
-                  ],
-                ),
-              ),
-              Expanded(
-                flex: 3,
                 child: Obx(() {
                   if (!controller.isSwitched.value) {
                     return Padding(
                       padding: EdgeInsets.symmetric(
-                        horizontal: 16,
+                        horizontal: 36,
                         vertical: 150.h,
                       ),
                       child: Container(
@@ -354,6 +347,7 @@ Widget _topAppBarWidget() {
 
 Widget _offlineCard({required RiderHomeController controller}) {
   return Container(
+    // height: 50,
     width: double.infinity.w,
     decoration: BoxDecoration(
       borderRadius: BorderRadius.all(Radius.circular(8.r)),
