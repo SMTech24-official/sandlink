@@ -12,7 +12,7 @@ import '../../../../core/widgets/custom_text_field.dart';
 import '../controllers/my_orders_controllers.dart';
 
 class UserItemReviewsScreen extends StatelessWidget {
-  final controller = Get.put(MyOrdersControllers());
+  final controller = Get.put(MyOrdersController());
 
   UserItemReviewsScreen({super.key});
   @override
@@ -72,7 +72,7 @@ class UserItemReviewsScreen extends StatelessWidget {
               CustomInputField(
                 maxLines: 5,
                 hintText: 'Write your reviews',
-                textController: controller.userReviewFeedbackController,
+                //textController: controller.userReviewFeedbackController,
                 borderSide: BorderSide(width: 1, color: AppColors.lightGreyD1),
               ),
               Spacer(),

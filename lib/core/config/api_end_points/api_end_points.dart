@@ -35,5 +35,6 @@ class ApiEndPoints {
 
  // added by shahriar 
  static const allProducts = '$_baseUrl/products';
+ static const getMyOrders = '$_baseUrl/orders/get-all-customer-orders';
 
 }
