@@ -165,8 +165,8 @@ class UserHomeController extends GetxController {
         // Map JSON to model
         categoriesList.value = getdata.map((e) => Result.fromJson(e)).toList();
 
-        log("✅ Categories loaded: $getdata");
-        log("✅  loaded: ");
+        log("Categories loaded: $getdata");
+        log("loaded: ");
       } else {
         Get.snackbar("Error", "Failed to load categories");
       }
@@ -187,14 +187,14 @@ class UserHomeController extends GetxController {
       );
 
       if (response.isSuccess) {
-        var getdata = response.responseData['result'] as List;
+        var getdata = response.responseData as List;
 
         // Map JSON to model
         mostPopularProductList.value = getdata
             .map((e) => MostProductResult.fromJson(e))
             .toList();
 
-        log("✅ Popular loaded: $getdata");
+        log("Popular loaded: $getdata");
       } else {
         Get.snackbar("Error", "Failed to load categories");
       }

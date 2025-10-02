@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:sandlink/core/app_colors/app_colors.dart';
+import 'package:sandlink/core/widgets/custom_app_bar.dart';
 import 'package:sandlink/core/wrappers/custom_text.dart';
 import 'package:sandlink/features/user/home/controllers/user_home_controller.dart';
-import '../../../../core/widgets/custom_app_bar.dart';
 
-class CategoryPopularScreen extends StatelessWidget {
-  CategoryPopularScreen({super.key, required this.appbarTitle});
+class CategoryScreen extends StatelessWidget {
+  CategoryScreen({super.key, required this.appbarTitle});
 
   final String appbarTitle;
 
