@@ -8,9 +8,11 @@ import 'dart:convert';
 import 'package:sandlink/core/config/api_end_points/api_end_points.dart';
 import 'package:sandlink/core/network/network_caller.dart';
 import 'package:sandlink/core/services/DBServices/local_db_services/storage_service.dart';
+import 'package:sandlink/features/user/user_profile/controller/user_profile_controller.dart';
 
 class PersonalInformationController extends GetxController {
   final basickey = GlobalKey<FormState>();
+  final UserProfileController controller = Get.put(UserProfileController());
 
   final nameController = TextEditingController();
   final phoneController = TextEditingController();
@@ -20,22 +22,39 @@ class PersonalInformationController extends GetxController {
 
   var addressText = ''.obs;
   var addressSuggestions = <AddressSuggestion>[].obs;
-  var isAddressSelected =
-      false.obs; // Track if address was selected from suggestions
+  var isAddressSelected = false.obs;
 
-  // Add your Google Places API key here
+  // Add success flag for OTP sending
+  var isOtpSentSuccessfully = false.obs;
+
   final String googleApiKey = 'AIzaSyCG3pcwRKpeAxF1CSAgwKFVIwZzwwyyWjE';
 
   @override
   void onInit() {
     super.onInit();
+    if (controller.getUserName.isNotEmpty) {
+      nameController.text = controller.getUserName.toString();
+      if (kDebugMode) {
+        print("✅ Phone number pre-filled: ${phoneController.text}");
+      }
+    }
+    if (controller.getUserphone.isNotEmpty) {
+      phoneController.text = controller.getUserphone.toString();
+      if (kDebugMode) {
+        print("✅ Phone number pre-filled: ${phoneController.text}");
+      }
+    }
+    if (controller.getUserEmail.isNotEmpty) {
+      emailController.text = controller.getUserEmail.toString();
+      if (kDebugMode) {
+        print("✅ Phone number pre-filled: ${phoneController.text}");
+      }
+    }
 
     debounce<String>(addressText, (val) {
-      // Only search if address wasn't just selected from suggestions
       if (val.isNotEmpty && val.length >= 3 && !isAddressSelected.value) {
         searchAddress(val);
       } else if (isAddressSelected.value) {
-        // Reset the flag after debounce period
         isAddressSelected.value = false;
       } else if (val.length < 3) {
         addressSuggestions.clear();
@@ -48,14 +67,13 @@ class PersonalInformationController extends GetxController {
 
   GoogleMapController? googleMapController;
 
-  // Use Google Places Autocomplete API for address suggestions
   Future<void> searchAddress(String input) async {
     try {
       final url = Uri.parse(
         'https://maps.googleapis.com/maps/api/place/autocomplete/json'
         '?input=${Uri.encodeComponent(input)}'
         '&key=$googleApiKey'
-        '&components=country:bd' // Restrict to Bangladesh, change as needed
+        '&components=country:bd'
         '&language=en',
       );
 
@@ -73,7 +91,7 @@ class PersonalInformationController extends GetxController {
               title: pred['structured_formatting']['main_text'] ?? '',
               subtitle: pred['structured_formatting']['secondary_text'] ?? '',
               description: pred['description'] ?? '',
-              latitude: 0.0, // Will be fetched when selected
+              latitude: 0.0,
               longitude: 0.0,
             );
           }).toList();
@@ -95,20 +113,13 @@ class PersonalInformationController extends GetxController {
 
   LatLng get currentLatLng => LatLng(lat.value, lon.value);
 
-  // When user picks a suggestion, fetch the coordinates
   Future<void> selectSuggestion(AddressSuggestion suggestion) async {
     try {
-      // Mark that an address was selected
       isAddressSelected.value = true;
-
-      // Show the selected address immediately
       addressController.text = suggestion.description;
       addressText.value = suggestion.description;
-
-      // Clear suggestions immediately
       addressSuggestions.clear();
 
-      // Fetch place details to get coordinates
       final url = Uri.parse(
         'https://maps.googleapis.com/maps/api/place/details/json'
         '?place_id=${suggestion.placeId}'
@@ -126,7 +137,6 @@ class PersonalInformationController extends GetxController {
           lat.value = location['lat'];
           lon.value = location['lng'];
 
-          // Animate map camera
           googleMapController?.animateCamera(
             CameraUpdate.newLatLng(LatLng(lat.value, lon.value)),
           );
@@ -139,30 +149,52 @@ class PersonalInformationController extends GetxController {
     }
   }
 
-  Future<void> phoneOtpSend() async {
-    EasyLoading.show(status: 'Loading...');
+  Future<bool> phoneOtpSend() async {
+    // Reset success flag
+    isOtpSentSuccessfully.value = false;
+
+    // Validate form before proceeding
+    if (basickey.currentState != null && !basickey.currentState!.validate()) {
+      EasyLoading.showError('Please fill all required fields correctly');
+      return false;
+    }
+
+    // Validate phone number
+    if (phoneController.text.trim().isEmpty) {
+      EasyLoading.showError('Phone number is required');
+      return false;
+    }
+
+    EasyLoading.show(status: 'Sending OTP...');
+
     try {
-      var url = ApiEndPoints.pricingPlan;
+      var url = ApiEndPoints.sendPhoneOtp;
 
       final response = await NetworkCaller().patchRequest(
         url,
-        body: {
-          "phoneNumber": phoneController.text.trim(),
-          "latitude": lat.value,
-          "longitude": lon.value,
-        },
+        body: {"phoneNumber": phoneController.text.trim()},
         token: StorageService().getData('accessToken'),
       );
 
+      EasyLoading.dismiss();
+
       if (response.isSuccess) {
-        // Handle success
+        isOtpSentSuccessfully.value = true;
+        EasyLoading.showSuccess('OTP sent successfully');
+        return true;
       } else {
+        isOtpSentSuccessfully.value = false;
         EasyLoading.showError(response.errorMessage);
+        return false;
       }
     } catch (e) {
-      EasyLoading.showError('Failed! Please try again');
-    } finally {
       EasyLoading.dismiss();
+      isOtpSentSuccessfully.value = false;
+      EasyLoading.showError('Failed! Please try again');
+      if (kDebugMode) {
+        print("Error sending OTP: $e");
+      }
+      return false;
     }
   }
 

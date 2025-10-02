@@ -31,7 +31,8 @@ class CustomInputField extends StatelessWidget {
     this.isObsecure,
     this.inputFormatters,
     this.onPressed,
-    this.onChanged, this.headerfontSize,
+    this.onChanged,
+    this.headerfontSize,
   });
 
   final TextEditingController? textController;
@@ -129,7 +130,7 @@ class CustomInputField extends StatelessWidget {
             onTap: onPressed,
             inputFormatters: inputFormatters,
             style: TextStyle(
-              color: textColor ?? const Color(0xFF636F85),
+              color: textColor ?? const Color(0xFF0C0D0C),
               fontSize: (fontSize ?? 14).sp,
               fontWeight: fontWeight ?? FontWeight.w400,
             ),
