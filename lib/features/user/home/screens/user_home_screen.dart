@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -9,6 +10,7 @@ import 'package:sandlink/core/config/constants/assets_paths/icons_assets_paths.d
 import 'package:sandlink/core/config/constants/assets_paths/svg_assets_paths.dart';
 import 'package:sandlink/core/wrappers/custom_text.dart';
 import 'package:sandlink/features/user/category/screen/category_screen.dart';
+import 'package:sandlink/features/user/category_popular_list/controllers/category_popular_details_controller.dart';
 import 'package:sandlink/features/user/home/controllers/user_home_controller.dart';
 import 'package:sandlink/features/user/join_affiliates/screen/terms_conditions_screen.dart';
 import 'package:sandlink/features/user/user_profile/controller/user_profile_controller.dart';
@@ -16,7 +18,8 @@ import '../../category_popular_list/screens/category_popular_details.dart';
 import '../../category_popular_list/screens/category_popular_list.dart';
 
 class UserHomeScreen extends StatelessWidget {
-  const UserHomeScreen({super.key});
+  UserHomeScreen({super.key});
+  final detailscontroller = Get.put(CategoryPopularDetailsController());
 
   @override
   Widget build(BuildContext context) {
@@ -329,11 +332,17 @@ class UserHomeScreen extends StatelessWidget {
           itemBuilder: (context, index) {
             final items = controller.mostPopularProductList[index];
             return GestureDetector(
-              onTap: () => Get.to(
-                () => CategoryPopularDetailsScreen(),
-
-                arguments: items,
-              ),
+              onTap: () async {
+                final productId = items.id;
+                if (productId != null) {
+                  await detailscontroller.getrProductdetails(productId);
+                  Get.to(() => CategoryPopularDetailsScreen());
+                } else {
+                  if (kDebugMode) {
+                    print("Product ID is null");
+                  }
+                }
+              },
               child: Container(
                 width: 226.w,
                 decoration: BoxDecoration(

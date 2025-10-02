@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 import 'package:sandlink/core/wrappers/custom_text.dart';
 import 'package:sandlink/features/user/search/controller/search_controller.dart';
 
-
 class SearchScreen extends StatelessWidget {
   SearchScreen({super.key});
 
@@ -18,7 +17,7 @@ class SearchScreen extends StatelessWidget {
     return Scaffold(
       appBar: CustomAppBar(title: 'Search'),
       body: Padding(
-        padding: EdgeInsets.all(20.w),
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         child: Column(
           children: [
             CustomInputField(
@@ -28,21 +27,21 @@ class SearchScreen extends StatelessWidget {
                 controller.search.value = value;
               },
             ),
-            SizedBox(height: 10.h),
+
             Expanded(
               child: Obx(() {
                 final products = controller.filteredProducts;
-                
+
                 if (products.isEmpty) {
                   return Center(
                     child: Text(
-                      controller.search.isEmpty 
-                          ? "No products available" 
+                      controller.search.isEmpty
+                          ? "No products available"
                           : "No products found for '${controller.search.value}'",
                     ),
                   );
                 }
-                
+
                 return GridView.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
@@ -91,9 +90,13 @@ class SearchScreen extends StatelessWidget {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    Icon(Icons.star,color: Color(0xffFFC107),size: 20),
+                                    Icon(
+                                      Icons.star,
+                                      color: Color(0xffFFC107),
+                                      size: 20,
+                                    ),
                                     SizedBox(width: 6.w),
-                                    CustomText(text: '5.0',),
+                                    CustomText(text: '5.0'),
                                     Spacer(),
                                     CustomText(
                                       text: '₦${product.price}/',
