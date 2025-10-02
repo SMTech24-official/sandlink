@@ -60,7 +60,7 @@ class PersonalInformationScreen extends StatelessWidget {
                             headerTextColor: AppColors.blackColor,
                             textController: controller.emailController,
                             isReadOnly: true,
-                            hintText: 'your.email@example.com',
+                            hintText: 'Enter email',
                             keyboardType: TextInputType.emailAddress,
                           ),
                           SizedBox(height: 12.h),

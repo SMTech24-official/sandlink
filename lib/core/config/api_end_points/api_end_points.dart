@@ -31,4 +31,6 @@ class ApiEndPoints {
 
   //Lokman
   static const pricingPlan = '$_baseUrl/subscription-plans';
+  static const sendPhoneOtp = '$_baseUrl/auth/send-otp-phone-number';
+  static const verifyPhoneOtp = '$_baseUrl/auth/verify-otp-by-phone-number';
 }
