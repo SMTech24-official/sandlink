@@ -9,6 +9,7 @@ import 'package:sandlink/core/config/constants/assets_paths/icons_assets_paths.d
 import 'package:sandlink/core/config/constants/assets_paths/svg_assets_paths.dart';
 import 'package:sandlink/core/wrappers/custom_text.dart';
 import 'package:sandlink/features/user/home/controllers/user_home_controller.dart';
+import 'package:sandlink/features/user/join_affiliates/screen/terms_conditions_screen.dart';
 import 'package:sandlink/features/user/user_profile/controller/user_profile_controller.dart';
 import '../../category_popular_list/screens/category_popular_details.dart';
 import '../../category_popular_list/screens/category_popular_list.dart';
@@ -58,15 +59,10 @@ class UserHomeScreen extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          GestureDetector(
-                            onTap: () {
-                              controller.getMostPopularProduct();
-                            },
-                            child: CustomText(
-                              text: 'Most Popular',
-                              fontSize: 20.spMin,
-                              fontWeight: FontWeight.w600,
-                            ),
+                          CustomText(
+                            text: 'Most Popular',
+                            fontSize: 20.spMin,
+                            fontWeight: FontWeight.w600,
                           ),
                           GestureDetector(
                             onTap: () => Get.to(
@@ -132,17 +128,21 @@ class UserHomeScreen extends StatelessWidget {
                 Container(
                   height: 40.h,
                   width: 90.w,
-
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(10.r)),
                     color: AppColors.whiteColor,
                   ),
                   child: Center(
-                    child: CustomText(
-                      text: 'Join Now',
-                      fontSize: 16.sp,
-                      color: AppColors.primaryColor,
-                      fontWeight: FontWeight.w400,
+                    child: GestureDetector(
+                      onTap: () {
+                        Get.to(TermsConditionsScreen());
+                      },
+                      child: CustomText(
+                        text: 'Join Now',
+                        fontSize: 16.sp,
+                        color: AppColors.primaryColor,
+                        fontWeight: FontWeight.w400,
+                      ),
                     ),
                   ),
                 ),
@@ -319,7 +319,7 @@ class UserHomeScreen extends StatelessWidget {
   /// 🔹 Popular products list
   Widget _popularProducts({required UserHomeController controller}) {
     return SizedBox(
-      height: 260.h,
+      height: 250.h,
       child: Obx(() {
         return ListView.separated(
           scrollDirection: Axis.horizontal,
@@ -338,7 +338,7 @@ class UserHomeScreen extends StatelessWidget {
                     BoxShadow(
                       color: Colors.black12,
                       blurRadius: 6,
-                      offset: const Offset(0, 3),
+                      offset: const Offset(0, 0),
                     ),
                   ],
                 ),
@@ -372,15 +372,11 @@ class UserHomeScreen extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            Icon(
-                              Icons.star_rounded,
-                              color: const Color(0xFFFFC107),
-                              size: 18.sp,
-                            ),
-                            4.horizontalSpace,
+                            Icon(Icons.star, color: Colors.amber, size: 12),
+                            SizedBox(width: 3.h),
                             CustomText(
-                              text: '5.0',
-                              fontSize: 14.spMin,
+                              text: "${items.count?.reviews ?? 0}",
+                              fontWeight: FontWeight.w400,
                               color: AppColors.lightGrey,
                             ),
                           ],
