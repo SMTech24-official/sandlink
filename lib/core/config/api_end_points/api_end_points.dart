@@ -33,7 +33,12 @@ class ApiEndPoints {
   static const pricingPlan = '$_baseUrl/subscription-plans';
 
 
+
  // added by shahriar 
  static const allProducts = '$_baseUrl/products';
+
+
+  static const sendPhoneOtp = '$_baseUrl/auth/send-otp-phone-number';
+  static const verifyPhoneOtp = '$_baseUrl/auth/verify-otp-by-phone-number';
 
 }
