@@ -128,7 +128,7 @@ class PhoneVerificationScreens extends StatelessWidget {
                                 ),
                                 SizedBox(height: 12.h),
 
-                                Container(
+                                SizedBox(
                                   width: double.infinity.w,
                                   child: Column(
                                     crossAxisAlignment:

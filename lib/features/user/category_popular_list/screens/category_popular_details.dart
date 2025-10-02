@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:sandlink/features/user/home/model/most_populer_product.dart';
 import '../../../../core/app_colors/app_colors.dart';
 import '../../../../core/config/constants/assets_paths/icons_assets_paths.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
@@ -176,7 +175,6 @@ Widget _bannerSlider({required CategoryPopularDetailsController controller}) {
   final product = controller.productdetails.value;
   if (product == null) return const SizedBox();
 
-  // যদি product.image একটি String হয়
   final images = [product.image].whereType<String>().toList();
 
   return Column(
@@ -220,7 +218,7 @@ Widget _bannerSlider({required CategoryPopularDetailsController controller}) {
               decoration: BoxDecoration(
                 color: controller.currentPage.value == index
                     ? AppColors.primaryColor
-                    : AppColors.primaryColor.withOpacity(0.3),
+                    : AppColors.primaryColor.withValues(alpha: 0.3),
                 borderRadius: BorderRadius.circular(4.r),
               ),
             );
