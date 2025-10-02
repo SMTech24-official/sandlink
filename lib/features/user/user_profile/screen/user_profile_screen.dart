@@ -25,23 +25,25 @@ class UserProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(title: 'Profile', centerTitle: true),
-      body: SafeArea(
-        child: Center(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                GestureDetector(
-                  onTap: () => controller.getUserProfileData(),
-                  child: _userProfile(
-                    controller: controller,
-                    editController: editcontroller,
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Center(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  GestureDetector(
+                    onTap: () => controller.getUserProfileData(),
+                    child: _userProfile(
+                      controller: controller,
+                      editController: editcontroller,
+                    ),
                   ),
-                ),
-                // SizedBox(height: 12.h),
-                _profileMenuList(controller: controller),
-              ],
+                  // SizedBox(height: 12.h),
+                  _profileMenuList(controller: controller),
+                ],
+              ),
             ),
           ),
         ),

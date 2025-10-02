@@ -50,7 +50,7 @@ class PhoneVerificationController extends GetxController {
     }
 
     // Check if user ID exists
-    if (controller.userId == null || controller.userId.toString().isEmpty) {
+    if (controller.userId.toString().isEmpty) {
       EasyLoading.showError('User ID not found. Please login again.');
       if (kDebugMode) {
         print("❌ User ID is null or empty");
@@ -100,7 +100,7 @@ class PhoneVerificationController extends GetxController {
         return true;
       } else {
         isOtpverifySuccessfully.value = false;
-        String errorMsg = response.errorMessage ?? 'Verification failed';
+        String errorMsg = response.errorMessage;
         EasyLoading.showError(errorMsg);
 
         if (kDebugMode) {
