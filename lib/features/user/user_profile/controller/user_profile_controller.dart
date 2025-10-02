@@ -69,6 +69,7 @@ class UserProfileController extends GetxController {
   var getUserEmail = ''.obs;
   var getUserProfile = ''.obs;
   var getUserphone = ''.obs;
+  var userId = ''.obs;
 
   /// Fetch user profile
   Future<void> getUserProfileData() async {
@@ -91,6 +92,9 @@ class UserProfileController extends GetxController {
             : "N/A";
         getUserphone.value = (getdata.phoneNumber?.isNotEmpty == true)
             ? getdata.phoneNumber!
+            : "N/A";
+        userId.value = (getdata.phoneNumber?.isNotEmpty == true)
+            ? getdata.id ?? ''
             : "N/A";
 
         /// ✅ Image must not be empty string
