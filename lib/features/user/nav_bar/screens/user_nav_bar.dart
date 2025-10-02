@@ -61,14 +61,14 @@ class UserNavBar extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withValues(alpha: 0.2),
-              spreadRadius: 2,
-              blurRadius: 5,
-              offset: const Offset(0, -2),
-            ),
-          ],
+          // boxShadow: [
+          //   BoxShadow(
+          //     color: Colors.grey.withValues(alpha: 0.2),
+          //     spreadRadius: 2,
+          //     blurRadius: 5,
+          //     offset: const Offset(0, -2),
+          //   ),
+          // ],
         ),
         child: SafeArea(
           child: Obx(
