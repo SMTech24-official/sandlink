@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -15,7 +13,7 @@ import '../rider_user_profile/screen/rider_user_profile_screen.dart';
 class RiderNavBar extends StatelessWidget {
   final RxInt _selectedIndex;
   RiderNavBar({super.key, int initialIndex = 0})
-      : _selectedIndex = initialIndex.obs;
+    : _selectedIndex = initialIndex.obs;
 
   final List<String> selectedItems = [
     SvgAssetsPaths.instance.homeSelected,
@@ -74,7 +72,7 @@ class RiderNavBar extends StatelessWidget {
         ),
         child: SafeArea(
           child: Obx(
-                () => Row(
+            () => Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: List.generate(selectedItems.length, (index) {
                 bool isSelected = _selectedIndex.value == index;

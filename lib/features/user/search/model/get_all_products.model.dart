@@ -21,11 +21,11 @@ class ProductResponse {
   }
 
   Map<String, dynamic> toJson() => {
-        'success': success,
-        'statusCode': statusCode,
-        'message': message,
-        'data': data.toJson(),
-      };
+    'success': success,
+    'statusCode': statusCode,
+    'message': message,
+    'data': data.toJson(),
+  };
 }
 
 class ProductData {
@@ -44,9 +44,9 @@ class ProductData {
   }
 
   Map<String, dynamic> toJson() => {
-        'meta': meta.toJson(),
-        'result': List<dynamic>.from(result.map((x) => x.toJson())),
-      };
+    'meta': meta.toJson(),
+    'result': List<dynamic>.from(result.map((x) => x.toJson())),
+  };
 }
 
 class Meta {
@@ -63,18 +63,18 @@ class Meta {
   });
 
   factory Meta.fromJson(Map<String, dynamic> json) => Meta(
-        page: json['page'],
-        limit: json['limit'],
-        total: json['total'],
-        totalPage: json['totalPage'],
-      );
+    page: json['page'],
+    limit: json['limit'],
+    total: json['total'],
+    totalPage: json['totalPage'],
+  );
 
   Map<String, dynamic> toJson() => {
-        'page': page,
-        'limit': limit,
-        'total': total,
-        'totalPage': totalPage,
-      };
+    'page': page,
+    'limit': limit,
+    'total': total,
+    'totalPage': totalPage,
+  };
 }
 
 class GetAllProduct {
@@ -95,7 +95,8 @@ class GetAllProduct {
   final String? userId;
   final Seller seller;
   final Category category;
-  final List<dynamic> reviews;
+  final int averageRating;
+  final int totalReviews;
 
   GetAllProduct({
     required this.id,
@@ -115,64 +116,73 @@ class GetAllProduct {
     this.userId,
     required this.seller,
     required this.category,
-    required this.reviews,
+    required this.averageRating,
+    required this.totalReviews,
   });
 
   factory GetAllProduct.fromJson(Map<String, dynamic> json) => GetAllProduct(
-        id: json['id'],
-        name: json['name'],
-        image: json['image'],
-        quantity: json['quantity'],
-        price: json['price'],
-        description: json['description'],
-        specification: json['specification'],
-        status: json['status'],
-        createdAt: DateTime.parse(json['createdAt']),
-        updatedAt: DateTime.parse(json['updatedAt']),
-        isActive: json['isActive'],
-        isDeleted: json['isDeleted'],
-        categoryId: json['categoryId'],
-        sellerId: json['sellerId'],
-        userId: json['userId'],
-        seller: Seller.fromJson(json['seller']),
-        category: Category.fromJson(json['category']),
-        reviews: json['reviews'] ?? [],
-      );
+    id: json['id'],
+    name: json['name'],
+    image: json['image'],
+    quantity: json['quantity'],
+    price: json['price'],
+    description: json['description'],
+    specification: json['specification'],
+    status: json['status'],
+    createdAt: DateTime.parse(json['createdAt']),
+    updatedAt: DateTime.parse(json['updatedAt']),
+    isActive: json['isActive'],
+    isDeleted: json['isDeleted'],
+    categoryId: json['categoryId'],
+    sellerId: json['sellerId'],
+    userId: json['userId'],
+    seller: Seller.fromJson(json['seller']),
+    category: Category.fromJson(json['category']),
+    averageRating: json['averageRating'] ?? 0,
+    totalReviews: json['totalReviews'] ?? 0,
+  );
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-        'image': image,
-        'quantity': quantity,
-        'price': price,
-        'description': description,
-        'specification': specification,
-        'status': status,
-        'createdAt': createdAt.toIso8601String(),
-        'updatedAt': updatedAt.toIso8601String(),
-        'isActive': isActive,
-        'isDeleted': isDeleted,
-        'categoryId': categoryId,
-        'sellerId': sellerId,
-        'userId': userId,
-        'seller': seller.toJson(),
-        'category': category.toJson(),
-        'reviews': reviews,
-      };
+    'id': id,
+    'name': name,
+    'image': image,
+    'quantity': quantity,
+    'price': price,
+    'description': description,
+    'specification': specification,
+    'status': status,
+    'createdAt': createdAt.toIso8601String(),
+    'updatedAt': updatedAt.toIso8601String(),
+    'isActive': isActive,
+    'isDeleted': isDeleted,
+    'categoryId': categoryId,
+    'sellerId': sellerId,
+    'userId': userId,
+    'seller': seller.toJson(),
+    'category': category.toJson(),
+    'averageRating': averageRating,
+    'totalReviews': totalReviews,
+  };
 }
 
 class Seller {
+  final String id;
+  final String shopName;
   final User user;
 
-  Seller({required this.user});
+  Seller({required this.id, required this.shopName, required this.user});
 
   factory Seller.fromJson(Map<String, dynamic> json) => Seller(
-        user: User.fromJson(json['user']),
-      );
+    id: json['id'],
+    shopName: json['shopName'],
+    user: User.fromJson(json['user']),
+  );
 
   Map<String, dynamic> toJson() => {
-        'user': user.toJson(),
-      };
+    'id': id,
+    'shopName': shopName,
+    'user': user.toJson(),
+  };
 }
 
 class User {
@@ -180,13 +190,9 @@ class User {
 
   User({required this.name});
 
-  factory User.fromJson(Map<String, dynamic> json) => User(
-        name: json['name'],
-      );
+  factory User.fromJson(Map<String, dynamic> json) => User(name: json['name']);
 
-  Map<String, dynamic> toJson() => {
-        'name': name,
-      };
+  Map<String, dynamic> toJson() => {'name': name};
 }
 
 class Category {
@@ -195,13 +201,8 @@ class Category {
 
   Category({required this.id, required this.name});
 
-  factory Category.fromJson(Map<String, dynamic> json) => Category(
-        id: json['id'],
-        name: json['name'],
-      );
+  factory Category.fromJson(Map<String, dynamic> json) =>
+      Category(id: json['id'], name: json['name']);
 
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-      };
+  Map<String, dynamic> toJson() => {'id': id, 'name': name};
 }
