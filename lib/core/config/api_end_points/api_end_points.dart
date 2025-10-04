@@ -31,10 +31,18 @@ class ApiEndPoints {
   static const addtocard = '$_baseUrl/carts/add';
   static const notification = '$_baseUrl/notifications';
 
-
   //Lokman
   static const pricingPlan = '$_baseUrl/subscription-plans';
+  static const purchaseSubscriptionPlan =
+      '$_baseUrl/sellers/seller-purchase-plan';
+  static const submitApplications =
+      '$_baseUrl/sellers/create-with-account-verification';
 
+  // added by shahriar
+  static const allProducts = '$_baseUrl/products';
+
+
+  static const sendPhoneOtp = '$_baseUrl/sellers/basic-info';
 
 
  // added by shahriar 
@@ -44,11 +52,7 @@ class ApiEndPoints {
 // Cart 
  static const getAllCart = '$_baseUrl/carts';
  static const deleteCart = '$_baseUrl/carts/delete';
-
-
-
-
+  
   static const sendPhoneOtp = '$_baseUrl/auth/send-otp-phone-number';
   static const verifyPhoneOtp = '$_baseUrl/auth/verify-otp-by-phone-number';
-
 }

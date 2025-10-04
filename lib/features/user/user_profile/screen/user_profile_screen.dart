@@ -18,13 +18,78 @@ import 'edit_profile_screen.dart';
 class UserProfileScreen extends StatelessWidget {
   UserProfileScreen({super.key});
 
-  final controller = Get.put(UserProfileController());
+  final UserProfileController controller = Get.find<UserProfileController>();
   final editcontroller = Get.put(EditUserProfileController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(title: 'Profile', centerTitle: true),
+      body: SafeArea(
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Obx(
+                  () => Column(
+                    children: [
+                      SizedBox(height: 16.h),
+                      CircleAvatar(
+                        backgroundColor: Colors.amber,
+                        radius: 56.r,
+                        child: ClipOval(
+                          child: (controller.profileData.value != null)
+                              ? Image.network(
+                                  controller.profileData.value?.image ?? '',
+                                  width: 112.r,
+                                  height: 112.r,
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Image.network(
+                                      "https://cdn-icons-png.flaticon.com/512/180/180644.png",
+                                      width: 112.r,
+                                      height: 112.r,
+                                    );
+                                  },
+                                )
+                              : Image.network(
+                                  "https://cdn-icons-png.flaticon.com/512/180/180644.png",
+                                  width: 112.r,
+                                  height: 112.r,
+                                ),
+                        ),
+                      ),
+
+                      SizedBox(height: 16.h),
+                      CustomText(
+                        text: controller.profileData.value?.name ?? '',
+                        color: AppColors.blackColor,
+                        fontSize: 24.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      CustomText(
+                        text: controller.profileData.value?.email ?? '',
+                        color: AppColors.lightGrey,
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ],
+                  ),
+                ),
+
+                // GestureDetector(
+                //   // onTap: () => controller.getUserProfileData(),
+                //   child: _userProfile(
+                //     controller: controller,
+                //     editController: editcontroller,
+                //   ),
+                // ),
+                // SizedBox(height: 12.h),
+                _profileMenuList(controller: controller),
+              ],
+
       body: SingleChildScrollView(
         child: SafeArea(
           child: Center(
@@ -44,6 +109,7 @@ class UserProfileScreen extends StatelessWidget {
                   _profileMenuList(controller: controller),
                 ],
               ),
+
             ),
           ),
         ),
@@ -52,57 +118,61 @@ class UserProfileScreen extends StatelessWidget {
   }
 }
 
-Widget _userProfile({
-  required UserProfileController controller,
-  required EditUserProfileController editController,
-}) {
-  return Obx(
-    () => Column(
-      children: [
-        SizedBox(height: 16.h),
-        CircleAvatar(
-          backgroundColor: Colors.amber,
-          radius: 56.r,
-          child: ClipOval(
-            child: (controller.getUserProfile.value.isNotEmpty)
-                ? Image.network(
-                    controller.getUserProfile.value,
-                    width: 112.r,
-                    height: 112.r,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Image.network(
-                        "https://cdn-icons-png.flaticon.com/512/180/180644.png",
-                        width: 112.r,
-                        height: 112.r,
-                      );
-                    },
-                  )
-                : Image.network(
-                    "https://cdn-icons-png.flaticon.com/512/180/180644.png",
-                    width: 112.r,
-                    height: 112.r,
-                  ),
-          ),
-        ),
+// Widget _userProfile({
+//   required UserProfileController controller,
+//   required EditUserProfileController editController,
+// }) {
+// return
 
-        SizedBox(height: 16.h),
-        CustomText(
-          text: controller.getUserName.value,
-          color: AppColors.blackColor,
-          fontSize: 24.sp,
-          fontWeight: FontWeight.w500,
-        ),
-        CustomText(
-          text: controller.getUserEmail.value,
-          color: AppColors.lightGrey,
-          fontSize: 16.sp,
-          fontWeight: FontWeight.w400,
-        ),
-      ],
-    ),
-  );
-}
+//  Obx(
+//   () =>
+//   Column(
+//     children: [
+//       SizedBox(height: 16.h),
+//       CircleAvatar(
+//         backgroundColor: Colors.amber,
+//         radius: 56.r,
+//         child: ClipOval(
+//           child: (controller.getUserProfile.value.isNotEmpty)
+//               ? Image.network(
+//                   controller.getUserProfile.value,
+//                   width: 112.r,
+//                   height: 112.r,
+//                   fit: BoxFit.cover,
+//                   errorBuilder: (context, error, stackTrace) {
+//                     return Image.network(
+//                       "https://cdn-icons-png.flaticon.com/512/180/180644.png",
+//                       width: 112.r,
+//                       height: 112.r,
+//                     );
+//                   },
+//                 )
+//               : Image.network(
+//                   "https://cdn-icons-png.flaticon.com/512/180/180644.png",
+//                   width: 112.r,
+//                   height: 112.r,
+//                 ),
+//         ),
+//       ),
+
+//       SizedBox(height: 16.h),
+//       CustomText(
+//         text: controller.getUserName.value,
+//         color: AppColors.blackColor,
+//         fontSize: 24.sp,
+//         fontWeight: FontWeight.w500,
+//       ),
+//       CustomText(
+//         text: controller.getUserEmail.value,
+//         color: AppColors.lightGrey,
+//         fontSize: 16.sp,
+//         fontWeight: FontWeight.w400,
+//       ),
+//     ],
+//   ),
+// );
+
+// }
 
 Widget _profileMenuList({required UserProfileController controller}) {
   return SizedBox(

@@ -341,6 +341,7 @@ import 'package:sandlink/core/wrappers/custom_text.dart';
 import 'package:sandlink/features/user/join_affiliates/controllers/personal_information_controller.dart';
 import 'package:sandlink/features/user/join_affiliates/controllers/phone_verification_controllers.dart';
 import 'package:sandlink/features/user/join_affiliates/controllers/document_upload_controller.dart';
+import 'package:sandlink/features/user/join_affiliates/controllers/submit_application_controller.dart';
 import 'package:sandlink/features/user/join_affiliates/model/affiliate_data_model.dart';
 import 'package:sandlink/features/user/join_affiliates/screen/document_verification_screen.dart';
 import 'package:sandlink/features/user/join_affiliates/screen/personal_information_screen.dart';
@@ -359,6 +360,9 @@ class StepsScreen extends StatelessWidget {
   );
   final DocumentVerificationController documentVerificationController = Get.put(
     DocumentVerificationController(),
+  );
+  final SubmitApplicationController submitApplicationController = Get.put(
+    SubmitApplicationController(),
   );
 
   StepsScreen({super.key});
@@ -716,8 +720,27 @@ class StepsScreen extends StatelessWidget {
                     );
                   } else if (step == 3) {
                     return CustomButton(
-                      onPressed: () {
-                        _submitAffiliateData(controller.affiliateData.value);
+                      onPressed: () async {
+                        // Check required documents
+                        if (!controller
+                            .affiliateData
+                            .value
+                            .hasRequiredDocuments) {
+                          Get.snackbar(
+                            'Missing Documents',
+                            'Please upload National ID Front & Back before submission',
+                            snackPosition: SnackPosition.BOTTOM,
+                            backgroundColor: AppColors.redColor,
+                            colorText: AppColors.whiteColor,
+                          );
+                          return;
+                        }
+
+                        // Submit application and navigate to payment
+                        await submitApplicationController
+                            .submitAffiliateApplication(
+                              controller.affiliateData.value,
+                            );
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -730,6 +753,25 @@ class StepsScreen extends StatelessWidget {
                         ],
                       ),
                     );
+
+                    //  else if (step == 3) {
+                    //   return CustomButton(
+                    //     onPressed: () {
+                    //       // _submitAffiliateData(controller.affiliateData.value);
+                    //       submitApplicationController
+                    //           .submitAffiliateApplication(data);
+                    //     },
+                    //     child: Row(
+                    //       mainAxisAlignment: MainAxisAlignment.center,
+                    //       children: [
+                    //         CustomText(
+                    //           text: 'Submit Application',
+                    //           color: AppColors.whiteColor,
+                    //           fontSize: 18.sp,
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   );
                   } else {
                     return Row(
                       children: [
@@ -791,18 +833,40 @@ class StepsScreen extends StatelessWidget {
     );
   }
 
-  void _submitAffiliateData(AffiliateDataModel data) {
-    // Check if required documents are uploaded
-    if (!data.hasRequiredDocuments) {
-      Get.snackbar(
-        'Missing Documents',
-        'Please upload National ID Front & Back before submission',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: AppColors.redColor,
-        colorText: AppColors.whiteColor,
-      );
-      return;
-    }
+  // Future<void> _submitAffiliateData(AffiliateDataModel data) async {
+  //   // Check if required documents are uploaded
+  //   if (!data.hasRequiredDocuments) {
+  //     Get.snackbar(
+  //       'Missing Documents',
+  //       'Please upload National ID Front & Back before submission',
+  //       snackPosition: SnackPosition.BOTTOM,
+  //       backgroundColor: AppColors.redColor,
+  //       colorText: AppColors.whiteColor,
+  //     );
+  //     return;
+  //   }
+
+
+  //   // Show confirmation dialog before submitting
+  //   final confirm = await Get.dialog<bool>(
+  //     AlertDialog(
+  //       title: Text('Confirm Submission'),
+  //       content: Text(
+  //         'Are you sure you want to submit your affiliate application? '
+  //         'You won\'t be able to make changes after submission.',
+  //       ),
+  //       actions: [
+  //         TextButton(
+  //           onPressed: () => Get.back(result: false),
+  //           child: Text('Cancel'),
+  //         ),
+  //         ElevatedButton(
+  //           onPressed: () => Get.back(result: true),
+  //           child: Text('Submit'),
+  //         ),
+  //       ],
+  //     ),
+  //   );
 
     // Implement your API call here to submit all data
     if (kDebugMode) {
@@ -850,16 +914,38 @@ class StepsScreen extends StatelessWidget {
       print('================================');
     }
 
-    // Show success message
-    Get.snackbar(
-      'Success',
-      'Affiliate application submitted successfully!',
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: AppColors.greenColor,
-      colorText: AppColors.whiteColor,
-    );
 
-    // You can navigate back or reset the flow here
-    // Get.until((route) => route.isFirst);
-  }
+  //   if (confirm != true) return;
+
+  //   // Submit the application
+  //   bool success = await submitApplicationController.submitAffiliateApplication(
+  //     data,
+  //   );
+
+  //   if (success) {
+  //     // Navigate back to home or show success screen
+  //     Get.until((route) => route.isFirst);
+
+  //     // Optionally show a success dialog
+  //     Get.dialog(
+  //       AlertDialog(
+  //         title: Row(
+  //           children: [
+  //             Icon(Icons.check_circle, color: AppColors.greenColor, size: 32),
+  //             SizedBox(width: 10),
+  //             Text('Success!'),
+  //           ],
+  //         ),
+  //         content: Text(
+  //           'Your affiliate application has been submitted successfully. '
+  //           'Our team will review it within 24-48 hours.',
+  //         ),
+  //         actions: [
+  //           ElevatedButton(onPressed: () => Get.back(), child: Text('OK')),
+  //         ],
+  //       ),
+  //       barrierDismissible: false,
+  //     );
+  //   }
+  // }
 }
