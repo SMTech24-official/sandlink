@@ -50,7 +50,7 @@ class AddAddressController extends GetxController {
         if (kDebugMode) {
           print("Address ID ..................$addressId");
         }
-        await controller.getAddress(addressId);
+        await controller.getAddress();
         // Clear fields
         addAddressLocationNameController.clear();
         addAddressController.clear();

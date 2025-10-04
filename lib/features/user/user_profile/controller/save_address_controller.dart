@@ -7,42 +7,46 @@ import 'package:sandlink/core/config/api_end_points/api_end_points.dart';
 import 'package:sandlink/features/user/user_profile/model/address_model.dart';
 
 class AddressController extends GetxController {
-  final String? addressid = StorageService().getData('id');
+  var addresses = <AddressData>[].obs; // Observable list
 
-  var addressResponse = Rx<AddressData?>(null);
   @override
   void onInit() {
     super.onInit();
-    if (addressid != null) {
-      getAddress(addressid!);
-    } else {
-      EasyLoading.showError("Address ID not found");
-    }
+    getAddress();
   }
 
-  Future<void> getAddress(String? addressId) async {
+  Future<void> getAddress() async {
     EasyLoading.show(status: "Loading...");
 
     try {
       final response = await NetworkCaller().getRequest(
-        "${ApiEndPoints.getAddress}/$addressId",
+        ApiEndPoints.getAddress,
         token: StorageService().getData('accessToken'),
       );
 
       if (response.isSuccess) {
-        addressResponse.value = AddressData.fromJson(response.responseData);
-        EasyLoading.dismiss();
+        // Use the full response map
+        final addressResponse = AddressResponseModel.fromJson(
+          response.responseData['result'],
+        );
+
+        // Assign the list to the observable
+        addresses.value = addressResponse.data?.result ?? [];
+
+        if (kDebugMode) print("✅ Loaded ${addresses.length} addresses");
       } else {
         EasyLoading.showError(response.errorMessage);
       }
     } catch (e) {
       EasyLoading.showError("Error: $e");
+      if (kDebugMode) print('Get address error: $e');
     } finally {
       EasyLoading.dismiss();
     }
   }
 
-  Future<void> deleteAddress(String? addressId) async {
+  // Delete a specific address
+  Future<void> deleteAddress(String addressId) async {
     EasyLoading.show(status: 'Deleting...');
 
     try {
@@ -53,9 +57,8 @@ class AddressController extends GetxController {
       );
 
       if (response.isSuccess) {
-        if (addressResponse.value?.id == addressId) {
-          addressResponse.value = null;
-        }
+        // Remove from the observable list
+        addresses.removeWhere((element) => element.id == addressId);
         EasyLoading.showSuccess('Address deleted successfully');
         return;
       }

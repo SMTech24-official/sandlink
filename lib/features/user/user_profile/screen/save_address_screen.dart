@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:sandlink/core/services/DBServices/local_db_services/storage_service.dart';
 import 'package:sandlink/core/widgets/custom_button.dart';
+import 'package:sandlink/features/user/user_profile/model/address_model.dart';
 import '../../../../core/app_colors/app_colors.dart';
 import '../../../../core/config/constants/assets_paths/icons_assets_paths.dart';
 import '../../../../core/config/constants/assets_paths/svg_assets_paths.dart';
@@ -33,13 +33,16 @@ class SaveAddressScreen extends StatelessWidget {
             children: [
               Expanded(
                 child: Obx(() {
-                  final address = controller.addressResponse.value;
-                  if (address == null) {
+                  final addressList = controller.addresses;
+
+                  if (addressList.isEmpty) {
                     return const Center(child: Text('No saved address'));
                   }
+
                   return ListView.builder(
-                    itemCount: 1, // replace with address list if multiple
+                    itemCount: addressList.length,
                     itemBuilder: (context, index) {
+                      final address = addressList[index];
                       return _addressTile(controller, address);
                     },
                   );
@@ -55,7 +58,7 @@ class SaveAddressScreen extends StatelessWidget {
   }
 }
 
-Widget _addressTile(AddressController controller, address) {
+Widget _addressTile(AddressController controller, AddressData address) {
   return Container(
     margin: EdgeInsets.only(bottom: 12.h),
     padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
@@ -73,13 +76,13 @@ Widget _addressTile(AddressController controller, address) {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CustomText(
-                text: address.locationType ?? 'Home',
+                text: address.locationType,
                 color: AppColors.blackColor,
                 fontWeight: FontWeight.w500,
                 fontSize: 16.sp,
               ),
               CustomText(
-                text: address.address ?? '123 Main Street, City, State',
+                text: address.address,
                 color: AppColors.lightGrey,
                 fontWeight: FontWeight.w400,
                 fontSize: 14.sp,
@@ -89,10 +92,7 @@ Widget _addressTile(AddressController controller, address) {
         ),
         GestureDetector(
           onTap: () {
-            Get.to(
-              () => EditAddressScreen(),
-              arguments: controller.addressResponse.value,
-            );
+            Get.to(() => EditAddressScreen(), arguments: address);
           },
           child: Image.asset(
             IconsAssetsPaths.instance.editicon,
@@ -104,16 +104,8 @@ Widget _addressTile(AddressController controller, address) {
         SizedBox(width: 12.w),
         GestureDetector(
           onTap: () {
-            final String? addressId = StorageService().getData(
-              'id',
-            ); // get the stored id
-            if (addressId != null) {
-              controller.deleteAddress(addressId);
-            } else {
-              Get.snackbar('Error', 'Address ID not found');
-            }
+            controller.deleteAddress(address.id);
           },
-
           child: Image.asset(
             IconsAssetsPaths.instance.deleteicon,
             height: 20.h,
