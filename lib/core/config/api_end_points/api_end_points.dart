@@ -29,6 +29,7 @@ class ApiEndPoints {
   static const deleteaccunt = '$_baseUrl/users/delete-account';
   static const productdetails = '$_baseUrl/products/details';
   static const addtocard = '$_baseUrl/carts/add';
+  static const notification = '$_baseUrl/notifications';
 
 
   //Lokman
