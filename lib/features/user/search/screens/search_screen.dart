@@ -96,7 +96,10 @@ class SearchScreen extends StatelessWidget {
                                       size: 20,
                                     ),
                                     SizedBox(width: 6.w),
-                                    CustomText(text: '5.0'),
+                                    CustomText(
+                                      text:
+                                          '${product.averageRating} (${product.totalReviews})',
+                                    ),
                                     Spacer(),
                                     CustomText(
                                       text: '₦${product.price}/',

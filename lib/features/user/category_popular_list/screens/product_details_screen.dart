@@ -1,5 +1,4 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,12 +8,11 @@ import '../../../../core/config/constants/assets_paths/icons_assets_paths.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
 import '../../../../core/widgets/custom_button.dart';
 import '../../../../core/wrappers/custom_text.dart';
-import '../../my_orders/screen/user_item_reviews.dart';
-import '../controllers/category_popular_details_controller.dart';
+import '../controllers/product_details_controller.dart';
 
-class CategoryPopularDetailsScreen extends StatelessWidget {
-  CategoryPopularDetailsScreen({super.key});
-  final controller = Get.put(CategoryPopularDetailsController());
+class ProductDetailsScreen extends StatelessWidget {
+  ProductDetailsScreen({super.key});
+  final controller = Get.put(ProductDetailsController());
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +90,13 @@ class CategoryPopularDetailsScreen extends StatelessWidget {
                           ),
                           SizedBox(width: 5.w),
                           CustomText(
-                            text: 'BuildMart',
+                            text:
+                                controller
+                                    .productdetails
+                                    .value
+                                    ?.seller
+                                    ?.shopName ??
+                                'Seller',
                             color: AppColors.darkGreyColor,
                             fontWeight: FontWeight.w500,
                             fontSize: 16.sp,
@@ -100,14 +104,13 @@ class CategoryPopularDetailsScreen extends StatelessWidget {
                           const Spacer(),
                           Icon(Icons.star, size: 16, color: Colors.amber),
                           SizedBox(width: 5.w),
-                          GestureDetector(
-                            onTap: () => Get.to(() => UserItemReviewsScreen()),
-                            child: CustomText(
-                              text: '5.0 (205 Reviews)',
-                              color: AppColors.lightGrey,
-                              fontWeight: FontWeight.w400,
-                              fontSize: 16.sp,
-                            ),
+                          SizedBox(width: 5.w),
+                          CustomText(
+                            text:
+                                '${controller.productdetails.value?.averageRating ?? 0} (${controller.productdetails.value?.totalReviews ?? 0} Reviews)',
+                            color: AppColors.lightGrey,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 16.sp,
                           ),
                         ],
                       ),
@@ -171,7 +174,7 @@ class CategoryPopularDetailsScreen extends StatelessWidget {
   }
 }
 
-Widget _bannerSlider({required CategoryPopularDetailsController controller}) {
+Widget _bannerSlider({required ProductDetailsController controller}) {
   final product = controller.productdetails.value;
   if (product == null) return const SizedBox();
 
@@ -229,12 +232,35 @@ Widget _bannerSlider({required CategoryPopularDetailsController controller}) {
   );
 }
 
-Widget _reviewsSection({required CategoryPopularDetailsController controller}) {
+Widget _reviewsSection({required ProductDetailsController controller}) {
+  final reviews = controller.reviewsList;
+
+  if (reviews.isEmpty) {
+    return Center(
+      child: CustomText(
+        text: 'No Reviews Yet',
+        color: AppColors.lightGrey,
+        fontSize: 16.sp,
+        fontWeight: FontWeight.w400,
+      ),
+    );
+  }
+
   return ListView.separated(
     separatorBuilder: (_, index) => SizedBox(height: 8.h),
-    itemCount: controller.reviewsList.length,
+    itemCount: reviews.length,
     itemBuilder: (_, index) {
-      final rivewsData = controller.reviewsList[index];
+      final review = reviews[index];
+
+      // calculate days ago
+      String daysAgo = '';
+      if (review.createdAt != null) {
+        final difference = DateTime.now().difference(review.createdAt!);
+        daysAgo = difference.inDays == 0
+            ? 'Today'
+            : '${difference.inDays} day${difference.inDays > 1 ? 's' : ''} ago';
+      }
+
       return Container(
         width: 343.w,
         decoration: BoxDecoration(
@@ -250,13 +276,13 @@ Widget _reviewsSection({required CategoryPopularDetailsController controller}) {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   CustomText(
-                    text: rivewsData.name,
+                    text: review.user?.name ?? 'Anonymous',
                     color: AppColors.blackColor,
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w500,
                   ),
                   CustomText(
-                    text: rivewsData.days,
+                    text: daysAgo,
                     color: AppColors.lightGrey,
                     fontSize: 12.sp,
                     fontWeight: FontWeight.w400,
@@ -265,7 +291,7 @@ Widget _reviewsSection({required CategoryPopularDetailsController controller}) {
               ),
               SizedBox(height: 8.h),
               RatingBar.builder(
-                initialRating: rivewsData.rating.toDouble(),
+                initialRating: (review.rating ?? 0).toDouble(),
                 minRating: 1,
                 direction: Axis.horizontal,
                 allowHalfRating: false,
@@ -274,16 +300,11 @@ Widget _reviewsSection({required CategoryPopularDetailsController controller}) {
                 itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
                 itemBuilder: (context, _) =>
                     Icon(Icons.star, color: Colors.amber),
-                onRatingUpdate: (rating) {
-                  if (kDebugMode) {
-                    print(rating);
-                  }
-                },
+                onRatingUpdate: (rating) {},
               ),
               SizedBox(height: 8.h),
-
               CustomText(
-                text: rivewsData.title,
+                text: review.comment ?? '',
                 color: AppColors.lightGrey,
                 fontSize: 14.sp,
                 fontWeight: FontWeight.w400,
@@ -293,13 +314,10 @@ Widget _reviewsSection({required CategoryPopularDetailsController controller}) {
         ),
       );
     },
-    // list
   );
 }
 
-Widget _customButtonContainer({
-  required CategoryPopularDetailsController controller,
-}) {
+Widget _customButtonContainer({required ProductDetailsController controller}) {
   return Padding(
     padding: EdgeInsets.symmetric(horizontal: 12.h, vertical: 20.r),
     child: CustomButton(

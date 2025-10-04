@@ -10,16 +10,16 @@ import 'package:sandlink/core/config/constants/assets_paths/icons_assets_paths.d
 import 'package:sandlink/core/config/constants/assets_paths/svg_assets_paths.dart';
 import 'package:sandlink/core/wrappers/custom_text.dart';
 import 'package:sandlink/features/user/category/screen/category_screen.dart';
-import 'package:sandlink/features/user/category_popular_list/controllers/category_popular_details_controller.dart';
+import 'package:sandlink/features/user/category_popular_list/controllers/product_details_controller.dart';
 import 'package:sandlink/features/user/home/controllers/user_home_controller.dart';
 import 'package:sandlink/features/user/join_affiliates/screen/terms_conditions_screen.dart';
 import 'package:sandlink/features/user/user_profile/controller/user_profile_controller.dart';
-import '../../category_popular_list/screens/category_popular_details.dart';
+import '../../category_popular_list/screens/product_details_screen.dart';
 import '../../category_popular_list/screens/category_popular_list.dart';
 
 class UserHomeScreen extends StatelessWidget {
   UserHomeScreen({super.key});
-  final detailscontroller = Get.put(CategoryPopularDetailsController());
+  final detailscontroller = Get.put(ProductDetailsController());
 
   @override
   Widget build(BuildContext context) {
@@ -285,7 +285,12 @@ class UserHomeScreen extends StatelessWidget {
             final items = controller.categoriesList[index];
             return GestureDetector(
               onTap: () {
-                Get.to(CategoryScreen() ,);
+                Get.to(
+                  () => CategoryScreen(
+                    appbarTitle: items.name ?? '',
+                    id: items.id.toString(), // সবসময় String আকারে যাবে
+                  ),
+                );
               },
 
               child: SizedBox(
@@ -335,8 +340,8 @@ class UserHomeScreen extends StatelessWidget {
               onTap: () async {
                 final productId = items.id;
                 if (productId != null) {
-                  await detailscontroller.getrProductdetails(productId);
-                  Get.to(() => CategoryPopularDetailsScreen());
+                  await detailscontroller.getProductdetails(productId);     
+                  Get.to(() => ProductDetailsScreen());
                 } else {
                   if (kDebugMode) {
                     print("Product ID is null");
