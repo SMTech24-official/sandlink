@@ -7,19 +7,14 @@ import 'package:sandlink/core/wrappers/custom_text.dart';
 import 'package:sandlink/features/user/home/controllers/user_home_controller.dart';
 
 class CategoryScreen extends StatelessWidget {
-  CategoryScreen({super.key, required this.appbarTitle});
-
-  final String appbarTitle;
+  CategoryScreen({super.key});
 
   final homecontroller = Get.put(UserHomeController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-        title: appbarTitle,
-        onLeadingPressed: () => Get.back(),
-      ),
+      appBar: CustomAppBar(title: "", onLeadingPressed: () => Get.back()),
 
       body: SafeArea(
         child: GridView.builder(
