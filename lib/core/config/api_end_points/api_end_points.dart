@@ -38,21 +38,16 @@ class ApiEndPoints {
   static const submitApplications =
       '$_baseUrl/sellers/create-with-account-verification';
 
+  static const sendPhoneOtpBasicInfo = '$_baseUrl/sellers/basic-info';
+
   // added by shahriar
   static const allProducts = '$_baseUrl/products';
+  static const getMyOrders = '$_baseUrl/orders/get-all-customer-orders';
 
+  // Cart
+  static const getAllCart = '$_baseUrl/carts';
+  static const deleteCart = '$_baseUrl/carts/delete';
 
-  static const sendPhoneOtp = '$_baseUrl/sellers/basic-info';
-
-
- // added by shahriar 
- static const allProducts = '$_baseUrl/products';
- static const getMyOrders = '$_baseUrl/orders/get-all-customer-orders';
-
-// Cart 
- static const getAllCart = '$_baseUrl/carts';
- static const deleteCart = '$_baseUrl/carts/delete';
-  
   static const sendPhoneOtp = '$_baseUrl/auth/send-otp-phone-number';
   static const verifyPhoneOtp = '$_baseUrl/auth/verify-otp-by-phone-number';
 }
