@@ -407,7 +407,7 @@ class PersonalInformationController extends GetxController {
     EasyLoading.show(status: 'Sending OTP...');
 
     try {
-      var url = ApiEndPoints.sendPhoneOtp;
+      var url = ApiEndPoints.sendPhoneOtpBasicInfo;
 
       final response = await NetworkCaller().patchRequest(
         url,

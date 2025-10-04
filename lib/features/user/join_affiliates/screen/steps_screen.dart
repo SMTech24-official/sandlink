@@ -331,7 +331,6 @@
 //   }
 // }
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -846,7 +845,6 @@ class StepsScreen extends StatelessWidget {
   //     return;
   //   }
 
-
   //   // Show confirmation dialog before submitting
   //   final confirm = await Get.dialog<bool>(
   //     AlertDialog(
@@ -868,52 +866,51 @@ class StepsScreen extends StatelessWidget {
   //     ),
   //   );
 
-    // Implement your API call here to submit all data
-    if (kDebugMode) {
-      print('=== SUBMITTING AFFILIATE DATA ===');
-    }
-    if (kDebugMode) {
-      print('Full Name: ${data.fullName}');
-    }
-    if (kDebugMode) {
-      print('Phone: ${data.phoneNumber}');
-    }
-    if (kDebugMode) {
-      print('Email: ${data.email}');
-    }
-    if (kDebugMode) {
-      print('Company: ${data.companyName}');
-    }
-    if (kDebugMode) {
-      print('Address: ${data.address}');
-    }
-    if (kDebugMode) {
-      print('Location: ${data.latitude}, ${data.longitude}');
-    }
-    if (kDebugMode) {
-      print('OTP: ${data.otp}');
-    }
-    if (kDebugMode) {
-      print('NID Front: ${data.nidFrontImage != null ? "Uploaded" : "Missing"}');
-    }
-    if (kDebugMode) {
-      print('NID Back: ${data.nidBackImage != null ? "Uploaded" : "Missing"}');
-    }
-    if (kDebugMode) {
-      print('License: ${data.licenceImage != null ? "Uploaded" : "Missing"}');
-    }
-    if (kDebugMode) {
-      print('TIN: ${data.tinImage != null ? "Uploaded" : "Missing"}');
-    }
-    if (kDebugMode) {
-      print(
-      'Address Proof: ${data.addressImage != null ? "Uploaded" : "Missing"}',
-    );
-    }
-    if (kDebugMode) {
-      print('================================');
-    }
-
+  // Implement your API call here to submit all data
+  // if (kDebugMode) {
+  //   print('=== SUBMITTING AFFILIATE DATA ===');
+  // }
+  // if (kDebugMode) {
+  //   print('Full Name: ${data.fullName}');
+  // }
+  // if (kDebugMode) {
+  //   print('Phone: ${data.phoneNumber}');
+  // }
+  // if (kDebugMode) {
+  //   print('Email: ${data.email}');
+  // }
+  // if (kDebugMode) {
+  //   print('Company: ${data.companyName}');
+  // }
+  // if (kDebugMode) {
+  //   print('Address: ${data.address}');
+  // }
+  // if (kDebugMode) {
+  //   print('Location: ${data.latitude}, ${data.longitude}');
+  // }
+  // if (kDebugMode) {
+  //   print('OTP: ${data.otp}');
+  // }
+  // if (kDebugMode) {
+  //   print('NID Front: ${data.nidFrontImage != null ? "Uploaded" : "Missing"}');
+  // }
+  // if (kDebugMode) {
+  //   print('NID Back: ${data.nidBackImage != null ? "Uploaded" : "Missing"}');
+  // }
+  // if (kDebugMode) {
+  //   print('License: ${data.licenceImage != null ? "Uploaded" : "Missing"}');
+  // }
+  // if (kDebugMode) {
+  //   print('TIN: ${data.tinImage != null ? "Uploaded" : "Missing"}');
+  // }
+  // if (kDebugMode) {
+  //   print(
+  //   'Address Proof: ${data.addressImage != null ? "Uploaded" : "Missing"}',
+  // );
+  // }
+  // if (kDebugMode) {
+  //   print('================================');
+  // }
 
   //   if (confirm != true) return;
 
