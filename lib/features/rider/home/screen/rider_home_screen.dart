@@ -4,9 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:sandlink/core/config/constants/assets_paths/icons_assets_paths.dart';
 import 'package:sandlink/core/widgets/custom_button.dart';
+import 'package:sandlink/features/rider/rider_notification/screen/notification_screen.dart';
 import '../../../../core/app_colors/app_colors.dart';
 import '../../../../core/wrappers/custom_text.dart';
-import '../../rider_notification/screen/rider_notification_screen.dart';
 import '../controller/rider_home_controller.dart';
 import '../../order/rider_order_screen/order_details_screen.dart';
 
