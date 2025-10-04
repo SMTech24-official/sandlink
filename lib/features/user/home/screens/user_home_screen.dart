@@ -16,11 +16,14 @@ import '../../category_popular_list/screens/category_popular_details.dart';
 import '../../category_popular_list/screens/category_popular_list.dart';
 
 class UserHomeScreen extends StatelessWidget {
-  const UserHomeScreen({super.key});
+  UserHomeScreen({super.key});
+
+  final profileController = Get.put(UserProfileController());
+  final controller = Get.put(UserHomeController());
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(UserHomeController());
+    profileController.getUserProfileData();
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -151,120 +154,6 @@ class UserHomeScreen extends StatelessWidget {
             ),
           ),
         ),
-        //   Container(
-        //   width: double.infinity,
-        //   decoration: BoxDecoration(
-        //     borderRadius: BorderRadius.all(Radius.circular(8.r)),
-        //   ),
-        //   child: ClipPath(
-        //     clipper: TrapezoidClipper(),
-        //     child: Container(
-        //       height: 140.h,
-        //       width: double.infinity,
-        //       color: AppColors.primaryColor,
-        //       padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 16.h),
-        //       child: Column(
-        //         crossAxisAlignment: CrossAxisAlignment.start,
-        //         mainAxisAlignment: MainAxisAlignment.center,
-        //         children: [
-        //           CustomText(
-        //             text: 'Join Our Affiliate',
-        //             fontSize: 18.sp,
-        //             color: AppColors.whiteColor,
-        //             fontWeight: FontWeight.w500,
-        //           ),
-        //           CustomText(
-        //             text: 'Network & Grow Faster',
-        //             fontSize: 14.sp,
-        //             color: AppColors.whiteColor,
-        //             fontWeight: FontWeight.w400,
-        //           ),
-        //         ],
-        //       ),
-        //     ),
-        //   ),
-        // ),
-
-        // Expanded(
-        //   flex: 1,
-        //   child: ClipPath(
-        //     clipper: TrapezoidClipper(),
-        //     child: Container(
-        //       height: 140.h,
-        //       width: 180.w,
-        //      color: AppColors.redColor,
-        //       child: Padding(
-        //         padding:  EdgeInsets.symmetric(horizontal:12.w,vertical: 16.h),
-        //         child: Column(
-        //           crossAxisAlignment: CrossAxisAlignment.start,
-        //           children: [
-        //             CustomText(
-        //               text: 'Join Our Affiliate',
-        //               fontSize: 18.sp,
-        //               color: AppColors.whiteColor,
-        //               fontWeight: FontWeight.w500,
-        //             ),
-        //
-        //             CustomText(
-        //               text: 'Network & Grow Faster',
-        //               fontSize: 14.sp,
-        //               color: AppColors.whiteColor,
-        //               fontWeight: FontWeight.w400,
-        //             ),
-        //           ],
-        //         ),
-        //       ),
-        //     ),
-        //   ),
-        // ),
-
-        // ClipRRect(
-        //   borderRadius: BorderRadius.circular(12.r),
-        //   child: SizedBox(
-        //     height: Get.width * 0.45,
-        //     width: double.infinity,
-        //     child: CarouselSlider.builder(
-        //       itemCount: controller.images.length,
-        //       itemBuilder: (context, index, realIndex) {
-        //         return Image.network(
-        //           controller.images[index],
-        //           fit: BoxFit.cover,
-        //           width: double.infinity,
-        //         );
-        //       },
-        //       options: CarouselOptions(
-        //         autoPlay: true,
-        //         autoPlayInterval: const Duration(seconds: 3),
-        //         viewportFraction: 1.0,
-        //         enableInfiniteScroll: true,
-        //         onPageChanged: (index, reason) {
-        //           controller.currentPage.value = index;
-        //         },
-        //       ),
-        //     ),
-        //   ),
-        // ),
-        // 8.verticalSpace,
-        // Obx(
-        //       () =>
-        //       Row(
-        //         mainAxisAlignment: MainAxisAlignment.center,
-        //         children: List.generate(controller.images.length, (index) {
-        //           return AnimatedContainer(
-        //             duration: const Duration(milliseconds: 300),
-        //             margin: EdgeInsets.symmetric(horizontal: 4.w),
-        //             height: 8.h,
-        //             width: controller.currentPage.value == index ? 24.w : 8.w,
-        //             decoration: BoxDecoration(
-        //               color: controller.currentPage.value == index
-        //                   ? AppColors.primaryColor
-        //                   : AppColors.primaryColor.withValues(alpha: 0.3),
-        //               borderRadius: BorderRadius.circular(4.r),
-        //             ),
-        //           );
-        //         }),
-        //       ),
-        // ),
       ],
     );
   }
@@ -415,7 +304,7 @@ class UserHomeScreen extends StatelessWidget {
 
   /// 🔹 Top app bar
   Widget _topAppBarWidget({required UserHomeController controller}) {
-    final profileController = Get.find<UserProfileController>();
+    final profileController = Get.put(UserProfileController());
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -489,43 +378,3 @@ class UserHomeScreen extends StatelessWidget {
     );
   }
 }
-
-// class TrapezoidClipper extends CustomClipper<Path> {
-//   @override
-//   Path getClip(Size size) {
-//     double topWidth = 75.w;
-//     double bottomWidth = 30.w;
-//     double height = size.height;
-//
-//     Path path = Path();
-//     path.moveTo((size.width - topWidth) / -2, 0); // top-left
-//     path.lineTo((size.width + topWidth) / 2, 0); // top-right
-//     path.lineTo((size.width + bottomWidth) / 3, height); // bottom-right
-//     path.lineTo((size.width - bottomWidth) / -2, height); // bottom-left
-//     path.close();
-//     return path;
-//   }
-//
-//   @override
-//   bool shouldReclip(CustomClipper<Path> oldClipper) => false;
-// }
-//
-// class BackTrapezoidClipper extends CustomClipper<Path> {
-//   @override
-//   Path getClip(Size size) {
-//     double topWidth = 75.w;
-//     double bottomWidth = 30.w;
-//     double height = size.height;
-//
-//     Path path = Path();
-//     path.moveTo((size.width - topWidth) / 2, 0); // top-left
-//     path.lineTo((size.width + topWidth) / -2, 0); // top-right
-//     path.lineTo((size.width + bottomWidth) / -3, height); // bottom-right
-//     path.lineTo((size.width - bottomWidth) / 2, height); // bottom-left
-//     path.close();
-//     return path;
-//   }
-//
-//   @override
-//   bool shouldReclip(CustomClipper<Path> oldClipper) => false;
-// }

@@ -116,8 +116,14 @@ class RegisterScreen extends StatelessWidget {
                                 phone.completeNumber;
                             debugPrint(phone.completeNumber);
                           },
+
+                          // onCountryChanged: (country) {
+                          //   debugPrint('Country changed to: ${country.name}');
+                          // },
                           onCountryChanged: (country) {
+                            controller.countryCode.value = country.code;
                             debugPrint('Country changed to: ${country.name}');
+                            debugPrint('Country code: ${country.code}');
                           },
                         ),
                         10.verticalSpace,

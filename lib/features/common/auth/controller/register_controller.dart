@@ -15,6 +15,7 @@ class RegisterController extends GetxController {
   final genderList = ['Male', 'Female', 'Other'].obs;
   final selectedGender = "Male".obs;
   final fullPhoneNumber = "".obs;
+  final countryCode = "".obs;
 
   var isPassVisible = false.obs;
   var isChecked = true.obs;
@@ -79,7 +80,9 @@ class RegisterController extends GetxController {
       var body = {
         "name": nameController.text,
         "email": emailController.text.trim(),
-        "phoneNumber": phoneController.text.trim(),
+        "phoneNumber":
+            "${countryCode.value}"
+            "${phoneController.text.trim()}",
         "password": passController.text.trim(),
         "role": StorageService().getData('role'),
         "isAgreeTermsAndPrivacyPolicy": isChecked.value,

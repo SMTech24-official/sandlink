@@ -13,6 +13,8 @@ import '../model/profile_menu_item.dart';
 
 class UserProfileController extends GetxController {
   /// Stored values
+  ///
+  final Rx<Data?> profileData = Rx<Data?>(null);
 
   final userToken = StorageService().getData('accessToken');
 
@@ -62,8 +64,6 @@ class UserProfileController extends GetxController {
     getUserProfileData();
   }
 
-  final token = StorageService().getData('accessToken');
-
   /// Observables for UI
   var getUserName = ''.obs;
   var getUserEmail = ''.obs;
@@ -73,6 +73,7 @@ class UserProfileController extends GetxController {
 
   /// Fetch user profile
   Future<void> getUserProfileData() async {
+    final token = StorageService().getData('accessToken');
     try {
       EasyLoading.show(status: 'Loading...');
       final response = await NetworkCaller().getRequest(
@@ -81,7 +82,8 @@ class UserProfileController extends GetxController {
       );
 
       if (response.isSuccess) {
-        var getdata = Data.fromJson(response.responseData);
+        final getdata = Data.fromJson(response.responseData);
+        profileData.value = getdata;
 
         /// Set values safely with fallbacks
         getUserName.value = (getdata.name?.isNotEmpty == true)

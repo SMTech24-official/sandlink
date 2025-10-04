@@ -29,7 +29,7 @@ class SubscriptionsPlanModel {
 
 class Data {
   Meta? meta;
-  List<Result>? result;
+  List<SubscriptionPlan>? result;
 
   Data({this.meta, this.result});
 
@@ -37,7 +37,9 @@ class Data {
     meta: json["meta"] == null ? null : Meta.fromJson(json["meta"]),
     result: json["result"] == null
         ? []
-        : List<Result>.from(json["result"]!.map((x) => Result.fromJson(x))),
+        : List<SubscriptionPlan>.from(
+            json["result"]!.map((x) => SubscriptionPlan.fromJson(x)),
+          ),
   );
 
   Map<String, dynamic> toJson() => {
@@ -71,7 +73,7 @@ class Meta {
   };
 }
 
-class Result {
+class SubscriptionPlan {
   String? id;
   String? planName;
   double? price;
@@ -84,7 +86,7 @@ class Result {
   DateTime? createdAt;
   DateTime? updatedAt;
 
-  Result({
+  SubscriptionPlan({
     this.id,
     this.planName,
     this.price,
@@ -98,25 +100,26 @@ class Result {
     this.updatedAt,
   });
 
-  factory Result.fromJson(Map<String, dynamic> json) => Result(
-    id: json["id"],
-    planName: json["planName"],
-    price: json["price"]?.toDouble(),
-    interval: json["interval"],
-    description: json["description"],
-    features: json["features"] == null
-        ? []
-        : List<String>.from(json["features"]!.map((x) => x)),
-    stripeProductId: json["stripeProductId"],
-    stripePriceId: json["stripePriceId"],
-    isDeleted: json["isDeleted"],
-    createdAt: json["createdAt"] == null
-        ? null
-        : DateTime.parse(json["createdAt"]),
-    updatedAt: json["updatedAt"] == null
-        ? null
-        : DateTime.parse(json["updatedAt"]),
-  );
+  factory SubscriptionPlan.fromJson(Map<String, dynamic> json) =>
+      SubscriptionPlan(
+        id: json["id"],
+        planName: json["planName"],
+        price: json["price"]?.toDouble(),
+        interval: json["interval"],
+        description: json["description"],
+        features: json["features"] == null
+            ? []
+            : List<String>.from(json["features"]!.map((x) => x)),
+        stripeProductId: json["stripeProductId"],
+        stripePriceId: json["stripePriceId"],
+        isDeleted: json["isDeleted"],
+        createdAt: json["createdAt"] == null
+            ? null
+            : DateTime.parse(json["createdAt"]),
+        updatedAt: json["updatedAt"] == null
+            ? null
+            : DateTime.parse(json["updatedAt"]),
+      );
 
   Map<String, dynamic> toJson() => {
     "id": id,

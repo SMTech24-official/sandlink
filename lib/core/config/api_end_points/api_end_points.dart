@@ -32,6 +32,10 @@ class ApiEndPoints {
 
   //Lokman
   static const pricingPlan = '$_baseUrl/subscription-plans';
+  static const purchaseSubscriptionPlan =
+      '$_baseUrl/sellers/seller-purchase-plan';
+  static const submitApplications =
+      '$_baseUrl/sellers/create-with-account-verification';
 
   // added by shahriar
   static const allProducts = '$_baseUrl/products';
