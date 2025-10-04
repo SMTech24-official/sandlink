@@ -285,7 +285,7 @@ class UserHomeScreen extends StatelessWidget {
             final items = controller.categoriesList[index];
             return GestureDetector(
               onTap: () {
-                Get.to(() => CategoryScreen(appbarTitle: 'Boulders'));
+                Get.to(CategoryScreen() ,);
               },
 
               child: SizedBox(
