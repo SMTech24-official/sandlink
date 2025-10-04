@@ -30,17 +30,12 @@ class ApiEndPoints {
   static const productdetails = '$_baseUrl/products/details';
   static const addtocard = '$_baseUrl/carts/add';
 
-
   //Lokman
   static const pricingPlan = '$_baseUrl/subscription-plans';
 
+  // added by shahriar
+  static const allProducts = '$_baseUrl/products';
 
-
- // added by shahriar 
- static const allProducts = '$_baseUrl/products';
-
-
-  static const sendPhoneOtp = '$_baseUrl/auth/send-otp-phone-number';
+  static const sendPhoneOtp = '$_baseUrl/sellers/basic-info';
   static const verifyPhoneOtp = '$_baseUrl/auth/verify-otp-by-phone-number';
-
 }

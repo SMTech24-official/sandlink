@@ -411,7 +411,10 @@ class PersonalInformationController extends GetxController {
 
       final response = await NetworkCaller().patchRequest(
         url,
-        body: {"phoneNumber": phoneController.text.trim()},
+        body: {
+          "name": nameController.text.trim(),
+          "phoneNumber": phoneController.text.trim(),
+        },
         token: StorageService().getData('accessToken'),
       );
 
