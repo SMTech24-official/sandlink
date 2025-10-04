@@ -626,8 +626,8 @@ class ReviewYourInformationScreen extends StatelessWidget {
           width: double.infinity.w,
           decoration: BoxDecoration(
             color: allRequiredDocsUploaded
-                ? AppColors.greenColor.withOpacity(0.1)
-                : AppColors.orangeColor.withOpacity(0.1),
+                ? AppColors.greenColor.withValues(alpha: 0.1)
+                : AppColors.orangeColor.withValues(alpha: 0.1),
             borderRadius: BorderRadius.all(Radius.circular(8.r)),
             border: Border.all(
               color: allRequiredDocsUploaded

@@ -25,7 +25,7 @@ class EditAddressController extends GetxController {
       );
       if (response.isSuccess) {
         EasyLoading.showSuccess("Address updated successfully!");
-        await controller.getAddress(addressId);
+        await controller.getAddress();
         Get.back();
       } else {
         EasyLoading.showError("Failed to update address");

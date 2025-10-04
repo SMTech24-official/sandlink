@@ -23,12 +23,13 @@ class ApiEndPoints {
 
   // added by mahmud
   static const addAddress = '$_baseUrl/users/create-address';
-  static const getAddress = '$_baseUrl/users/single-address';
+  static const getAddress = '$_baseUrl/users/all-address';
   static const deleteadress = '$_baseUrl/users/delete-address';
   static const updateAddress = '$_baseUrl/users/update-address';
   static const deleteaccunt = '$_baseUrl/users/delete-account';
   static const productdetails = '$_baseUrl/products/details';
   static const addtocard = '$_baseUrl/carts/add';
+  static const notification = '$_baseUrl/notifications';
 
   //Lokman
   static const pricingPlan = '$_baseUrl/subscription-plans';
@@ -40,6 +41,18 @@ class ApiEndPoints {
   // added by shahriar
   static const allProducts = '$_baseUrl/products';
 
+
   static const sendPhoneOtp = '$_baseUrl/sellers/basic-info';
+
+
+ // added by shahriar 
+ static const allProducts = '$_baseUrl/products';
+ static const getMyOrders = '$_baseUrl/orders/get-all-customer-orders';
+
+// Cart 
+ static const getAllCart = '$_baseUrl/carts';
+ static const deleteCart = '$_baseUrl/carts/delete';
+  
+  static const sendPhoneOtp = '$_baseUrl/auth/send-otp-phone-number';
   static const verifyPhoneOtp = '$_baseUrl/auth/verify-otp-by-phone-number';
 }

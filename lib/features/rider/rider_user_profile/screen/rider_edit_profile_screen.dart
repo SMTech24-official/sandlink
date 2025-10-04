@@ -92,6 +92,7 @@ Widget _changeUserinfo({required RiderEditUserProfileController controller}) {
           headerTextColor: AppColors.blackColor,
           fontSize: 14.sp,
           headerfontSize: 16.sp,
+
           hintTextFontWeight: FontWeight.w400,
           hintTextColor: AppColors.lightGrey,
           isReadOnly: true,
@@ -119,5 +120,11 @@ Widget _changeUserinfo({required RiderEditUserProfileController controller}) {
 }
 
 Widget _saveButton() {
-  return CustomButton(onPressed: () {}, text: 'Save');
+  final controller = Get.put(RiderEditUserProfileController());
+  return CustomButton(
+    onPressed: () {
+      controller.updateProfile();
+    },
+    text: 'Save',
+  );
 }

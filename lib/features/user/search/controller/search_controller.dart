@@ -8,7 +8,7 @@ import 'package:sandlink/features/user/search/model/get_all_products.model.dart'
 class SearchingController extends GetxController {
   final getAllProduct = <GetAllProduct>[].obs;
   final search = ''.obs;
-  final allProducts = <GetAllProduct>[].obs; 
+  final allProducts = <GetAllProduct>[].obs;
 
   @override
   void onInit() {
@@ -21,9 +21,12 @@ class SearchingController extends GetxController {
     if (search.isEmpty) {
       return allProducts;
     }
-    return allProducts.where((product) => 
-      product.name.toLowerCase().contains(search.toLowerCase())
-    ).toList();
+    return allProducts
+        .where(
+          (product) =>
+              product.name.toLowerCase().contains(search.toLowerCase()),
+        )
+        .toList();
   }
 
   Future<void> getAllProducts() async {
@@ -36,8 +39,8 @@ class SearchingController extends GetxController {
       if (response.isSuccess) {
         final productData = ProductData.fromJson(response.responseData);
         allProducts.value = productData.result;
-        getAllProduct.value = productData.result; 
-        
+        getAllProduct.value = productData.result;
+
         log("✅ Products loaded: ${allProducts.length}");
       } else {
         Get.snackbar("Error", "Failed to load products");
@@ -48,6 +51,4 @@ class SearchingController extends GetxController {
       EasyLoading.dismiss();
     }
   }
-
-  
 }

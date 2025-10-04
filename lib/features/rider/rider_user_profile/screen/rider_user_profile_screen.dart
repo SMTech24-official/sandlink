@@ -7,7 +7,6 @@ import 'package:sandlink/features/rider/rider_user_profile/screen/rider_document
 import 'package:sandlink/features/rider/rider_user_profile/screen/rider_edit_profile_screen.dart';
 import 'package:sandlink/features/rider/rider_user_profile/screen/rider_payment_methods.dart';
 import '../../../../core/app_colors/app_colors.dart';
-import '../../../../core/config/constants/assets_paths/icons_assets_paths.dart';
 import '../../../../core/config/constants/assets_paths/svg_assets_paths.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
 import '../../../../core/widgets/custom_bottom_sheet.dart';
@@ -52,20 +51,42 @@ class RiderUserProfileScreen extends StatelessWidget {
 Widget _userProfile({required RiderUserProfileController controller}) {
   return Column(
     children: [
+      SizedBox(height: 16.h),
       CircleAvatar(
         backgroundColor: Colors.amber,
-        backgroundImage: AssetImage(IconsAssetsPaths.instance.userImage),
         radius: 56.r,
+        child: ClipOval(
+          child: (controller.getUserProfile.value.isNotEmpty)
+              ? Image.network(
+                  controller.getUserProfile.value,
+                  width: 112.r,
+                  height: 112.r,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Image.network(
+                      "https://cdn-icons-png.flaticon.com/512/180/180644.png",
+                      width: 112.r,
+                      height: 112.r,
+                    );
+                  },
+                )
+              : Image.network(
+                  "https://cdn-icons-png.flaticon.com/512/180/180644.png",
+                  width: 112.r,
+                  height: 112.r,
+                ),
+        ),
       ),
-      SizedBox(height: 8.h),
+
+      SizedBox(height: 16.h),
       CustomText(
-        text: 'Alex Smith',
+        text: controller.getUserName.value,
         color: AppColors.blackColor,
         fontSize: 24.sp,
         fontWeight: FontWeight.w500,
       ),
       CustomText(
-        text: 'alexsmith@gmail.com',
+        text: controller.getUserEmail.value,
         color: AppColors.lightGrey,
         fontSize: 16.sp,
         fontWeight: FontWeight.w400,
